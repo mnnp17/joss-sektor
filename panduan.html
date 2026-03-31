@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Pusat Panduan | JOSS - DPMPTSP Jawa Timur</title>
+    <link rel="icon" type="image/png" href="https://joss.jatimprov.go.id/images/logo.png">
+    <!-- Tailwind CSS v3 CDN with Plugins -->
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'joss-blue': '#6e8dff',
+                        'joss-yellow': '#fccf0c',
+                        'joss-dark': '#1e293b',
+                        'joss-bg': '#f8fafc'
+                    },
+                    animation: {
+                        'fade-in-up': 'fadeInUp 0.6s ease-out forwards',
+                    },
+                    keyframes: {
+                        fadeInUp: {
+                            '0%': { opacity: '0', transform: 'translateY(20px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        .pdf-container {
+            position: relative;
+            width: 100%;
+            height: 700px;
+            border-radius: 1rem;
+            overflow: hidden;
+            box-shadow: 0 10px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+            border: 1px solid #e2e8f0;
+            background: #f1f5f9;
+        }
+
+        .pdf-container iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        /* Custom scrollbar for sidebar */
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 4px;
+        }
+
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+
+<body class="bg-gray-50 text-gray-800 font-sans min-h-screen flex flex-col">
+
+    <!-- ===== HEADER ===== -->
+    <header class="sticky top-0 z-50 bg-white shadow-md">
+        <nav class="container mx-auto px-4 py-3 flex items-center justify-between">
+            <a href="index.html" class="flex items-center space-x-3">
+                <img src="https://joss.jatimprov.go.id/images/logo.png" alt="Logo JOSS" class="h-10 w-auto" />
+                <div>
+                    <h1 class="font-bold text-xl tracking-tight text-joss-dark leading-none">JOSS</h1>
+                    <p class="text-[10px] uppercase font-semibold text-gray-500">DPMPTSP Jawa Timur</p>
+                </div>
+            </a>
+            <div class="hidden md:flex items-center space-x-8 font-medium">
+                <a class="text-gray-600 hover:text-joss-blue" href="index.html">Beranda</a>
+                <a class="text-gray-600 hover:text-joss-blue" href="e-tracking.html">e-Tracking</a>
+                <a class="text-joss-blue font-semibold border-b-2 border-joss-blue pb-0.5"
+                    href="panduan.html">Panduan</a>
+            </div>
+            <div class="hidden md:flex items-center space-x-4">
+                <button
+                    class="px-5 py-2 border-2 border-joss-blue text-joss-blue font-semibold rounded-full hover:bg-blue-50 transition">Login</button>
+                <button
+                    class="px-6 py-2 bg-joss-blue text-white font-semibold rounded-full hover:bg-blue-600 shadow-lg shadow-blue-200 transition">Daftar</button>
+            </div>
+            <button class="md:hidden p-2" onclick="document.getElementById('mobile-menu').classList.toggle('hidden')">
+                <i class="w-6 h-6 text-gray-700" data-lucide="menu"></i>
+            </button>
+        </nav>
+        <div class="hidden md:hidden bg-white border-t border-gray-100 p-4 space-y-3" id="mobile-menu">
+            <a class="block font-medium py-2" href="index.html">Beranda</a>
+            <a class="block font-medium py-2" href="e-tracking.html">e-Tracking</a>
+            <a class="block font-medium py-2 text-joss-blue" href="panduan.html">Panduan</a>
+            <hr />
+            <button class="w-full py-2 border-2 border-joss-blue text-joss-blue font-semibold rounded-lg">Login</button>
+            <button class="w-full py-2 bg-joss-blue text-white font-semibold rounded-lg">Daftar</button>
+        </div>
+    </header>
+
+    <!-- ===== HEADER CONTENT / SEARCH ===== -->
+    <section class="bg-gradient-to-b from-blue-50 to-gray-50 pt-16 pb-12">
+        <div class="container mx-auto px-4 text-center max-w-4xl animate-fade-in-up">
+            <h1 class="text-4xl md:text-5xl font-extrabold text-joss-dark mb-4 tracking-tight">Pusat Panduan JOSS</h1>
+            <p class="text-lg text-gray-500 mb-8 max-w-2xl mx-auto">
+                Temukan buku panduan teknis operasional untuk mempermudah permohonan dan pelaporan bisnis Anda.
+            </p>
+
+            <div class="relative max-w-2xl mx-auto shadow-xl shadow-blue-100/50 rounded-2xl group">
+                <div class="absolute inset-y-0 left-4 flex items-center pointer-events-none">
+                    <i class="w-5 h-5 text-gray-400 group-focus-within:text-joss-blue transition"
+                        data-lucide="search"></i>
+                </div>
+                <input type="text"
+                    class="w-full pl-12 pr-32 py-4 border-none bg-white rounded-2xl text-gray-700 outline-none focus:ring-4 focus:ring-joss-blue/20 transition text-lg"
+                    placeholder="Apa yang bisa kami bantu hari ini?">
+                <button
+                    class="absolute inset-y-2 right-2 px-6 bg-joss-blue hover:bg-blue-600 text-white font-bold rounded-xl transition shadow-md shadow-blue-200">
+                    Cari
+                </button>
+            </div>
+
+            <div class="mt-6 flex flex-wrap items-center justify-center gap-3 text-sm text-gray-500">
+                <span class="font-bold tracking-wider text-xs uppercase text-gray-400">Populer:</span>
+                <span
+                    class="px-3 py-1 bg-white border border-gray-200 rounded-full cursor-pointer hover:border-joss-blue hover:text-joss-blue transition">Registrasi
+                    Akun</span>
+                <span
+                    class="px-3 py-1 bg-white border border-gray-200 rounded-full cursor-pointer hover:border-joss-blue hover:text-joss-blue transition">Laporan
+                    Perikanan</span>
+                <span
+                    class="px-3 py-1 bg-white border border-gray-200 rounded-full cursor-pointer hover:border-joss-blue hover:text-joss-blue transition">Input
+                    Data ESDM</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== MAIN CONTENT ===== -->
+    <main class="flex-1 container mx-auto px-4 py-8">
+        <div class="flex flex-col lg:flex-row gap-8">
+
+
+
+            <!-- ── PDF CONTENT & FAQ ── -->
+            <div class="flex-1 w-full max-w-5xl mx-auto space-y-10 animate-fade-in-up" style="animation-delay: 0.1s;">
+
+                <!-- PDF Viewer Section -->
+                <section>
+                    <div class="flex items-center justify-between mb-4">
+                        <div>
+                            <h2 class="text-2xl font-bold text-joss-dark">Buku Panduan User JOSS (PDF)</h2>
+                            <p class="text-sm text-gray-500 mt-1">Dokumen manual lengkap (Terbaru: Feb 2024)</p>
+                        </div>
+                        <a href="panduan.pdf" download
+                            class="hidden sm:flex items-center gap-2 px-4 py-2 bg-gray-100 hover:bg-gray-200 text-gray-700 text-sm font-semibold rounded-lg transition">
+                            <i class="w-4 h-4" data-lucide="download"></i> Unduh PDF
+                        </a>
+                    </div>
+
+                    <!-- Native PDF Embed (Using object/iframe) -->
+                    <div class="pdf-container group">
+                        <!-- We use an iframe so that it relies on the browser's native robust PDF viewer -->
+                        <iframe src="panduan.pdf#toolbar=0" title="Buku Panduan JOSS PDF Viewer">
+                            <p class="p-8 text-center text-gray-500">
+                                Browser Anda tidak mendukung preview PDF langsung.
+                                <br><br>
+                                <a href="panduan.pdf"
+                                    class="inline-flex items-center gap-2 px-6 py-3 bg-joss-blue text-white font-semibold rounded-xl">
+                                    <i class="w-5 h-5" data-lucide="download"></i> Unduh Panduan PDF
+                                </a>
+                            </p>
+                        </iframe>
+                    </div>
+                </section>
+
+
+                <!-- ── VIDEO TUTORIAL SECTION ── -->
+                <section>
+                    <div class="flex items-center justify-between mb-5">
+                        <div>
+                            <h2 class="text-2xl font-bold text-joss-dark">Panduan Video Tutorial</h2>
+                            <p class="text-sm text-gray-500 mt-1">Pelajari cara penggunaan JOSS melalui panduan video
+                                langkah demi langkah.</p>
+                        </div>
+                        <button onclick="openVideoModal()"
+                            class="flex items-center gap-1.5 px-4 py-2 bg-joss-blue text-white text-sm font-bold rounded-xl hover:bg-blue-600 transition shadow-md shadow-blue-200 hover:-translate-y-0.5">
+                            Lihat Semua <i class="w-4 h-4" data-lucide="arrow-right"></i>
+                        </button>
+                    </div>
+
+                    <!-- Preview: 3 video cards -->
+                    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5" id="preview-videos">
+                        <!-- Rendered by JS -->
+                    </div>
+                </section>
+
+                <!-- FAQ Section -->
+                <section>
+                    <h3 class="text-xl font-bold text-joss-dark mb-4">Pertanyaan Umum (FAQ)</h3>
+                    <div class="space-y-3">
+                        <details
+                            class="group bg-white border border-gray-100 rounded-2xl [&_summary::-webkit-details-marker]:hidden">
+                            <summary
+                                class="flex cursor-pointer items-center justify-between gap-1.5 p-5 text-joss-dark font-semibold">
+                                Bagaimana cara mereset password akun JOSS saya?
+                                <span
+                                    class="bg-gray-50 shrink-0 rounded-full p-1.5 transition duration-300 group-open:-rotate-180">
+                                    <i class="w-4 h-4 text-joss-blue" data-lucide="chevron-down"></i>
+                                </span>
+                            </summary>
+                            <div class="px-5 pb-5 pt-0 text-sm text-gray-500 leading-relaxed">
+                                Anda dapat melakukan reset password melalui halaman login dengan mengklik "Lupa
+                                Password". Masukkan alamat email yang terdaftar dan ikuti instruksi yang dikirimkan ke
+                                kotak masuk Anda.
+                            </div>
+                        </details>
+
+                        <details
+                            class="group bg-white border border-gray-100 rounded-2xl [&_summary::-webkit-details-marker]:hidden">
+                            <summary
+                                class="flex cursor-pointer items-center justify-between gap-1.5 p-5 text-joss-dark font-semibold">
+                                Apakah sistem JOSS bisa diakses secara offline?
+                                <span
+                                    class="bg-gray-50 shrink-0 rounded-full p-1.5 transition duration-300 group-open:-rotate-180">
+                                    <i class="w-4 h-4 text-gray-400" data-lucide="chevron-down"></i>
+                                </span>
+                            </summary>
+                            <div class="px-5 pb-5 pt-0 text-sm text-gray-500 leading-relaxed">
+                                Tidak, sistem JOSS adalah aplikasi berbasis web yang membutuhkan koneksi internet stabil
+                                (online) untuk melakukan input data harian maupun validasi secara real-time.
+                            </div>
+                        </details>
+
+                        <details
+                            class="group bg-white border border-gray-100 rounded-2xl [&_summary::-webkit-details-marker]:hidden">
+                            <summary
+                                class="flex cursor-pointer items-center justify-between gap-1.5 p-5 text-joss-dark font-semibold">
+                                Format file apa saja yang didukung untuk upload dokumen persyaratan?
+                                <span
+                                    class="bg-gray-50 shrink-0 rounded-full p-1.5 transition duration-300 group-open:-rotate-180">
+                                    <i class="w-4 h-4 text-gray-400" data-lucide="chevron-down"></i>
+                                </span>
+                            </summary>
+                            <div class="px-5 pb-5 pt-0 text-sm text-gray-500 leading-relaxed">
+                                Sistem JOSS saat ini mendukung dokumen berformat PDF (maksimal 5MB) untuk dokumen
+                                legalitas. Untuk gambar pendukung teknis, format JPG dan PNG diperbolehkan hingga
+                                maksimal 2MB per file.
+                            </div>
+                        </details>
+                    </div>
+                </section>
+
+            </div>
+        </div>
+    </main>
+
+    <!-- ===== FOOTER ===== -->
+    <footer class="bg-joss-dark text-white py-16 mt-10">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-12">
+                <div class="col-span-1 md:col-span-2">
+                    <div class="flex items-center space-x-3 mb-6">
+                        <img src="https://joss.jatimprov.go.id/images/logo.png" alt="Logo JOSS" class="h-10 w-auto" />
+                        <h2 class="text-2xl font-bold tracking-tight">JOSS - Jatim Online Single Submission</h2>
+                    </div>
+                    <p class="text-gray-400 mb-6 max-w-md">Layanan perizinan terpadu satu pintu Provinsi Jawa Timur
+                        untuk mewujudkan iklim investasi yang kondusif, transparan, dan akuntabel.</p>
+                    <div class="flex space-x-4">
+                        <a class="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center hover:bg-joss-blue transition"
+                            href="#"><i class="w-5 h-5" data-lucide="facebook"></i></a>
+                        <a class="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center hover:bg-joss-blue transition"
+                            href="#"><i class="w-5 h-5" data-lucide="instagram"></i></a>
+                        <a class="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center hover:bg-joss-blue transition"
+                            href="#"><i class="w-5 h-5" data-lucide="twitter"></i></a>
+                    </div>
+                </div>
+                <div>
+                    <h3 class="font-bold text-lg mb-6">Kontak Kami</h3>
+                    <ul class="space-y-4 text-gray-400">
+                        <li class="flex items-start gap-3">
+                            <i class="w-5 h-5 text-joss-yellow shrink-0" data-lucide="map-pin"></i>
+                            <span>Jl. Pahlawan No.116, Krembangan Sel., Kec. Krembangan, Surabaya, Jawa Timur
+                                60175</span>
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <i class="w-5 h-5 text-joss-yellow shrink-0" data-lucide="phone"></i>
+                            <span>(031) 3537345</span>
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <i class="w-5 h-5 text-joss-yellow shrink-0" data-lucide="mail"></i>
+                            <span>dpmptsp@jatimprov.go.id</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-white/10 mt-16 pt-8 text-center text-sm text-gray-500">
+                <p>© 2023 DPMPTSP Provinsi Jawa Timur. Hak Cipta Dilindungi Undang-Undang.</p>
+            </div>
+        </div>
+    </footer>
+
+    <a href="https://dpmptsp.jatimprov.go.id/helpdesk/web/" target="_blank" rel="noopener noreferrer"
+        class="fixed bottom-6 right-6 z-50 flex items-center gap-2 bg-joss-blue text-white font-bold px-5 py-3 rounded-full shadow-2xl shadow-blue-400/40 hover:bg-blue-600 transition hover:-translate-y-1 group">
+        <i class="w-4 h-4" data-lucide="headphones"></i>
+        <span class="text-sm">Helpdesk</span>
+    </a>
+
+    <!-- ── MODAL: LIHAT SEMUA VIDEO ── -->
+    <div id="video-modal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4">
+        <div class="absolute inset-0 bg-black/50 backdrop-blur-sm" onclick="closeVideoModal()"></div>
+        <div
+            class="relative bg-white rounded-3xl shadow-2xl w-full max-w-5xl max-h-[90vh] flex flex-col overflow-hidden">
+            <!-- Modal Header -->
+            <div class="flex items-center justify-between px-6 py-4 border-b border-gray-100 shrink-0">
+                <div>
+                    <h3 class="text-xl font-extrabold text-joss-dark">Semua Panduan Video</h3>
+                    <p class="text-xs text-gray-400 mt-0.5" id="modal-video-count">Memuat...</p>
+                </div>
+                <button onclick="closeVideoModal()"
+                    class="w-9 h-9 bg-gray-100 hover:bg-gray-200 rounded-full flex items-center justify-center transition">
+                    <i class="w-5 h-5 text-gray-500" data-lucide="x"></i>
+                </button>
+            </div>
+            <!-- Modal Body -->
+            <div class="overflow-y-auto flex-1 p-6">
+                <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5" id="modal-videos">
+                    <!-- Rendered by JS -->
+                </div>
+            </div>
+            <!-- Pagination -->
+            <div class="px-6 py-4 border-t border-gray-100 flex items-center justify-center gap-2 shrink-0"
+                id="pagination-container">
+                <!-- Rendered by JS -->
+            </div>
+        </div>
+    </div>
+
+    <!-- ── VIDEO PLAY MODAL ── -->
+    <div id="video-play-modal" class="hidden fixed inset-0 z-[60] flex items-center justify-center p-4">
+        <div class="absolute inset-0 bg-black/80" onclick="closeVideoPlay()"></div>
+        <div class="relative w-full max-w-3xl">
+            <button onclick="closeVideoPlay()"
+                class="absolute -top-10 right-0 text-white/80 hover:text-white flex items-center gap-1 text-sm font-semibold">
+                <i class="w-4 h-4" data-lucide="x"></i> Tutup
+            </button>
+            <div class="aspect-video rounded-2xl overflow-hidden shadow-2xl bg-black">
+                <iframe id="video-iframe" src="" frameborder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowfullscreen class="w-full h-full"></iframe>
+            </div>
+        </div>
+    </div>
+
+    <!-- Initialize Icons -->
+    <script>
+        lucide.createIcons();
+
+        // ══ DATA VIDEO TUTORIAL ══════════════════════════════════
+        const videos = [
+            { id: 'v1', videoId: 'dQw4w9WgXcQ', title: 'Cara Registrasi Akun JOSS', desc: 'Panduan lengkap membuat akun baru di sistem JOSS untuk pertama kali.', duration: '5:32', category: 'Registrasi' },
+            { id: 'v2', videoId: 'dQw4w9WgXcQ', title: 'Login & Navigasi Dashboard JOSS', desc: 'Cara masuk ke sistem dan memahami menu utama dashboard JOSS.', duration: '3:15', category: 'Dasar' },
+            { id: 'v3', videoId: 'dQw4w9WgXcQ', title: 'Pengajuan Izin Baru Online', desc: 'Langkah demi langkah proses pengajuan perizinan baru melalui portal JOSS.', duration: '8:45', category: 'Perizinan' },
+            { id: 'v4', videoId: 'dQw4w9WgXcQ', title: 'Upload Dokumen Persyaratan', desc: 'Cara mengunggah berkas persyaratan perizinan dengan format yang benar.', duration: '4:20', category: 'Perizinan' },
+            { id: 'v5', videoId: 'dQw4w9WgXcQ', title: 'Cek Status Permohonan (e-Tracking)', desc: 'Memantau perkembangan status permohonan izin secara real-time.', duration: '2:55', category: 'Tracking' },
+            { id: 'v6', videoId: 'dQw4w9WgXcQ', title: 'Mengunduh Dokumen Izin Digital', desc: 'Cara mengunduh sertifikat dan dokumen perizinan yang telah terbit.', duration: '3:10', category: 'Perizinan' },
+            { id: 'v7', videoId: 'dQw4w9WgXcQ', title: 'Input Laporan Perikanan', desc: 'Panduan pengisian laporan bulanan sektor perikanan di sistem JOSS.', duration: '6:40', category: 'Laporan' },
+            { id: 'v8', videoId: 'dQw4w9WgXcQ', title: 'Pengajuan Izin Peternakan', desc: 'Khusus panduan pengajuan perizinan untuk dinas peternakan Jawa Timur.', duration: '7:25', category: 'Peternakan' },
+            { id: 'v9', videoId: 'dQw4w9WgXcQ', title: 'Lupa Password & Reset Akun', desc: 'Solusi mudah jika lupa password atau akun terblokir di sistem JOSS.', duration: '2:30', category: 'Akun' },
+            { id: 'v10', videoId: 'dQw4w9WgXcQ', title: 'Input Data ESDM Bulanan', desc: 'Tutorial input data laporan bulanan untuk sektor Energi dan Sumber Daya Mineral.', duration: '5:50', category: 'Laporan' },
+            { id: 'v11', videoId: 'dQw4w9WgXcQ', title: 'Cara Perpanjangan Izin Usaha', desc: 'Prosedur memperpanjang izin usaha yang akan habis masa berlakunya.', duration: '4:10', category: 'Perizinan' },
+            { id: 'v12', videoId: 'dQw4w9WgXcQ', title: 'Mengurus Perubahan Data Perusahaan', desc: 'Cara mengajukan perubahan data legalitas perusahaan melalui JOSS.', duration: '5:05', category: 'Perusahaan' },
+            { id: 'v13', videoId: 'dQw4w9WgXcQ', title: 'Panduan Izin Toko Obat Hewan', desc: 'Langkah pengajuan izin pendirian toko obat hewan sesuai regulasi dinas.', duration: '6:15', category: 'Peternakan' },
+            { id: 'v14', videoId: 'dQw4w9WgXcQ', title: 'Notifikasi & Pesan di JOSS', desc: 'Memahami sistem notifikasi dan pesan dari petugas di portal JOSS.', duration: '3:45', category: 'Dasar' },
+            { id: 'v15', videoId: 'dQw4w9WgXcQ', title: 'Cetak & Ekspor Laporan', desc: 'Cara mencetak dan mengekspor laporan perizinan ke format PDF dan Excel.', duration: '4:35', category: 'Laporan' },
+        ];
+
+        // ══ CATEGORY BADGE COLOR ════════════════════════════════
+        const catColor = {
+            'Registrasi': 'bg-purple-100 text-purple-700',
+            'Dasar': 'bg-gray-100 text-gray-600',
+            'Perizinan': 'bg-blue-100 text-blue-700',
+            'Tracking': 'bg-yellow-100 text-yellow-700',
+            'Laporan': 'bg-green-100 text-green-700',
+            'Akun': 'bg-red-100 text-red-700',
+            'Peternakan': 'bg-amber-100 text-amber-700',
+            'Perusahaan': 'bg-indigo-100 text-indigo-700',
+        };
+
+        // ══ BUILD VIDEO CARD HTML ════════════════════════════════
+        function videoCardHTML(v) {
+            const cc = catColor[v.category] || 'bg-gray-100 text-gray-600';
+            const thumb = `https://img.youtube.com/vi/${v.videoId}/hqdefault.jpg`;
+            return `
+            <div class="group bg-white rounded-2xl border border-gray-100 shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-200 overflow-hidden cursor-pointer"
+                 onclick="playVideo('${v.videoId}')">
+                <div class="relative overflow-hidden">
+                    <img src="${thumb}" alt="${v.title}" class="w-full h-40 object-cover group-hover:scale-105 transition-transform duration-300">
+                    <div class="absolute inset-0 bg-black/30 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                        <div class="w-14 h-14 bg-white rounded-full flex items-center justify-center shadow-xl">
+                            <svg class="w-6 h-6 text-joss-blue ml-1" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                        </div>
+                    </div>
+                    <span class="absolute bottom-2 right-2 bg-black/70 text-white text-xs font-bold px-2 py-0.5 rounded-lg">${v.duration}</span>
+                </div>
+                <div class="p-4">
+                    <span class="inline-block text-xs font-bold px-2 py-0.5 rounded-full mb-2 ${cc}">${v.category}</span>
+                    <h4 class="font-bold text-sm text-joss-dark leading-snug group-hover:text-joss-blue transition-colors line-clamp-2 mb-1">${v.title}</h4>
+                    <p class="text-xs text-gray-400 leading-relaxed line-clamp-2">${v.desc}</p>
+                </div>
+            </div>`;
+        }
+
+        // ══ RENDER PREVIEW (3 video) ════════════════════════════
+        function renderPreview() {
+            const el = document.getElementById('preview-videos');
+            el.innerHTML = videos.slice(0, 3).map(videoCardHTML).join('');
+            lucide.createIcons();
+        }
+
+        // ══ MODAL STATE ══════════════════════════════════════════
+        const VIDEOS_PER_PAGE = 9;
+        let currentPage = 1;
+
+        function openVideoModal() {
+            currentPage = 1;
+            document.getElementById('video-modal').classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+            renderModalPage(currentPage);
+            lucide.createIcons();
+        }
+
+        function closeVideoModal() {
+            document.getElementById('video-modal').classList.add('hidden');
+            document.body.style.overflow = '';
+        }
+
+        // ══ RENDER MODAL PAGE ════════════════════════════════════
+        function renderModalPage(page) {
+            const totalPages = Math.ceil(videos.length / VIDEOS_PER_PAGE);
+            const start = (page - 1) * VIDEOS_PER_PAGE;
+            const pageVideos = videos.slice(start, start + VIDEOS_PER_PAGE);
+
+            document.getElementById('modal-video-count').textContent =
+                `${videos.length} video tersedia · Halaman ${page} dari ${totalPages}`;
+
+            document.getElementById('modal-videos').innerHTML = pageVideos.map(videoCardHTML).join('');
+            renderPagination(page, totalPages);
+            lucide.createIcons();
+        }
+
+        // ══ RENDER PAGINATION ════════════════════════════════════
+        function renderPagination(current, total) {
+            const el = document.getElementById('pagination-container');
+            if (total <= 1) { el.innerHTML = ''; return; }
+
+            let html = '';
+
+            // Prev button
+            html += `<button onclick="goToPage(${current - 1})" ${current === 1 ? 'disabled' : ''}
+                class="flex items-center gap-1 px-3 py-2 rounded-xl text-sm font-semibold transition
+                       ${current === 1 ? 'text-gray-300 cursor-not-allowed' : 'text-gray-600 hover:bg-gray-100 hover:text-joss-blue'}">
+                <i class="w-4 h-4" data-lucide="chevron-left"></i> Sebelumnya
+            </button>`;
+
+            // Page numbers
+            for (let i = 1; i <= total; i++) {
+                if (i === current) {
+                    html += `<button class="w-9 h-9 rounded-xl text-sm font-bold bg-joss-blue text-white shadow-md shadow-blue-200">${i}</button>`;
+                } else {
+                    html += `<button onclick="goToPage(${i})"
+                        class="w-9 h-9 rounded-xl text-sm font-semibold text-gray-600 hover:bg-gray-100 hover:text-joss-blue transition">${i}</button>`;
+                }
+            }
+
+            // Next button
+            html += `<button onclick="goToPage(${current + 1})" ${current === total ? 'disabled' : ''}
+                class="flex items-center gap-1 px-3 py-2 rounded-xl text-sm font-semibold transition
+                       ${current === total ? 'text-gray-300 cursor-not-allowed' : 'text-gray-600 hover:bg-gray-100 hover:text-joss-blue'}">
+                Berikutnya <i class="w-4 h-4" data-lucide="chevron-right"></i>
+            </button>`;
+
+            el.innerHTML = html;
+            lucide.createIcons();
+        }
+
+        function goToPage(page) {
+            const total = Math.ceil(videos.length / VIDEOS_PER_PAGE);
+            if (page < 1 || page > total) return;
+            currentPage = page;
+            renderModalPage(page);
+            // Scroll modal body to top
+            document.querySelector('#video-modal .overflow-y-auto').scrollTop = 0;
+        }
+
+        // ══ VIDEO PLAY ═══════════════════════════════════════════
+        function playVideo(videoId) {
+            const modal = document.getElementById('video-play-modal');
+            document.getElementById('video-iframe').src =
+                `https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0`;
+            modal.classList.remove('hidden');
+        }
+
+        function closeVideoPlay() {
+            document.getElementById('video-play-modal').classList.add('hidden');
+            document.getElementById('video-iframe').src = '';
+        }
+
+        // Close video-modal with Escape key
+        document.addEventListener('keydown', function (e) {
+            if (e.key === 'Escape') {
+                closeVideoPlay();
+                closeVideoModal();
+            }
+        });
+
+        // ══ INIT ══════════════════════════════════════════════════
+        renderPreview();
+    </script>
+</body>
+
+</html>

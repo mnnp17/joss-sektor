@@ -1,0 +1,1130 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Dinas Peternakan | JOSS - DPMPTSP Jawa Timur</title>
+    <link rel="icon" type="image/png" href="https://joss.jatimprov.go.id/images/logo.png">
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'joss-blue': '#6e8dff',
+                        'joss-yellow': '#fccf0c',
+                        'joss-green': '#00b52d',
+                        'joss-dark': '#1e293b'
+                    }
+                }
+            }
+        }
+    </script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(14px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .fade-up {
+            animation: fadeUp 0.4s ease both;
+        }
+
+        /* procedure connector */
+        .proc-item:not(:last-child) .proc-line {
+            display: block;
+        }
+
+        .proc-line {
+            display: none;
+        }
+
+        /* Sidebar slide transition */
+        #sidebar-wrap {
+            transition: width 0.3s ease, opacity 0.3s ease, margin 0.3s ease;
+            overflow: hidden;
+        }
+
+        #sidebar-wrap.sidebar-hidden {
+            width: 0 !important;
+            opacity: 0;
+            margin: 0 !important;
+            padding: 0 !important;
+        }
+
+        /* Toggle button animation */
+        #sidebar-toggle-icon {
+            transition: transform 0.3s ease;
+        }
+
+        #sidebar-wrap.sidebar-hidden~* #sidebar-toggle-icon,
+        body.sidebar-hidden #sidebar-toggle-icon {
+            transform: rotate(180deg);
+        }
+    </style>
+</head>
+
+<body class="bg-gray-50 text-gray-900 font-sans min-h-screen flex flex-col">
+
+    <!-- ===== HEADER ===== -->
+    <!-- BEGIN: MainHeader -->
+    <header class="sticky top-0 z-50 bg-white shadow-md">
+        <nav class="container mx-auto px-4 py-3 flex items-center justify-between">
+            <!-- Logo and Brand -->
+            <a href="index.html" class="flex items-center space-x-3">
+                <img src="https://joss.jatimprov.go.id/images/logo.png" alt="Logo JOSS" class="h-10 w-auto" />
+                <div>
+                    <h1 class="font-bold text-xl tracking-tight text-joss-dark leading-none">JOSS</h1>
+                    <p class="text-[10px] uppercase font-semibold text-gray-500">DPMPTSP Jawa Timur</p>
+                </div>
+            </a>
+            <!-- Navigation Links (Desktop) -->
+            <div class="hidden md:flex items-center space-x-8 font-medium">
+                <a class="text-gray-600 hover:text-joss-blue" href="index.html">Beranda</a>
+                <a class="text-gray-600 hover:text-joss-blue" href="e-tracking.html">e-Tracking</a>
+                <a class="text-gray-600 hover:text-joss-blue" href="panduan.html">Panduan</a>
+            </div>
+            <!-- Auth Buttons -->
+            <div class="hidden md:flex items-center space-x-4">
+                <button
+                    class="px-5 py-2 border-2 border-joss-blue text-joss-blue font-semibold rounded-full hover:bg-blue-50 transition">Login</button>
+                <button
+                    class="px-6 py-2 bg-joss-blue text-white font-semibold rounded-full hover:bg-blue-600 shadow-lg shadow-blue-200 transition">Daftar</button>
+            </div>
+            <!-- Mobile Menu Button -->
+            <button class="md:hidden p-2" onclick="document.getElementById('mob-menu').classList.toggle('hidden')">
+                <i class="w-6 h-6 text-gray-700" data-lucide="menu"></i>
+            </button>
+        </nav>
+        <!-- Mobile Navigation -->
+        <div class="hidden md:hidden bg-white border-t border-gray-100 p-4 space-y-4" id="mob-menu">
+            <a class="block font-medium py-2" href="index.html">Beranda</a>
+            <a class="block font-medium py-2" href="e-tracking.html">e-Tracking</a>
+            <a class="block font-medium py-2" href="panduan.html">Panduan</a>
+            <hr />
+            <div class="flex flex-col space-y-2">
+                <button
+                    class="w-full py-2 border-2 border-joss-blue text-joss-blue font-semibold rounded-lg">Login</button>
+                <button class="w-full py-2 bg-joss-blue text-white font-semibold rounded-lg">Daftar</button>
+            </div>
+        </div>
+    </header>
+    <!-- END: MainHeader -->
+
+    <!-- ===== BREADCRUMB ===== -->
+    <div class="bg-white border-b border-gray-100 py-3">
+        <div class="container mx-auto px-4">
+            <nav class="flex items-center gap-2 text-sm text-gray-500">
+                <a href="index.html" class="hover:text-joss-blue transition">Beranda</a>
+                <i class="w-3 h-3" data-lucide="chevron-right"></i>
+                <span class="text-gray-700 font-medium">Dinas Peternakan</span>
+                <i class="w-3 h-3 hidden" id="bc-sep2" data-lucide="chevron-right"></i>
+                <span class="text-joss-blue font-medium truncate max-w-xs hidden" id="bc-detail"></span>
+            </nav>
+        </div>
+    </div>
+
+    <!-- ===== MAIN LAYOUT ===== -->
+    <div class="flex-1 container mx-auto px-4 py-6 flex flex-col lg:flex-row gap-6">
+
+        <!-- ── SIDEBAR COLUMN ───────────────────── -->
+        <div id="sidebar-col" class="w-full lg:w-64 shrink-0 flex flex-col gap-2 transition-all duration-300">
+
+            <!-- Hamburger toggle — always visible, sits above sidebar -->
+            <button onclick="toggleSidebar()" id="sidebar-toggle-btn" title="Sembunyikan / Tampilkan Panel"
+                class="hidden lg:flex w-9 h-9 items-center justify-center bg-white border border-gray-200 hover:bg-blue-50 hover:border-joss-blue hover:text-joss-blue text-gray-500 rounded-xl shadow-sm transition-all">
+                <i class="w-5 h-5" id="sidebar-toggle-icon" data-lucide="menu"></i>
+            </button>
+
+            <!-- ── SIDEBAR ────────────────────── -->
+            <aside id="sidebar-wrap" class="w-full space-y-4">
+
+                <!-- Unit Kerja header -->
+                <div class="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
+                    <div class="bg-gradient-to-r from-joss-blue to-blue-500 px-5 py-4">
+                        <p class="text-blue-100 text-xs font-semibold uppercase tracking-wider mb-1">Unit Kerja</p>
+                        <h2 class="text-white font-extrabold text-lg leading-tight">Dinas Peternakan</h2>
+                    </div>
+                    <div class="p-3 space-y-1" id="sidebar-menu">
+                        <!-- items rendered by JS -->
+                    </div>
+                </div>
+
+            </aside>
+        </div>
+
+        <!-- ── MAIN CONTENT ───────────────── -->
+        <main class="flex-1 min-w-0">
+
+            <!-- Default landing: list of all permits -->
+            <div id="view-list" class="fade-up">
+                <div class="mb-6">
+                    <h2 class="text-2xl md:text-3xl font-extrabold text-joss-dark mb-2">Dinas Peternakan Provinsi Jawa
+                        Timur</h2>
+                    <p class="text-gray-500 text-sm max-w-2xl">Layanan perizinan sektor peternakan mencakup izin usaha,
+                        produk pangan hewani, kesehatan hewan, dan regulasi terkait dalam satu platform terintegrasi.
+                    </p>
+                </div>
+
+                <!-- Stats row -->
+                <div class="grid grid-cols-3 gap-4 mb-8">
+                    <div class="bg-white rounded-2xl p-4 border border-gray-100 shadow-sm text-center">
+                        <p class="text-3xl font-extrabold text-joss-blue">5</p>
+                        <p class="text-xs text-gray-500 mt-1 font-medium">Jenis Layanan</p>
+                    </div>
+                    <div class="bg-white rounded-2xl p-4 border border-gray-100 shadow-sm text-center">
+                        <p class="text-3xl font-extrabold text-joss-green">3–14</p>
+                        <p class="text-xs text-gray-500 mt-1 font-medium">Hari Kerja</p>
+                    </div>
+                    <div class="bg-white rounded-2xl p-4 border border-gray-100 shadow-sm text-center">
+                        <p class="text-3xl font-extrabold text-joss-yellow">Rp 0</p>
+                        <p class="text-xs text-gray-500 mt-1 font-medium">Biaya Dasar</p>
+                    </div>
+                </div>
+
+                <!-- Permit cards grid -->
+                <h3 class="font-bold text-joss-dark mb-4 text-lg">Pilih Jenis Perizinan</h3>
+                <div class="grid sm:grid-cols-2 gap-4" id="list-cards">
+                    <!-- Rendered by JS -->
+                </div>
+            </div>
+
+            <!-- Detail view (hidden by default) -->
+            <div id="view-detail" class="hidden fade-up">
+
+                <!-- Back button + status -->
+                <div class="flex items-center gap-3 mb-5">
+                    <button onclick="backToList()"
+                        class="flex items-center gap-1.5 text-sm font-semibold text-gray-500 hover:text-joss-blue transition">
+                        <i class="w-4 h-4" data-lucide="arrow-left"></i> Kembali
+                    </button>
+                </div>
+
+                <!-- Permit title -->
+                <div class="mb-2 flex items-start gap-3">
+                    <div class="w-12 h-12 bg-blue-50 rounded-2xl flex items-center justify-center shrink-0 mt-1">
+                        <i class="w-6 h-6 text-joss-blue" id="detail-icon" data-lucide="file-text"></i>
+                    </div>
+                    <div>
+                        <h2 class="text-xl md:text-2xl font-extrabold text-joss-dark leading-tight" id="detail-title">—
+                        </h2>
+                        <p class="text-sm text-gray-500 mt-1 flex items-center gap-1">
+                            <i class="w-3.5 h-3.5 text-joss-blue" data-lucide="building-2"></i>
+                            Dinas Peternakan Provinsi Jawa Timur
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Tabs -->
+                <div class="flex border-b border-gray-200 mb-6 mt-5 overflow-x-auto">
+                    <button onclick="switchTab('ringkasan')" id="tab-ringkasan"
+                        class="tab-btn px-5 py-3 text-sm font-semibold text-joss-blue border-b-2 border-joss-blue whitespace-nowrap">Ringkasan</button>
+                    <button onclick="switchTab('syarat')" id="tab-syarat"
+                        class="tab-btn px-5 py-3 text-sm font-semibold text-gray-500 border-b-2 border-transparent hover:text-joss-blue whitespace-nowrap">Persyaratan</button>
+                    <button onclick="switchTab('prosedur')" id="tab-prosedur"
+                        class="tab-btn px-5 py-3 text-sm font-semibold text-gray-500 border-b-2 border-transparent hover:text-joss-blue whitespace-nowrap">Prosedur</button>
+                    <button onclick="switchTab('biaya')" id="tab-biaya"
+                        class="tab-btn px-5 py-3 text-sm font-semibold text-gray-500 border-b-2 border-transparent hover:text-joss-blue whitespace-nowrap">Biaya
+                        &amp; Waktu</button>
+                </div>
+
+                <!-- ── TAB: Ringkasan ── -->
+                <div id="content-ringkasan" class="space-y-6">
+
+                    <!-- Info cards -->
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                        <div class="bg-white rounded-2xl p-5 border border-gray-100 shadow-sm">
+                            <div class="flex items-center gap-2 mb-3">
+                                <div class="w-9 h-9 bg-blue-50 rounded-xl flex items-center justify-center">
+                                    <i class="w-5 h-5 text-joss-blue" data-lucide="clock"></i>
+                                </div>
+                                <p class="text-xs font-bold text-gray-400 uppercase tracking-wider">Estimasi Waktu</p>
+                            </div>
+                            <p class="text-2xl font-extrabold text-joss-dark" id="info-waktu">—</p>
+                        </div>
+                        <div class="bg-white rounded-2xl p-5 border border-gray-100 shadow-sm">
+                            <div class="flex items-center gap-2 mb-3">
+                                <div class="w-9 h-9 bg-green-50 rounded-xl flex items-center justify-center">
+                                    <i class="w-5 h-5 text-joss-green" data-lucide="banknote"></i>
+                                </div>
+                                <p class="text-xs font-bold text-gray-400 uppercase tracking-wider">Biaya / Tarif</p>
+                            </div>
+                            <p class="text-2xl font-extrabold text-joss-dark" id="info-biaya">—</p>
+                        </div>
+                        <div class="bg-white rounded-2xl p-5 border border-gray-100 shadow-sm">
+                            <div class="flex items-center gap-2 mb-3">
+                                <div class="w-9 h-9 bg-yellow-50 rounded-xl flex items-center justify-center">
+                                    <i class="w-5 h-5 text-yellow-600" data-lucide="award"></i>
+                                </div>
+                                <p class="text-xs font-bold text-gray-400 uppercase tracking-wider">Produk Layanan</p>
+                            </div>
+                            <p class="text-base font-bold text-joss-dark leading-tight" id="info-produk">—</p>
+                        </div>
+                    </div>
+
+                    <!-- Dasar Hukum -->
+                    <div class="bg-white rounded-2xl p-6 border border-gray-100 shadow-sm">
+                        <h4 class="font-bold text-joss-dark mb-4 flex items-center gap-2">
+                            <i class="w-5 h-5 text-joss-blue" data-lucide="scale"></i> Dasar Hukum
+                        </h4>
+                        <div id="hukum-list" class="space-y-2"><!-- Rendered by JS --></div>
+                    </div>
+
+                    <!-- Persyaratan Dokumen (ringkas) -->
+                    <div class="bg-white rounded-2xl p-6 border border-gray-100 shadow-sm">
+                        <h4 class="font-bold text-joss-dark mb-4 flex items-center gap-2">
+                            <i class="w-5 h-5 text-joss-blue" data-lucide="clipboard-check"></i> Persyaratan Dokumen
+                        </h4>
+                        <div id="dok-list" class="grid sm:grid-cols-2 gap-3"><!-- Rendered by JS --></div>
+                    </div>
+
+                    <!-- Prosedur singkat -->
+                    <div class="bg-white rounded-2xl p-6 border border-gray-100 shadow-sm">
+                        <h4 class="font-bold text-joss-dark mb-5 flex items-center gap-2">
+                            <i class="w-5 h-5 text-joss-blue" data-lucide="git-merge"></i> Mekanisme &amp; Prosedur
+                        </h4>
+                        <div id="proc-list" class="space-y-3"><!-- Rendered by JS --></div>
+                    </div>
+
+                    <!-- Unduh Formulir -->
+                    <div class="bg-white rounded-2xl p-6 border border-gray-100 shadow-sm">
+                        <h4 class="font-bold text-joss-dark mb-4 flex items-center gap-2">
+                            <i class="w-5 h-5 text-joss-blue" data-lucide="download-cloud"></i> Unduh Formulir &amp;
+                            Panduan
+                        </h4>
+                        <div id="file-list" class="space-y-2"><!-- Rendered by JS --></div>
+                    </div>
+
+                    <!-- CTA -->
+                    <div
+                        class="bg-gradient-to-r from-joss-dark to-blue-900 rounded-3xl p-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+                        <div>
+                            <h4 class="text-white font-bold text-lg mb-1">Siap mengajukan permohonan?</h4>
+                            <p class="text-blue-300 text-sm">Pastikan semua persyaratan dokumen telah Anda siapkan dalam
+                                format digital.</p>
+                        </div>
+                        <button onclick="alert('Mengalihkan ke portal OSS / sistem pengajuan…')"
+                            class="flex items-center gap-2 bg-joss-blue hover:bg-blue-500 text-white font-bold px-7 py-4 rounded-2xl transition-all hover:-translate-y-0.5 shadow-lg shadow-blue-900/40 whitespace-nowrap shrink-0">
+                            Ajukan Izin Sekarang <i class="w-5 h-5" data-lucide="arrow-right"></i>
+                        </button>
+                    </div>
+                </div><!-- end ringkasan -->
+
+                <!-- ── TAB: Persyaratan ── -->
+                <div id="content-syarat" class="hidden">
+                    <div class="bg-white rounded-2xl p-6 border border-gray-100 shadow-sm">
+                        <h4 class="font-bold text-joss-dark text-lg mb-2">Persyaratan Dokumen Lengkap</h4>
+                        <p class="text-sm text-gray-500 mb-5">Pilih jenis pengurusan untuk melihat dokumen yang
+                            diperlukan.</p>
+
+                        <!-- Pilihan Utama (Baru vs Pencabutan) -->
+                        <div class="flex flex-wrap gap-2 mb-4 border-b border-gray-100 pb-4">
+                            <button onclick="switchPengurusan('baru')" id="btn-pengurusan-baru"
+                                class="px-4 py-2 bg-joss-blue text-white rounded-xl text-sm font-bold shadow-md transition-all hover:-translate-y-0.5">
+                                Pengurusan Baru
+                            </button>
+                            <button onclick="switchPengurusan('pencabutan')" id="btn-pengurusan-pencabutan"
+                                class="px-4 py-2 bg-gray-100 text-gray-600 hover:bg-gray-200 rounded-xl text-sm font-semibold transition">
+                                Pengurusan Pencabutan
+                            </button>
+                        </div>
+
+                        <!-- Pilihan Sub-Jenis (Perseorangan vs Non) -->
+                        <div class="flex flex-wrap gap-2 mb-6">
+                            <button onclick="switchPemohon('perseorangan')" id="btn-pemohon-perseorangan"
+                                class="px-4 py-1.5 border-2 border-joss-blue text-joss-blue rounded-full text-xs font-bold transition">
+                                Perseorangan
+                            </button>
+                            <button onclick="switchPemohon('non')" id="btn-pemohon-non"
+                                class="px-4 py-1.5 border-2 border-gray-200 text-gray-500 hover:border-gray-300 rounded-full text-xs font-semibold transition">
+                                Non Perseorangan
+                            </button>
+                        </div>
+
+                        <div id="syarat-full" class="space-y-3"><!-- Rendered by JS --></div>
+                    </div>
+                </div>
+
+                <!-- ── TAB: Prosedur ── -->
+                <div id="content-prosedur" class="hidden">
+                    <div class="bg-white rounded-2xl p-6 border border-gray-100 shadow-sm">
+                        <h4 class="font-bold text-joss-dark text-lg mb-5">Alur Prosedur Pengajuan</h4>
+                        <div id="prosedur-full" class="space-y-4"><!-- Rendered by JS --></div>
+                    </div>
+                </div>
+
+                <!-- ── TAB: Biaya & Waktu ── -->
+                <div id="content-biaya" class="hidden">
+                    <div class="space-y-4">
+                        <div class="bg-white rounded-2xl p-6 border border-gray-100 shadow-sm">
+                            <h4 class="font-bold text-joss-dark mb-4 flex items-center gap-2">
+                                <i class="w-5 h-5 text-joss-blue" data-lucide="banknote"></i> Rincian Biaya
+                            </h4>
+                            <div id="biaya-table" class="space-y-2"><!-- Rendered by JS --></div>
+                        </div>
+                        <div class="bg-white rounded-2xl p-6 border border-gray-100 shadow-sm">
+                            <h4 class="font-bold text-joss-dark mb-4 flex items-center gap-2">
+                                <i class="w-5 h-5 text-joss-blue" data-lucide="calendar"></i> Estimasi Waktu Proses
+                            </h4>
+                            <div id="waktu-detail" class="space-y-3"><!-- Rendered by JS --></div>
+                        </div>
+                    </div>
+                </div>
+
+            </div><!-- end view-detail -->
+        </main>
+    </div><!-- end main layout -->
+
+    <!-- ===== FOOTER ===== -->
+    <!-- BEGIN: Footer -->
+    <footer class="bg-joss-dark text-white py-16">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-12">
+                <div class="col-span-1 md:col-span-2">
+                    <div class="flex items-center space-x-3 mb-6">
+                        <img src="https://joss.jatimprov.go.id/images/logo.png" alt="Logo JOSS" class="h-10 w-auto" />
+                        <h2 class="text-2xl font-bold tracking-tight">JOSS - Jatim Online Single Submission</h2>
+                    </div>
+                    <p class="text-gray-400 mb-6 max-w-md">Layanan perizinan terpadu satu pintu Provinsi Jawa Timur
+                        untuk mewujudkan iklim investasi yang kondusif, transparan, dan akuntabel.</p>
+                    <div class="flex space-x-4">
+                        <a class="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center hover:bg-joss-blue transition"
+                            href="#"><i class="w-5 h-5" data-lucide="facebook"></i></a>
+                        <a class="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center hover:bg-joss-blue transition"
+                            href="#"><i class="w-5 h-5" data-lucide="instagram"></i></a>
+                        <a class="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center hover:bg-joss-blue transition"
+                            href="#"><i class="w-5 h-5" data-lucide="twitter"></i></a>
+                    </div>
+                </div>
+                <div>
+                    <h3 class="font-bold text-lg mb-6">Kontak Kami</h3>
+                    <ul class="space-y-4 text-gray-400">
+                        <li class="flex items-start gap-3">
+                            <i class="w-5 h-5 text-joss-yellow shrink-0" data-lucide="map-pin"></i>
+                            <span>Jl. Pahlawan No.116, Krembangan Sel., Kec. Krembangan, Surabaya, Jawa Timur
+                                60175</span>
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <i class="w-5 h-5 text-joss-yellow shrink-0" data-lucide="phone"></i>
+                            <span>(031) 3537345</span>
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <i class="w-5 h-5 text-joss-yellow shrink-0" data-lucide="mail"></i>
+                            <span>dpmptsp@jatimprov.go.id</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-white/10 mt-16 pt-8 text-center text-sm text-gray-500">
+                <p>© 2023 DPMPTSP Provinsi Jawa Timur. Hak Cipta Dilindungi Undang-Undang.</p>
+            </div>
+        </div>
+    </footer>
+    <!-- END: Footer -->
+
+    <a href="https://dpmptsp.jatimprov.go.id/helpdesk/web/" target="_blank" rel="noopener noreferrer"
+        class="fixed bottom-6 right-6 z-50 flex items-center gap-2 bg-joss-blue text-white font-bold px-5 py-3 rounded-full shadow-2xl shadow-blue-400/40 hover:bg-blue-600 transition hover:-translate-y-1 group">
+        <i class="w-4 h-4" data-lucide="headphones"></i>
+        <span class="text-sm">Helpdesk</span>
+    </a>
+
+    <!-- Helpdesk Modal -->
+    <div id="helpdesk-modal" class="hidden fixed inset-0 z-50 flex items-end sm:items-center justify-center p-4">
+        <div class="absolute inset-0 bg-black/40 backdrop-blur-sm"
+            onclick="document.getElementById('helpdesk-modal').classList.add('hidden')"></div>
+        <div class="relative bg-white rounded-3xl shadow-2xl w-full max-w-md p-6 fade-up">
+            <!-- Header -->
+            <div class="flex items-center justify-between mb-5">
+                <div class="flex items-center gap-3">
+                    <div class="w-11 h-11 bg-joss-blue rounded-2xl flex items-center justify-center">
+                        <i class="w-6 h-6 text-white" data-lucide="headphones"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-extrabold text-joss-dark text-lg leading-none">Helpdesk JOSS</h3>
+                        <p class="text-xs text-gray-400 mt-0.5">Kami siap membantu Anda</p>
+                    </div>
+                </div>
+                <button onclick="document.getElementById('helpdesk-modal').classList.add('hidden')"
+                    class="w-8 h-8 bg-gray-100 hover:bg-gray-200 rounded-full flex items-center justify-center transition">
+                    <i class="w-4 h-4 text-gray-500" data-lucide="x"></i>
+                </button>
+            </div>
+            <!-- Status online -->
+            <div class="flex items-center gap-2 px-3 py-2 bg-green-50 rounded-xl mb-5">
+                <span class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
+                <span class="text-xs font-semibold text-green-700">Petugas Online · Senin – Jumat, 08.00 – 16.00
+                    WIB</span>
+            </div>
+            <!-- Channel list -->
+            <div class="space-y-3 mb-5">
+                <a href="tel:0313537345"
+                    class="flex items-center gap-4 p-4 bg-gray-50 hover:bg-blue-50 rounded-2xl transition group">
+                    <div
+                        class="w-10 h-10 bg-joss-blue/10 group-hover:bg-joss-blue rounded-xl flex items-center justify-center transition">
+                        <i class="w-5 h-5 text-joss-blue group-hover:text-white transition"
+                            data-lucide="phone-call"></i>
+                    </div>
+                    <div class="flex-1">
+                        <p class="font-bold text-sm text-joss-dark">Telepon Langsung</p>
+                        <p class="text-xs text-gray-500">(031) 3537345 ext. 1</p>
+                    </div>
+                    <i class="w-4 h-4 text-gray-300 group-hover:text-joss-blue" data-lucide="arrow-right"></i>
+                </a>
+                <a href="mailto:dpmptsp@jatimprov.go.id"
+                    class="flex items-center gap-4 p-4 bg-gray-50 hover:bg-blue-50 rounded-2xl transition group">
+                    <div
+                        class="w-10 h-10 bg-joss-blue/10 group-hover:bg-joss-blue rounded-xl flex items-center justify-center transition">
+                        <i class="w-5 h-5 text-joss-blue group-hover:text-white transition" data-lucide="mail"></i>
+                    </div>
+                    <div class="flex-1">
+                        <p class="font-bold text-sm text-joss-dark">Kirim Email</p>
+                        <p class="text-xs text-gray-500">dpmptsp@jatimprov.go.id</p>
+                    </div>
+                    <i class="w-4 h-4 text-gray-300 group-hover:text-joss-blue" data-lucide="arrow-right"></i>
+                </a>
+                <a href="https://wa.me/6281234567890" target="_blank"
+                    class="flex items-center gap-4 p-4 bg-gray-50 hover:bg-green-50 rounded-2xl transition group">
+                    <div
+                        class="w-10 h-10 bg-green-100 group-hover:bg-green-500 rounded-xl flex items-center justify-center transition">
+                        <i class="w-5 h-5 text-green-600 group-hover:text-white transition"
+                            data-lucide="message-circle"></i>
+                    </div>
+                    <div class="flex-1">
+                        <p class="font-bold text-sm text-joss-dark">WhatsApp</p>
+                        <p class="text-xs text-gray-500">Chat langsung dengan petugas</p>
+                    </div>
+                    <i class="w-4 h-4 text-gray-300 group-hover:text-green-500" data-lucide="arrow-right"></i>
+                </a>
+                <a href="e-tracking.html"
+                    class="flex items-center gap-4 p-4 bg-gray-50 hover:bg-blue-50 rounded-2xl transition group">
+                    <div
+                        class="w-10 h-10 bg-joss-blue/10 group-hover:bg-joss-blue rounded-xl flex items-center justify-center transition">
+                        <i class="w-5 h-5 text-joss-blue group-hover:text-white transition" data-lucide="radar"></i>
+                    </div>
+                    <div class="flex-1">
+                        <p class="font-bold text-sm text-joss-dark">e-Tracking Perizinan</p>
+                        <p class="text-xs text-gray-500">Cek status permohonan Anda</p>
+                    </div>
+                    <i class="w-4 h-4 text-gray-300 group-hover:text-joss-blue" data-lucide="arrow-right"></i>
+                </a>
+            </div>
+            <p class="text-center text-xs text-gray-400">Di luar jam kerja? Kirim email dan kami akan merespons keesokan
+                harinya.</p>
+        </div>
+    </div>
+
+    <!-- ===== SCRIPTS ===== -->
+    <script>
+        lucide.createIcons();
+
+        // ══ STATE VARIABLE UNTUK PERSYARATAN ════════════════════════
+        let currentPengurusan = 'baru'; // 'baru' | 'pencabutan'
+        let currentPemohon = 'perseorangan'; // 'perseorangan' | 'non'
+
+        // ══ SIDEBAR TOGGLE ══════════════════════════════════════════
+        let sidebarVisible = true;
+        function toggleSidebar() {
+            const sidebarCol = document.getElementById('sidebar-col');
+            const sidebarWrap = document.getElementById('sidebar-wrap');
+            const icon = document.getElementById('sidebar-toggle-icon');
+            sidebarVisible = !sidebarVisible;
+
+            if (sidebarVisible) {
+                // Expand: restore full sidebar column width
+                sidebarCol.style.width = '';
+                sidebarCol.style.minWidth = '';
+                sidebarWrap.style.display = '';
+                icon.setAttribute('data-lucide', 'menu');
+            } else {
+                // Collapse: shrink column to just the toggle button width
+                sidebarWrap.style.display = 'none';
+                sidebarCol.style.width = '40px';
+                sidebarCol.style.minWidth = '40px';
+                icon.setAttribute('data-lucide', 'menu');
+            }
+            lucide.createIcons();
+        }
+
+
+        // ══ DATA ══════════════════════════════════════════════════════════
+        const permits = [
+            {
+                id: 'pangan-hewan',
+                icon: 'package',
+                title: 'Izin Pemasukan dan atau Pengeluaran Produk Pangan Asal Hewan (Daging/Olahan) antar Provinsi dan Pulau',
+                shortTitle: 'Produk Pangan Hewan',
+                desc: 'Izin peredaran produk pangan asal hewan antar provinsi yang wajib memenuhi standar veteriner nasional.',
+                waktu: '3 – 5 Hari Kerja',
+                biaya: 'Gratis (Rp 0)',
+                produk: 'Surat Rekomendasi',
+                hukum: [
+                    { title: 'Undang-Undang Nomor 23 Tahun 2014 tentang Pemerintahan Daerah;', url: 'uu1.pdf' },
+                    { title: 'Undang-Undang Nomor 18 Tahun 2009 tentang Peternakan dan Kesehatan Hewan (Lembaran Negara Republik Indonesia Tahun 2009 Nomor 84, Tambahan Lembaran Negara Republik Indonesia Nomor 5015) sebagaimana telah diubah dengan Undang-Undang Nomor 41 Tahun 2014 tentang Perubahan atas Undang-Undang Nomor 18 Tahun 2009 tentang Peternakan dan Kesehatan Hewan (Lembaran Negara Republik Indonesia Tahun 2014 Nomor 338, Tambahan Lembaran Negara Republik Indonesia Nomor 5619);', url: 'uu1.pdf' },
+                    { title: 'Peraturan Pemerintah Nomor 38 Tahun 2007 tentang Pembagian Urusan Pemerintahan antara Pemerintah, Pemerintah Daerah Provinsi dan Pemerintah Daerah Kabupaten/Kota;', url: 'uu1.pdf' },
+                    { title: 'Peraturan Pemerintah Nomor 95 Tahun 2012 tentang Kesehatan Masyarakat Veteriner dan Kesejahteraan Hewan;', url: 'uu1.pdf' },
+                    { title: 'Peraturan Pemerintah Nomor 5 Tahun 2021 tentang Penyelenggaraan Perizinan Berusaha Berbasis Risiko;', url: 'uu1.pdf' },
+                    { title: 'Peraturan Menteri Pertanian Nomor 11 Tahun 2020 tentang Sertifikasi Nomor Kontrol Veteriner Unit Usaha Produk Hewan;', url: 'uu1.pdf' },
+                    { title: 'Peraturan Menteri Pertanian Nomor 15 Tahun 2021 tentang Standar Kegiatan Usaha dan Standar Produk pada Penyelenggaraan Perizinan Berusaha Berbasis Resiko Sektor Pertanian;', url: 'uu1.pdf' },
+                    { title: 'Peraturan Menteri Pertanian Nomor 17 Tahun 2023 Tentang Tata Cara Pengawasan Lalu Lintas Hewan, Produk Hewan, dan Media Pembawa Penyakit Hewan Lainnya di dalam Wilayah Negara Kesatuan Republik Indonesia;', url: 'uu1.pdf' },
+                    { title: 'Peraturan Daerah Provinsi Jawa Timur Nomor 8 Tahun 2023 tentang Pajak Daerah dan Retribusi Daerah;', url: 'uu1.pdf' },
+                    { title: 'Peraturan Gubernur Jawa Timur Nomor 88 Tahun 2022 tentang Penyelenggaraan Perizinan Berusaha.', url: 'uu1.pdf' }
+                ],
+                dokumen: {
+                    baru: {
+                        perseorangan: [
+                            { nama: 'Nomor Induk Berusaha (NIB)', ket: 'Dari sistem OSS' },
+                            { nama: 'NKV (Nomor Kontrol Veteriner)', ket: 'Atau unit usaha dalam status pembinaan untuk mendapatkan NKV' },
+                            { nama: 'Sertifikat Halal', ket: 'Untuk yang dipersyaratkan' },
+                            { nama: 'Laporan Realisasi Pengeluaran/Pemasukan Produk Pangan Asal Hewan', ket: 'Daging/Olahan antar Provinsi dan Pulau' },
+                            { nama: 'Surat Rekomendasi dan/atau Keterangan Kesehatan Produk Pangan Asal Hewan', ket: 'Dari daerah asal/tujuan' },
+                            { nama: 'Hasil Pengujian Laboratorium Produk', ket: 'Dari Laboratorium Pemerintah atau swasta terakreditasi' },
+                            { nama: 'Khusus pemasukan daging sapi: Rencana Distribusi & Pernyataan tidak dijual di pasar tradisional', ket: 'Dokumen bermaterai' },
+                        ],
+                        non: [
+                            { nama: 'Nomor Induk Berusaha (NIB)', ket: 'Dari sistem OSS' },
+                            { nama: 'NKV (Nomor Kontrol Veteriner)', ket: 'Atau unit usaha dalam status pembinaan untuk mendapatkan NKV' },
+                            { nama: 'Sertifikat Halal', ket: 'Untuk yang dipersyaratkan' },
+                            { nama: 'Laporan Realisasi Pengeluaran/Pemasukan Produk Pangan Asal Hewan', ket: 'Daging/Olahan antar Provinsi dan Pulau' },
+                            { nama: 'Surat Rekomendasi dan/atau Keterangan Kesehatan Produk Pangan Asal Hewan', ket: 'Dari daerah asal/tujuan' },
+                            { nama: 'Hasil Pengujian Laboratorium Produk', ket: 'Dari Laboratorium Pemerintah atau swasta terakreditasi' },
+                            { nama: 'Khusus pemasukan daging sapi: Rencana Distribusi & Pernyataan tidak dijual di pasar tradisional', ket: 'Dokumen bermaterai' },
+                        ]
+                    },
+                    pencabutan: {
+                        perseorangan: [
+                            { nama: 'Scan Surat Pernyataan Pemegang Dokumen Perizinan Berusaha', ket: 'Berisikan alasan pengembalian izin, bermaterai 10.000' },
+                            { nama: 'Scan Dokumen Perizinan Berusaha yang Diajukan Pencabutannya', ket: 'Dokumen asli' },
+                        ],
+                        non: [
+                            { nama: 'Scan Surat Pernyataan Pemegang Dokumen Perizinan Berusaha', ket: 'Berisikan alasan pengembalian izin, bermaterai 10.000' },
+                            { nama: 'Scan Dokumen Perizinan Berusaha yang Diajukan Pencabutannya', ket: 'Dokumen asli' },
+                        ]
+                    }
+                },
+                prosedur: [
+                    { step: 1, judul: 'Pendaftaran Online', desc: 'Pemohon melakukan registrasi dan input data online melalui portal JOSS Jatim.' },
+                    { step: 2, judul: 'Verifikasi Administrasi', desc: 'Petugas melakukan pengecekan kelengkapan dan keabsahan dokumen.' },
+                    { step: 3, judul: 'Kajian Teknis Veteriner', desc: 'Tim teknis Dinas Peternakan melakukan penilaian aspek kesehatan hewan dan produk.' },
+                    { step: 4, judul: 'Penerbitan Izin', desc: 'Izin/rekomendasi diterbitkan secara digital dengan tanda tangan elektronik.' },
+                ],
+                files: [
+                    { nama: 'Formulir Permohonan Izin Pemasukan.pdf', type: 'pdf' },
+                    { nama: 'Daftar Kelengkapan Dokumen Pendukung.docx', type: 'doc' },
+                ],
+                biayaRincian: [
+                    { item: 'Biaya Administrasi', nilai: 'Rp 0 (Gratis)' },
+                    { item: 'Biaya Kajian Teknis', nilai: 'Rp 0 (Gratis)' },
+                    { item: 'Biaya Penerbitan Dokumen', nilai: 'Rp 0 (Gratis)' },
+                ],
+                waktuDetail: [
+                    { tahap: 'Verifikasi Administrasi', durasi: '1 Hari Kerja' },
+                    { tahap: 'Kajian Teknis', durasi: '1 – 2 Hari Kerja' },
+                    { tahap: 'Penerbitan & Pengiriman', durasi: '1 Hari Kerja' },
+                    { tahap: 'Total Estimasi', durasi: '3 – 5 Hari Kerja', bold: true },
+                ],
+            },
+            {
+                id: 'usaha-peternakan',
+                icon: 'building',
+                title: 'Izin Usaha Peternakan',
+                shortTitle: 'Izin Usaha Peternakan',
+                desc: 'Izin operasional bagi pelaku usaha di bidang budidaya ternak unggas, ruminansia besar, dan ruminansia kecil.',
+                waktu: '7 – 14 Hari Kerja',
+                biaya: 'Gratis (Rp 0)',
+                produk: 'Surat Izin Usaha Peternakan',
+                hukum: [
+                    'Undang-Undang Nomor 18 Tahun 2009 tentang Peternakan dan Kesehatan Hewan.',
+                    'Peraturan Menteri Pertanian Nomor 40 Tahun 2018 tentang Tata Cara Perizinan Usaha Peternakan.',
+                    'Peraturan Gubernur Jawa Timur Nomor 23 Tahun 2020 tentang Standar Pelayanan Perizinan.',
+                ],
+                dokumen: [
+                    { nama: 'KTP Pemohon / Direktur', ket: 'Scan berwarna, berlaku' },
+                    { nama: 'NPWP Perusahaan / Perorangan', ket: 'Aktif' },
+                    { nama: 'Akta Pendirian & SK Kemenkumham', ket: 'Untuk badan hukum' },
+                    { nama: 'Sertifikat Kepemilikan Lahan / IMB', ket: 'Atau sewa min. 5 tahun' },
+                    { nama: 'Dokumen UKL-UPL / SPPL', ket: 'Sesuai skala usaha' },
+                    { nama: 'Rekomendasi Dinas Teknis Kabupaten/Kota', ket: 'Dari lokasi kandang' },
+                    { nama: 'Denah Lokasi & Layout Kandang', ket: 'Skala 1:1000' },
+                    { nama: 'NIB dari Sistem OSS', ket: 'KBLI sesuai jenis ternak' },
+                ],
+                prosedur: [
+                    { step: 1, judul: 'Pendaftaran & Unggah Dokumen', desc: 'Pemohon mendaftar via JOSS dan mengunggah seluruh dokumen persyaratan.' },
+                    { step: 2, judul: 'Verifikasi Administrasi', desc: 'Front Office memverifikasi kelengkapan berkas dalam 2 hari kerja.' },
+                    { step: 3, judul: 'Peninjauan Lapangan', desc: 'Tim teknis dinas melakukan survei lokasi kandang dan fasilitas.' },
+                    { step: 4, judul: 'Kajian & Rekomendasi Teknis', desc: 'Hasil survei dikaji untuk memastikan kesesuaian teknis dan lingkungan.' },
+                    { step: 5, judul: 'Penandatanganan & Penerbitan', desc: 'Kepala Dinas atau yang dikuasakan menandatangani dokumen izin secara digital.' },
+                ],
+                files: [
+                    { nama: 'Formulir Permohonan IUP.pdf', type: 'pdf' },
+                    { nama: 'Checklist Persyaratan IUP.pdf', type: 'pdf' },
+                    { nama: 'Template Surat Pernyataan Pemohon.docx', type: 'doc' },
+                ],
+                biayaRincian: [
+                    { item: 'Biaya Pendaftaran', nilai: 'Rp 0 (Gratis)' },
+                    { item: 'Biaya Survei Lapangan', nilai: 'Rp 0 (Gratis)' },
+                    { item: 'Biaya Penerbitan Izin', nilai: 'Rp 0 (Gratis)' },
+                ],
+                waktuDetail: [
+                    { tahap: 'Verifikasi Administrasi', durasi: '2 Hari Kerja' },
+                    { tahap: 'Peninjauan Lapangan', durasi: '3 – 5 Hari Kerja' },
+                    { tahap: 'Kajian Teknis', durasi: '3 – 5 Hari Kerja' },
+                    { tahap: 'Penerbitan Izin', durasi: '2 Hari Kerja' },
+                    { tahap: 'Total Estimasi', durasi: '7 – 14 Hari Kerja', bold: true },
+                ],
+            },
+            {
+                id: 'toko-obat-hewan',
+                icon: 'pill',
+                title: 'Izin Toko Obat Hewan',
+                shortTitle: 'Izin Toko Obat Hewan',
+                desc: 'Izin operasional pendirian toko yang menjual obat-obatan, vaksin, dan suplemen untuk hewan ternak.',
+                waktu: '5 – 10 Hari Kerja',
+                biaya: 'Gratis (Rp 0)',
+                produk: 'Surat Izin Toko Obat Hewan',
+                hukum: [
+                    'Undang-Undang Nomor 18 Tahun 2009 tentang Peternakan dan Kesehatan Hewan.',
+                    'Peraturan Menteri Pertanian Nomor 74 Tahun 2007 tentang Obat Hewan.',
+                    'Peraturan Daerah Provinsi Jawa Timur Nomor 4 Tahun 2011.',
+                ],
+                dokumen: [
+                    { nama: 'KTP Pemilik / Penanggungjawab', ket: 'Berlaku' },
+                    { nama: 'Ijazah / Sertifikat Kompetensi', ket: 'Min. D3 Keswan atau Apoteker' },
+                    { nama: 'Surat Izin Tempat Usaha (SITU)', ket: 'Dari kelurahan/kecamatan' },
+                    { nama: 'Denah Layout Toko', ket: 'Menunjukkan area penyimpanan' },
+                    { nama: 'NIB dari OSS', ket: 'KBLI 47721' },
+                    { nama: 'Sertifikat Pelatihan Obat Hewan', ket: 'Jika ada' },
+                ],
+                prosedur: [
+                    { step: 1, judul: 'Pendaftaran Online', desc: 'Input data pemohon dan unggah dokumen melalui JOSS.' },
+                    { step: 2, judul: 'Verifikasi Kelengkapan', desc: 'Petugas memeriksa kelengkapan dokumen persyaratan.' },
+                    { step: 3, judul: 'Pemeriksaan Sarana', desc: 'Petugas teknis memeriksa kondisi fisik dan sarana toko.' },
+                    { step: 4, judul: 'Penerbitan Izin', desc: 'Izin diterbitkan secara elektronik.' },
+                ],
+                files: [
+                    { nama: 'Formulir Permohonan Toko Obat Hewan.pdf', type: 'pdf' },
+                    { nama: 'Panduan Persyaratan TOH.pdf', type: 'pdf' },
+                ],
+                biayaRincian: [
+                    { item: 'Seluruh tahapan', nilai: 'Rp 0 (Gratis)' },
+                ],
+                waktuDetail: [
+                    { tahap: 'Verifikasi Administrasi', durasi: '2 Hari Kerja' },
+                    { tahap: 'Pemeriksaan Sarana', durasi: '2 – 5 Hari Kerja' },
+                    { tahap: 'Penerbitan Izin', durasi: '1 – 3 Hari Kerja' },
+                    { tahap: 'Total Estimasi', durasi: '5 – 10 Hari Kerja', bold: true },
+                ],
+            },
+            {
+                id: 'unit-pengolahan',
+                icon: 'factory',
+                title: 'Izin Unit Pengolahan / Rumah Potong Hewan',
+                shortTitle: 'Izin Unit Pengolahan',
+                desc: 'Izin operasional bagi unit pengolahan produk asal hewan, termasuk rumah potong hewan (RPH) dan unggas (RPU).',
+                waktu: '10 – 21 Hari Kerja',
+                biaya: 'Gratis (Rp 0)',
+                produk: 'Sertifikat NKV (Nomor Kontrol Veteriner)',
+                hukum: [
+                    'Undang-Undang Nomor 18 Tahun 2009 tentang Peternakan dan Kesehatan Hewan.',
+                    'Peraturan Menteri Pertanian Nomor 13 Tahun 2010 tentang Persyaratan RPH.',
+                    'SNI 01-6159-1999 tentang Rumah Potong Hewan Ruminansia.',
+                ],
+                dokumen: [
+                    { nama: 'KTP Pemohon / Direktur', ket: 'Berlaku' },
+                    { nama: 'Akta Pendirian Usaha', ket: 'Telah disahkan' },
+                    { nama: 'IMB Bangunan RPH/RPU', ket: 'Sesuai standar higienis' },
+                    { nama: 'Dokumen AMDAL / UKL-UPL', ket: 'Tergantung skala' },
+                    { nama: 'Sertifikat Halal (jika ada)', ket: 'Dari MUI/BPJPH' },
+                    { nama: 'Denah Alur Produksi', ket: 'Detail standar higienitas' },
+                    { nama: 'Daftar Peralatan & Mesin', ket: 'Spesifikasi teknis lengkap' },
+                    { nama: 'Rekomendasi Dinas Peternakan Kab/Kota', ket: 'Lokasi RPH' },
+                ],
+                prosedur: [
+                    { step: 1, judul: 'Pendaftaran & Upload Berkas', desc: 'Pemohon mendaftar dan mengunggah seluruh dokumen.' },
+                    { step: 2, judul: 'Verifikasi Administrasi', desc: 'Pengecekan kelengkapan berkas dan validitas dokumen.' },
+                    { step: 3, judul: 'Audit / Inspeksi Teknis', desc: 'Tim auditor NKV melakukan inspeksi lapangan secara menyeluruh.' },
+                    { step: 4, judul: 'Penilaian & Rekomendasi', desc: 'Hasil audit dianalisis dan dibuat rekomendasi teknis.' },
+                    { step: 5, judul: 'Penerbitan NKV', desc: 'Sertifikat NKV diterbitkan setelah memenuhi seluruh standar.' },
+                ],
+                files: [
+                    { nama: 'Panduan NKV Unit Pengolahan.pdf', type: 'pdf' },
+                    { nama: 'Formulir Permohonan RPH-RPU.pdf', type: 'pdf' },
+                    { nama: 'Checklist Audit NKV.xlsx', type: 'xls' },
+                ],
+                biayaRincian: [
+                    { item: 'Biaya Pendaftaran', nilai: 'Rp 0' },
+                    { item: 'Biaya Audit (oleh negara)', nilai: 'Rp 0' },
+                    { item: 'Penerbitan Sertifikat', nilai: 'Rp 0' },
+                ],
+                waktuDetail: [
+                    { tahap: 'Verifikasi Administrasi', durasi: '3 Hari Kerja' },
+                    { tahap: 'Penjadwalan & Audit Lapangan', durasi: '5 – 7 Hari Kerja' },
+                    { tahap: 'Analisis Hasil Audit', durasi: '3 – 7 Hari Kerja' },
+                    { tahap: 'Penerbitan NKV', durasi: '2 – 4 Hari Kerja' },
+                    { tahap: 'Total Estimasi', durasi: '10 – 21 Hari Kerja', bold: true },
+                ],
+            },
+            {
+                id: 'praktik-dokter-hewan',
+                icon: 'stethoscope',
+                title: 'Izin Praktik Dokter Hewan',
+                shortTitle: 'Izin Praktik Dokter Hewan',
+                desc: 'Izin bagi dokter hewan untuk membuka praktik pelayanan kesehatan hewan secara mandiri di wilayah Jawa Timur.',
+                waktu: '3 – 7 Hari Kerja',
+                biaya: 'Gratis (Rp 0)',
+                produk: 'Surat Izin Praktik Dokter Hewan (SIPDH)',
+                hukum: [
+                    'Undang-Undang Nomor 18 Tahun 2009 tentang Peternakan dan Kesehatan Hewan.',
+                    'Peraturan Menteri Pertanian Nomor 02 Tahun 2010 tentang Tenaga Kesehatan Hewan.',
+                    'Keputusan Menteri Pertanian Nomor 637 Tahun 2003 tentang Uji Kompetensi Dokter Hewan.',
+                ],
+                dokumen: [
+                    { nama: 'KTP Dokter Hewan', ket: 'Scan berwarna' },
+                    { nama: 'Ijazah Dokter Hewan (drh.)', ket: 'Dilegalisir' },
+                    { nama: 'Sertifikat Kompetensi Profesi', ket: 'Dari Organisasi Profesi' },
+                    { nama: 'Surat Tanda Registrasi Veteriner (STRV)', ket: 'Berlaku' },
+                    { nama: 'Surat Keterangan Domisili Praktik', ket: 'Dari kelurahan' },
+                    { nama: 'Foto Sarana Praktik', ket: '3 foto (tampak luar, dalam, ruang peralatan)' },
+                ],
+                prosedur: [
+                    { step: 1, judul: 'Pengajuan Online', desc: 'Dokter hewan mengajukan permohonan dan mengunggah dokumen via JOSS.' },
+                    { step: 2, judul: 'Verifikasi Administrasi', desc: 'Petugas memeriksa keabsahan ijazah, STRV, dan sertifikat kompetensi.' },
+                    { step: 3, judul: 'Pemeriksaan Sarana Praktik', desc: 'Petugas teknis melakukan pengecekan lokasi praktik (jika diperlukan).' },
+                    { step: 4, judul: 'Penerbitan SIPDH', desc: 'SIPDH diterbitkan secara digital dan dapat diunduh langsung dari sistem.' },
+                ],
+                files: [
+                    { nama: 'Formulir Permohonan SIPDH.pdf', type: 'pdf' },
+                    { nama: 'Panduan Kelengkapan Dokumen drh.pdf', type: 'pdf' },
+                ],
+                biayaRincian: [
+                    { item: 'Seluruh proses', nilai: 'Rp 0 (Gratis)' },
+                ],
+                waktuDetail: [
+                    { tahap: 'Verifikasi Administrasi', durasi: '1 – 2 Hari Kerja' },
+                    { tahap: 'Pemeriksaan Sarana', durasi: '1 – 3 Hari Kerja' },
+                    { tahap: 'Penerbitan SIPDH', durasi: '1 – 2 Hari Kerja' },
+                    { tahap: 'Total Estimasi', durasi: '3 – 7 Hari Kerja', bold: true },
+                ],
+            },
+        ];
+
+        let currentPermit = null;
+
+        // ══ RENDER SIDEBAR ══════════════════════════════════════════
+        function renderSidebar(activeId) {
+            const el = document.getElementById('sidebar-menu');
+            el.innerHTML = permits.map(p => `
+      <button onclick="openPermit('${p.id}')"
+        class="w-full flex items-center gap-2.5 px-3 py-2.5 rounded-xl text-left text-sm font-medium transition-all
+               ${p.id === activeId
+                    ? 'bg-blue-50 text-joss-blue font-bold'
+                    : 'text-gray-600 hover:bg-gray-50 hover:text-joss-blue'}">
+        <i class="w-4 h-4 shrink-0" data-lucide="${p.icon}"></i>
+        <span class="leading-snug">${p.shortTitle}</span>
+      </button>`).join('');
+            lucide.createIcons();
+        }
+
+        // ══ RENDER LIST CARDS ═══════════════════════════════════════
+        function renderList() {
+            const el = document.getElementById('list-cards');
+            el.innerHTML = permits.map(p => `
+      <button onclick="openPermit('${p.id}')"
+        class="group text-left bg-white rounded-2xl p-5 border border-gray-100 shadow-sm hover:border-joss-blue/40 hover:shadow-lg transition-all duration-200 hover:-translate-y-1">
+        <div class="flex items-start gap-4 mb-3">
+          <div class="w-12 h-12 bg-blue-50 group-hover:bg-joss-blue rounded-2xl flex items-center justify-center shrink-0 transition-colors">
+            <i class="w-6 h-6 text-joss-blue group-hover:text-white transition-colors" data-lucide="${p.icon}"></i>
+          </div>
+          <div class="flex-1 min-w-0">
+            <h4 class="font-bold text-joss-dark text-sm leading-snug group-hover:text-joss-blue transition-colors line-clamp-2">${p.title}</h4>
+          </div>
+        </div>
+        <p class="text-xs text-gray-500 mb-4 leading-relaxed">${p.desc}</p>
+        <div class="flex items-center justify-between">
+          <div class="flex gap-3">
+            <span class="flex items-center gap-1 text-xs text-gray-500">
+              <i class="w-3 h-3 text-joss-blue" data-lucide="clock"></i> ${p.waktu}
+            </span>
+            <span class="flex items-center gap-1 text-xs text-gray-500">
+              <i class="w-3 h-3 text-joss-green" data-lucide="banknote"></i> ${p.biaya}
+            </span>
+          </div>
+          <span class="text-joss-blue text-xs font-bold flex items-center gap-1 group-hover:gap-2 transition-all">
+            Lihat <i class="w-3 h-3" data-lucide="arrow-right"></i>
+          </span>
+        </div>
+      </button>`).join('');
+            lucide.createIcons();
+        }
+
+        // ══ OPEN PERMIT DETAIL ═══════════════════════════════════════
+        function openPermit(id) {
+            const p = permits.find(x => x.id === id);
+            if (!p) return;
+            currentPermit = p;
+
+            // Reset Persyaratan filters to default
+            switchPengurusan('baru');
+            switchPemohon('perseorangan');
+
+            // Breadcrumb
+            document.getElementById('bc-sep2').classList.remove('hidden');
+            const bcD = document.getElementById('bc-detail');
+            bcD.textContent = p.shortTitle;
+            bcD.classList.remove('hidden');
+
+            // Views
+            document.getElementById('view-list').classList.add('hidden');
+            const vd = document.getElementById('view-detail');
+            vd.classList.remove('hidden');
+            vd.classList.add('fade-up');
+            setTimeout(() => vd.classList.remove('fade-up'), 500);
+
+            // Title & icon
+            document.getElementById('detail-title').textContent = p.title;
+            const iconEl = document.getElementById('detail-icon');
+            iconEl.setAttribute('data-lucide', p.icon);
+
+            // Info
+            document.getElementById('info-waktu').textContent = p.waktu;
+            document.getElementById('info-biaya').textContent = p.biaya;
+            document.getElementById('info-produk').textContent = p.produk;
+
+            document.getElementById('hukum-list').innerHTML = `
+        <div class="grid gap-3">
+          ${p.hukum.map((h, i) => {
+                if (typeof h === 'object') {
+                    return `
+            <a href="${h.url}" target="_blank" rel="noopener noreferrer" class="flex items-start gap-4 p-4 bg-white border border-gray-100 rounded-2xl hover:border-joss-blue hover:shadow-md transition group">
+              <div class="w-10 h-10 bg-red-50 text-red-500 rounded-xl flex items-center justify-center shrink-0 mt-0.5 font-bold text-lg">
+                ${i + 1}
+              </div>
+              <div class="flex-1">
+                <p class="text-sm font-semibold text-gray-700 leading-relaxed group-hover:text-joss-blue transition">
+                  ${h.title}
+                </p>
+              </div>
+              <i class="w-5 h-5 text-gray-300 group-hover:text-joss-blue transition shrink-0 mt-2" data-lucide="external-link"></i>
+            </a>`;
+                } else {
+                    return `
+            <div class="flex items-start gap-4 p-4 bg-white border border-gray-100 rounded-2xl hover:border-joss-blue hover:shadow-md transition group">
+              <div class="w-10 h-10 bg-gray-50 text-gray-400 rounded-xl flex items-center justify-center shrink-0 mt-0.5 font-bold text-lg">
+                ${i + 1}
+              </div>
+              <div class="flex-1">
+                <p class="text-sm font-semibold text-gray-700 leading-relaxed group-hover:text-joss-blue transition">
+                  ${h}
+                </p>
+              </div>
+            </div>`;
+                }
+            }).join('')}
+        </div>
+      `;
+
+            // Dokumen ringkas (menampilkan dokumen baru > perseorangan sebagai default di ringkasan)
+            let defaultDokumen = p.dokumen;
+            if (!Array.isArray(p.dokumen)) {
+                // Ambil default dari baru -> perseorangan jika hierarki
+                defaultDokumen = p.dokumen['baru']?.['perseorangan'] || [];
+            }
+
+            document.getElementById('dok-list').innerHTML = defaultDokumen.map(d => `
+      <div class="flex items-start gap-2.5">
+        <div class="w-5 h-5 bg-green-100 rounded-full flex items-center justify-center shrink-0 mt-0.5">
+          <i class="w-3 h-3 text-green-600" data-lucide="check"></i>
+        </div>
+        <p class="text-sm font-medium text-gray-700">${d.nama}</p>
+      </div>`).join('');
+
+            // Prosedur
+            document.getElementById('proc-list').innerHTML = p.prosedur.map((pr, i) => {
+                const isRight = i % 2 === 1;
+                return `
+        <div class="flex gap-4 ${isRight ? 'flex-row-reverse' : ''}">
+          <div class="w-9 h-9 bg-joss-blue rounded-xl flex items-center justify-center text-white font-bold text-sm shrink-0">${pr.step}</div>
+          <div class="${isRight ? 'text-right' : ''} flex-1">
+            <p class="font-bold text-sm text-joss-dark">${pr.judul}</p>
+            <p class="text-xs text-gray-500 mt-0.5">${pr.desc}</p>
+          </div>
+        </div>`;
+            }).join('');
+
+            // Files
+            const typeColor = { pdf: 'text-red-500 bg-red-50', doc: 'text-blue-500 bg-blue-50', xls: 'text-green-600 bg-green-50' };
+            const typeIcon = { pdf: 'file-text', doc: 'file-type', xls: 'table' };
+            document.getElementById('file-list').innerHTML = p.files.map(f => `
+      <div class="flex items-center gap-3 p-3 bg-gray-50 rounded-xl hover:bg-blue-50 transition cursor-pointer group">
+        <div class="w-9 h-9 ${typeColor[f.type] || 'text-gray-500 bg-gray-100'} rounded-lg flex items-center justify-center shrink-0">
+          <i class="w-5 h-5" data-lucide="${typeIcon[f.type] || 'file'}"></i>
+        </div>
+        <span class="flex-1 text-sm font-medium text-gray-700 group-hover:text-joss-blue transition">${f.nama}</span>
+        <i class="w-5 h-5 text-gray-400 group-hover:text-joss-blue transition" data-lucide="download"></i>
+      </div>`).join('');
+
+            // Render Syarat full
+            renderDokumenFull();
+
+            // Prosedur full
+            document.getElementById('prosedur-full').innerHTML = p.prosedur.map((pr, i) => `
+      <div class="flex gap-4 relative ${i < p.prosedur.length - 1 ? 'pb-4' : ''}">
+        ${i < p.prosedur.length - 1 ? '<div class="absolute left-5 top-10 bottom-0 w-0.5 bg-blue-100"></div>' : ''}
+        <div class="w-10 h-10 bg-joss-blue rounded-xl flex items-center justify-center text-white font-bold shrink-0 z-10">${pr.step}</div>
+        <div class="bg-gray-50 rounded-2xl p-4 flex-1">
+          <h5 class="font-bold text-joss-dark mb-1">${pr.judul}</h5>
+          <p class="text-sm text-gray-600">${pr.desc}</p>
+        </div>
+      </div>`).join('');
+
+            // Biaya table
+            document.getElementById('biaya-table').innerHTML = `
+      <div class="overflow-hidden rounded-2xl border border-gray-100">
+        <table class="w-full text-sm">
+          <thead class="bg-gray-50">
+            <tr>
+              <th class="text-left px-4 py-3 font-bold text-gray-600">Komponen</th>
+              <th class="text-right px-4 py-3 font-bold text-gray-600">Nilai</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${p.biayaRincian.map(b => `
+              <tr class="border-t border-gray-100">
+                <td class="px-4 py-3 text-gray-700">${b.item}</td>
+                <td class="px-4 py-3 text-right font-bold text-joss-green">${b.nilai}</td>
+              </tr>`).join('')}
+          </tbody>
+        </table>
+      </div>`;
+
+            // Waktu detail
+            document.getElementById('waktu-detail').innerHTML = p.waktuDetail.map(w => `
+      <div class="flex items-center justify-between p-3 ${w.bold ? 'bg-blue-50 rounded-xl' : 'border-b border-gray-100'}">
+        <span class="text-sm ${w.bold ? 'font-extrabold text-joss-blue' : 'text-gray-600'}">${w.tahap}</span>
+        <span class="text-sm ${w.bold ? 'font-extrabold text-joss-blue' : 'font-semibold text-gray-800'}">${w.durasi}</span>
+      </div>`).join('');
+
+            // Sidebar & icons
+            renderSidebar(id);
+            switchTab('ringkasan');
+            lucide.createIcons();
+
+            // Scroll to top on mobile
+            if (window.innerWidth < 1024) {
+                document.querySelector('main').scrollIntoView({ behavior: 'smooth' });
+            }
+        }
+
+        // ══ FILTER PERSYARATAN ══════════════════════════════════════
+        function switchPengurusan(type) {
+            currentPengurusan = type;
+
+            // Update UI buttons
+            const btnBaru = document.getElementById('btn-pengurusan-baru');
+            const btnPencabutan = document.getElementById('btn-pengurusan-pencabutan');
+
+            if (type === 'baru') {
+                btnBaru.className = "px-4 py-2 bg-joss-blue text-white rounded-xl text-sm font-bold shadow-md transition-all hover:-translate-y-0.5";
+                btnPencabutan.className = "px-4 py-2 bg-gray-100 text-gray-600 hover:bg-gray-200 rounded-xl text-sm font-semibold transition";
+            } else {
+                btnPencabutan.className = "px-4 py-2 bg-joss-blue text-white rounded-xl text-sm font-bold shadow-md transition-all hover:-translate-y-0.5";
+                btnBaru.className = "px-4 py-2 bg-gray-100 text-gray-600 hover:bg-gray-200 rounded-xl text-sm font-semibold transition";
+            }
+            renderDokumenFull();
+        }
+
+        function switchPemohon(type) {
+            currentPemohon = type;
+
+            // Update UI buttons
+            const btnPerseorangan = document.getElementById('btn-pemohon-perseorangan');
+            const btnNon = document.getElementById('btn-pemohon-non');
+
+            if (type === 'perseorangan') {
+                btnPerseorangan.className = "px-4 py-1.5 border-2 border-joss-blue text-joss-blue rounded-full text-xs font-bold transition";
+                btnNon.className = "px-4 py-1.5 border-2 border-gray-200 text-gray-500 hover:border-gray-300 rounded-full text-xs font-semibold transition";
+            } else {
+                btnNon.className = "px-4 py-1.5 border-2 border-joss-blue text-joss-blue rounded-full text-xs font-bold transition";
+                btnPerseorangan.className = "px-4 py-1.5 border-2 border-gray-200 text-gray-500 hover:border-gray-300 rounded-full text-xs font-semibold transition";
+            }
+            renderDokumenFull();
+        }
+
+        function renderDokumenFull() {
+            if (!currentPermit) return;
+            let p = currentPermit; // currentPermit is already the full permit object
+            if (!p) return;
+
+            let docList = [];
+            if (Array.isArray(p.dokumen)) {
+                docList = p.dokumen; // Fallback jika masih pakai array lama
+            } else if (p.dokumen && p.dokumen[currentPengurusan] && p.dokumen[currentPengurusan][currentPemohon]) {
+                docList = p.dokumen[currentPengurusan][currentPemohon];
+            }
+
+            if (docList.length === 0) {
+                document.getElementById('syarat-full').innerHTML = `<p class="text-sm text-gray-500 italic p-4 text-center">Data persyaratan belum tersedia untuk pilihan ini.</p>`;
+                lucide.createIcons();
+                return;
+            }
+
+            document.getElementById('syarat-full').innerHTML = docList.map((d, i) => `
+      <div class="flex items-start gap-4 p-4 bg-gray-50 rounded-2xl hover:bg-blue-50 transition">
+        <div class="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center shrink-0 mt-0.5">
+          <i class="w-4 h-4 text-green-600" data-lucide="check-circle"></i>
+        </div>
+        <div>
+          <p class="font-bold text-sm text-joss-dark">${d.nama}</p>
+          <p class="text-xs text-gray-500 mt-0.5">${d.ket}</p>
+        </div>
+        <span class="ml-auto text-xs text-gray-400 font-semibold shrink-0">No. ${i + 1}</span>
+      </div>`).join('');
+
+            lucide.createIcons();
+        }
+
+        // ══ BACK TO LIST ════════════════════════════════════════════
+        function backToList() {
+            document.getElementById('view-list').classList.remove('hidden');
+            document.getElementById('view-detail').classList.add('hidden');
+            document.getElementById('bc-sep2').classList.add('hidden');
+            document.getElementById('bc-detail').classList.add('hidden');
+            currentPermit = null;
+            renderSidebar(null);
+            lucide.createIcons();
+        }
+
+        // ══ TAB SWITCHING ════════════════════════════════════════════
+        function switchTab(tab) {
+            ['ringkasan', 'syarat', 'prosedur', 'biaya'].forEach(t => {
+                document.getElementById('content-' + t).classList.add('hidden');
+                const btn = document.getElementById('tab-' + t);
+                btn.classList.remove('text-joss-blue', 'border-joss-blue');
+                btn.classList.add('text-gray-500', 'border-transparent');
+            });
+            document.getElementById('content-' + tab).classList.remove('hidden');
+            const active = document.getElementById('tab-' + tab);
+            active.classList.add('text-joss-blue', 'border-joss-blue');
+            active.classList.remove('text-gray-500', 'border-transparent');
+            lucide.createIcons();
+        }
+
+        // ══ INIT ════════════════════════════════════════════════════
+        renderSidebar(null);
+        renderList();
+
+        // URL param: ?izin=usaha-peternakan
+        const urlIzin = new URLSearchParams(window.location.search).get('izin');
+        if (urlIzin) openPermit(urlIzin);
+    </script>
+</body>
+
+</html>

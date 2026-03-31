@@ -1,0 +1,684 @@
+<!DOCTYPE html>
+
+<html lang="id">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>JOSS - Jatim Online Single Submission | DPMPTSP Jawa Timur</title>
+    <link rel="icon" type="image/png" href="https://joss.jatimprov.go.id/images/logo.png">
+    <!-- Tailwind CSS v3 CDN with Plugins -->
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <!-- Tailwind Configuration -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'joss-blue': '#6e8dff',
+                        'joss-yellow': '#fccf0c',
+                        'joss-green': '#00b52d',
+                        'joss-dark': '#1e293b'
+                    },
+                    animation: {
+                        'slide-in': 'slideIn 0.5s ease-out forwards',
+                    },
+                    keyframes: {
+                        slideIn: {
+                            '0%': { opacity: '0', transform: 'translateY(10px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Lucide Icons for consistent iconography -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style data-purpose="custom-animations">
+        .slider-item {
+            display: none;
+        }
+
+        .slider-item.active {
+            display: block;
+            animation: fadeIn 0.8s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        .hide-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+
+        .hide-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+
+        .service-card:hover {
+            transform: translateY(-5px);
+            transition: all 0.3s ease;
+        }
+    </style>
+</head>
+
+<body class="bg-gray-50 text-gray-900 font-sans">
+    <!-- BEGIN: MainHeader -->
+    <header class="sticky top-0 z-50 bg-white shadow-md">
+        <nav class="container mx-auto px-4 py-3 flex items-center justify-between">
+            <!-- Logo and Brand -->
+            <div class="flex items-center space-x-3">
+                <img src="https://joss.jatimprov.go.id/images/logo.png" alt="Logo JOSS" class="h-10 w-auto" />
+                <div>
+                    <h1 class="font-bold text-xl tracking-tight text-joss-dark leading-none">JOSS</h1>
+                    <p class="text-[10px] uppercase font-semibold text-gray-500">DPMPTSP Jawa Timur</p>
+                </div>
+            </div>
+            <!-- Navigation Links (Desktop) -->
+            <div class="hidden md:flex items-center space-x-8 font-medium">
+                <a class="text-joss-blue hover:text-blue-700" href="#">Beranda</a>
+                <a class="text-gray-600 hover:text-joss-blue" href="e-tracking.html">e-Tracking</a>
+                <a class="text-gray-600 hover:text-joss-blue" href="panduan.html">Panduan</a>
+            </div>
+            <!-- Auth Buttons -->
+            <div class="hidden md:flex items-center space-x-4">
+                <button
+                    class="px-5 py-2 border-2 border-joss-blue text-joss-blue font-semibold rounded-full hover:bg-blue-50 transition">Login</button>
+                <button
+                    class="px-6 py-2 bg-joss-blue text-white font-semibold rounded-full hover:bg-blue-600 shadow-lg shadow-blue-200 transition">Daftar</button>
+            </div>
+            <!-- Mobile Menu Button -->
+            <button class="md:hidden p-2" onclick="document.getElementById('mobile-menu').classList.toggle('hidden')">
+                <i class="w-6 h-6 text-gray-700" data-lucide="menu"></i>
+            </button>
+        </nav>
+        <!-- Mobile Navigation -->
+        <div class="hidden md:hidden bg-white border-t border-gray-100 p-4 space-y-4" id="mobile-menu">
+            <a class="block font-medium py-2" href="#">Beranda</a>
+            <a class="block font-medium py-2" href="e-tracking.html">e-Tracking</a>
+            <a class="block font-medium py-2" href="panduan.html">Panduan</a>
+            <hr />
+            <div class="flex flex-col space-y-2">
+                <button
+                    class="w-full py-2 border-2 border-joss-blue text-joss-blue font-semibold rounded-lg">Login</button>
+                <button class="w-full py-2 bg-joss-blue text-white font-semibold rounded-lg">Daftar</button>
+            </div>
+        </div>
+    </header>
+    <!-- END: MainHeader -->
+    <!-- BEGIN: HeroSlider -->
+    <section class="relative h-[500px] md:h-[600px] overflow-hidden bg-gray-900" id="hero-slider">
+        <!-- Slide 1: Livestock -->
+        <div class="slider-item active h-full w-full relative">
+            <img alt="Sektor Peternakan" class="w-full h-full object-cover opacity-60"
+                src="https://lh3.googleusercontent.com/aida-public/AB6AXuD7xRgSQKinVJrk8kB3zUS6fGH6cTmjtPsLqKsgutPOXRR4e5Cd54eh0jlNr1jLRlW0l-uxR8ipOyxWr_slKj08huNxhoq7TNjiycCiVumNInwT6pAjvUhmtayJNI6n_y3n4EQyUxDQytokRMS2cTexkaMw_DSxEbjVHGCvyF5v9t4_VIByC6dDockmi7tharP80cOY2wKZEiPn-Pf1shMBzFWYAgEbFb79oqIrMMd7a3xq6lcvgl5umCMBFKQhA_CeGt6anNJ4eqY" />
+            <div class="absolute inset-0 flex items-center">
+                <div class="container mx-auto px-6">
+                    <div class="max-w-2xl text-white">
+                        <span
+                            class="inline-block px-3 py-1 bg-joss-yellow text-joss-dark font-bold text-xs rounded mb-4">INVESTASI
+                            UNGGULAN</span>
+                        <h2 class="text-4xl md:text-6xl font-extrabold mb-4 leading-tight">Potensi Melimpah Sektor
+                            Peternakan</h2>
+                        <p class="text-lg md:text-xl mb-8 text-gray-200">Jawa Timur memimpin dalam produksi komoditas
+                            ternak nasional. Bergabunglah dalam ekosistem investasi yang stabil.</p>
+                        <button
+                            class="bg-joss-blue hover:bg-blue-600 text-white px-8 py-4 rounded-full font-bold text-lg flex items-center gap-2 transition-all">
+                            Mulai Perizinan <i class="w-5 h-5" data-lucide="arrow-right"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Slide 2: Energy -->
+        <div class="slider-item h-full w-full relative">
+            <img alt="Sektor Energi" class="w-full h-full object-cover opacity-60"
+                src="https://lh3.googleusercontent.com/aida-public/AB6AXuDxjo6BTa7kModwvNK95-LkC1gN7R7yvwwVPKarviOAAqN27h3j2W_MFzbA--7Z_jNaO0X2wigsqVOsYcHdxR67nr1h7YruIqlZevI1t49NZt6DHWrAuyw9kNKBuQKgMB9OE8ZA1t7RqMfePu5oNkj0WHJUhYYU2hIy1UxFssphhhxemTzKhD6jvOAV7FyMGVQM_wBTSmxshrUM42-r2rZ2tb2I5AbnLI6gU52oIvIoOclHKlXQPJKk8p90kwHJm1al7RYa9FbF6z8" />
+            <div class="absolute inset-0 flex items-center">
+                <div class="container mx-auto px-6">
+                    <div class="max-w-2xl text-white">
+                        <span
+                            class="inline-block px-3 py-1 bg-joss-green text-white font-bold text-xs rounded mb-4">MASA
+                            DEPAN</span>
+                        <h2 class="text-4xl md:text-6xl font-extrabold mb-4 leading-tight">Energi Terbarukan &amp;
+                            Mandiri</h2>
+                        <p class="text-lg md:text-xl mb-8 text-gray-200">Wujudkan kemandirian energi berkelanjutan
+                            melalui kemudahan akses perizinan sektor ESDM.</p>
+                        <button
+                            class="bg-joss-yellow hover:bg-yellow-500 text-joss-dark px-8 py-4 rounded-full font-bold text-lg flex items-center gap-2 transition-all">
+                            Eksplorasi Sektor <i class="w-5 h-5" data-lucide="arrow-right"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Slide 3: Education -->
+        <div class="slider-item h-full w-full relative">
+            <img alt="Sektor Pendidikan" class="w-full h-full object-cover opacity-60"
+                src="https://lh3.googleusercontent.com/aida-public/AB6AXuA0ZWFyenrRZQxuTNggK6NjrEdZ78xqwGmB4INCrnBJxF6qahslTk3UKp78zqXrQItIJ-ksmJzUEI8N7eKfXSFVIeM9_7H0YYsP5EthV0lBsl6L4JmgaM1MX-kSFAWotfeGmyA37BUdYqvSjN8AooSFEhoZR2Q-2Ylc9KLRib2y2ovGa8D7_tsJMbdP3kWlQ2BTTmLtB-XqUoaVnqy8t7_zjB8JZPEK5u-aS5jmBe4sau9th0Ev7keRIV9dkIy-LpHQQq1my0BDVRE" />
+            <div class="absolute inset-0 flex items-center">
+                <div class="container mx-auto px-6">
+                    <div class="max-w-2xl text-white">
+                        <span class="inline-block px-3 py-1 bg-white text-joss-blue font-bold text-xs rounded mb-4">SDM
+                            UNGGUL</span>
+                        <h2 class="text-4xl md:text-6xl font-extrabold mb-4 leading-tight">Pusat Pendidikan &amp;
+                            Inovasi</h2>
+                        <p class="text-lg md:text-xl mb-8 text-gray-200">Investasi pada masa depan melalui pengembangan
+                            institusi pendidikan yang berstandar internasional.</p>
+                        <button
+                            class="bg-joss-blue hover:bg-blue-600 text-white px-8 py-4 rounded-full font-bold text-lg flex items-center gap-2 transition-all">
+                            Daftar Sekarang <i class="w-5 h-5" data-lucide="arrow-right"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Slider Controls -->
+        <div class="absolute bottom-10 left-1/2 -translate-x-1/2 flex space-x-2">
+            <button class="slider-dot w-12 h-1 bg-white rounded opacity-50" onclick="currentSlide(0)"></button>
+            <button class="slider-dot w-12 h-1 bg-white rounded opacity-50" onclick="currentSlide(1)"></button>
+            <button class="slider-dot w-12 h-1 bg-white rounded opacity-50" onclick="currentSlide(2)"></button>
+        </div>
+    </section>
+    <!-- END: HeroSlider -->
+    <!-- BEGIN: ServicesSection -->
+    <section class="py-20 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold text-joss-dark mb-4">Layanan Perizinan Sektoral</h2>
+                <p class="text-gray-600 max-w-2xl mx-auto">Akses mudah dan cepat untuk berbagai jenis izin usaha di
+                    wilayah Provinsi Jawa Timur yang terintegrasi dalam satu platform.</p>
+            </div>
+            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6" data-purpose="services-grid">
+                <!-- Service Card Items -->
+                <a class="service-card group p-6 bg-gray-50 rounded-2xl flex flex-col items-center text-center transition-all hover:bg-blue-50 border border-transparent hover:border-joss-blue/20"
+                    href="peternakan.html">
+                    <div
+                        class="w-16 h-16 bg-white rounded-2xl flex items-center justify-center mb-4 shadow-sm group-hover:shadow-md transition-all">
+                        <i class="w-8 h-8 text-joss-blue" data-lucide="dog"></i>
+                    </div>
+                    <span class="text-sm font-bold text-gray-700 group-hover:text-joss-blue">Peternakan</span>
+                </a>
+                <a class="service-card group p-6 bg-gray-50 rounded-2xl flex flex-col items-center text-center transition-all hover:bg-blue-50 border border-transparent hover:border-joss-blue/20"
+                    href="#">
+                    <div
+                        class="w-16 h-16 bg-white rounded-2xl flex items-center justify-center mb-4 shadow-sm group-hover:shadow-md transition-all">
+                        <i class="w-8 h-8 text-joss-blue" data-lucide="zap"></i>
+                    </div>
+                    <span class="text-sm font-bold text-gray-700 group-hover:text-joss-blue">ESDM</span>
+                </a>
+                <a class="service-card group p-6 bg-gray-50 rounded-2xl flex flex-col items-center text-center transition-all hover:bg-blue-50 border border-transparent hover:border-joss-blue/20"
+                    href="#">
+                    <div
+                        class="w-16 h-16 bg-white rounded-2xl flex items-center justify-center mb-4 shadow-sm group-hover:shadow-md transition-all">
+                        <i class="w-8 h-8 text-joss-blue" data-lucide="graduation-cap"></i>
+                    </div>
+                    <span class="text-sm font-bold text-gray-700 group-hover:text-joss-blue">Pendidikan</span>
+                </a>
+                <a class="service-card group p-6 bg-gray-50 rounded-2xl flex flex-col items-center text-center transition-all hover:bg-blue-50 border border-transparent hover:border-joss-blue/20"
+                    href="#">
+                    <div
+                        class="w-16 h-16 bg-white rounded-2xl flex items-center justify-center mb-4 shadow-sm group-hover:shadow-md transition-all">
+                        <i class="w-8 h-8 text-joss-blue" data-lucide="sprout"></i>
+                    </div>
+                    <span class="text-sm font-bold text-gray-700 group-hover:text-joss-blue">Pertanian</span>
+                </a>
+                <a class="service-card group p-6 bg-gray-50 rounded-2xl flex flex-col items-center text-center transition-all hover:bg-blue-50 border border-transparent hover:border-joss-blue/20"
+                    href="#">
+                    <div
+                        class="w-16 h-16 bg-white rounded-2xl flex items-center justify-center mb-4 shadow-sm group-hover:shadow-md transition-all">
+                        <i class="w-8 h-8 text-joss-blue" data-lucide="droplets"></i>
+                    </div>
+                    <span class="text-sm font-bold text-gray-700 group-hover:text-joss-blue">PU SDA</span>
+                </a>
+                <a class="service-card group p-6 bg-gray-50 rounded-2xl flex flex-col items-center text-center transition-all hover:bg-blue-50 border border-transparent hover:border-joss-blue/20"
+                    href="#">
+                    <div
+                        class="w-16 h-16 bg-white rounded-2xl flex items-center justify-center mb-4 shadow-sm group-hover:shadow-md transition-all">
+                        <i class="w-8 h-8 text-joss-blue" data-lucide="trees"></i>
+                    </div>
+                    <span class="text-sm font-bold text-gray-700 group-hover:text-joss-blue">Kehutanan</span>
+                </a>
+                <!-- Row 2 -->
+                <a class="service-card group p-6 bg-gray-50 rounded-2xl flex flex-col items-center text-center transition-all hover:bg-blue-50 border border-transparent hover:border-joss-blue/20"
+                    href="#">
+                    <div
+                        class="w-16 h-16 bg-white rounded-2xl flex items-center justify-center mb-4 shadow-sm group-hover:shadow-md transition-all">
+                        <i class="w-8 h-8 text-joss-blue" data-lucide="ship"></i>
+                    </div>
+                    <span class="text-sm font-bold text-gray-700 group-hover:text-joss-blue">Kelautan</span>
+                </a>
+                <a class="service-card group p-6 bg-gray-50 rounded-2xl flex flex-col items-center text-center transition-all hover:bg-blue-50 border border-transparent hover:border-joss-blue/20"
+                    href="#">
+                    <div
+                        class="w-16 h-16 bg-white rounded-2xl flex items-center justify-center mb-4 shadow-sm group-hover:shadow-md transition-all">
+                        <i class="w-8 h-8 text-joss-blue" data-lucide="factory"></i>
+                    </div>
+                    <span class="text-sm font-bold text-gray-700 group-hover:text-joss-blue">Perindustrian</span>
+                </a>
+                <a class="service-card group p-6 bg-gray-50 rounded-2xl flex flex-col items-center text-center transition-all hover:bg-blue-50 border border-transparent hover:border-joss-blue/20"
+                    href="#">
+                    <div
+                        class="w-16 h-16 bg-white rounded-2xl flex items-center justify-center mb-4 shadow-sm group-hover:shadow-md transition-all">
+                        <i class="w-8 h-8 text-joss-blue" data-lucide="leaf"></i>
+                    </div>
+                    <span class="text-sm font-bold text-gray-700 group-hover:text-joss-blue">Perkebunan</span>
+                </a>
+                <a class="service-card group p-6 bg-gray-50 rounded-2xl flex flex-col items-center text-center transition-all hover:bg-blue-50 border border-transparent hover:border-joss-blue/20"
+                    href="#">
+                    <div
+                        class="w-16 h-16 bg-white rounded-2xl flex items-center justify-center mb-4 shadow-sm group-hover:shadow-md transition-all">
+                        <i class="w-8 h-8 text-joss-blue" data-lucide="home"></i>
+                    </div>
+                    <span class="text-sm font-bold text-gray-700 group-hover:text-joss-blue">Perumahan</span>
+                </a>
+                <a class="service-card group p-6 bg-gray-50 rounded-2xl flex flex-col items-center text-center transition-all hover:bg-blue-50 border border-transparent hover:border-joss-blue/20"
+                    href="#">
+                    <div
+                        class="w-16 h-16 bg-white rounded-2xl flex items-center justify-center mb-4 shadow-sm group-hover:shadow-md transition-all">
+                        <i class="w-8 h-8 text-joss-blue" data-lucide="briefcase"></i>
+                    </div>
+                    <span class="text-sm font-bold text-gray-700 group-hover:text-joss-blue">Tenaga Kerja</span>
+                </a>
+                <a class="service-card group p-6 bg-gray-50 rounded-2xl flex flex-col items-center text-center transition-all hover:bg-blue-50 border border-transparent hover:border-joss-blue/20"
+                    href="#">
+                    <div
+                        class="w-16 h-16 bg-white rounded-2xl flex items-center justify-center mb-4 shadow-sm group-hover:shadow-md transition-all">
+                        <i class="w-8 h-8 text-joss-blue" data-lucide="activity"></i>
+                    </div>
+                    <span class="text-sm font-bold text-gray-700 group-hover:text-joss-blue">Kesehatan</span>
+                </a>
+                <!-- Row 3 -->
+                <a class="service-card group p-6 bg-gray-50 rounded-2xl flex flex-col items-center text-center transition-all hover:bg-blue-50 border border-transparent hover:border-joss-blue/20"
+                    href="#">
+                    <div
+                        class="w-16 h-16 bg-white rounded-2xl flex items-center justify-center mb-4 shadow-sm group-hover:shadow-md transition-all">
+                        <i class="w-8 h-8 text-joss-blue" data-lucide="cloud-rain"></i>
+                    </div>
+                    <span class="text-sm font-bold text-gray-700 group-hover:text-joss-blue">Lingkungan</span>
+                </a>
+                <a class="service-card group p-6 bg-gray-50 rounded-2xl flex flex-col items-center text-center transition-all hover:bg-blue-50 border border-transparent hover:border-joss-blue/20"
+                    href="#">
+                    <div
+                        class="w-16 h-16 bg-white rounded-2xl flex items-center justify-center mb-4 shadow-sm group-hover:shadow-md transition-all">
+                        <i class="w-8 h-8 text-joss-blue" data-lucide="users"></i>
+                    </div>
+                    <span class="text-sm font-bold text-gray-700 group-hover:text-joss-blue">Sosial</span>
+                </a>
+                <a class="service-card group p-6 bg-gray-50 rounded-2xl flex flex-col items-center text-center transition-all hover:bg-blue-50 border border-transparent hover:border-joss-blue/20"
+                    href="#">
+                    <div
+                        class="w-16 h-16 bg-white rounded-2xl flex items-center justify-center mb-4 shadow-sm group-hover:shadow-md transition-all">
+                        <i class="w-8 h-8 text-joss-blue" data-lucide="hard-hat"></i>
+                    </div>
+                    <span class="text-sm font-bold text-gray-700 group-hover:text-joss-blue">Bina Marga</span>
+                </a>
+                <a class="service-card group p-6 bg-gray-50 rounded-2xl flex flex-col items-center text-center transition-all hover:bg-blue-50 border border-transparent hover:border-joss-blue/20"
+                    href="#">
+                    <div
+                        class="w-16 h-16 bg-white rounded-2xl flex items-center justify-center mb-4 shadow-sm group-hover:shadow-md transition-all">
+                        <i class="w-8 h-8 text-joss-blue" data-lucide="truck"></i>
+                    </div>
+                    <span class="text-sm font-bold text-gray-700 group-hover:text-joss-blue">Perhubungan</span>
+                </a>
+                <a class="service-card group p-6 bg-gray-50 rounded-2xl flex flex-col items-center text-center transition-all hover:bg-blue-50 border border-transparent hover:border-joss-blue/20"
+                    href="#">
+                    <div
+                        class="w-16 h-16 bg-white rounded-2xl flex items-center justify-center mb-4 shadow-sm group-hover:shadow-md transition-all">
+                        <i class="w-8 h-8 text-joss-blue" data-lucide="store"></i>
+                    </div>
+                    <span class="text-sm font-bold text-gray-700 group-hover:text-joss-blue">Koperasi</span>
+                </a>
+                <a class="service-card group p-6 bg-gray-50 rounded-2xl flex flex-col items-center text-center transition-all hover:bg-blue-50 border border-transparent hover:border-joss-blue/20"
+                    href="#">
+                    <div
+                        class="w-16 h-16 bg-white rounded-2xl flex items-center justify-center mb-4 shadow-sm group-hover:shadow-md transition-all">
+                        <i class="w-8 h-8 text-joss-blue" data-lucide="palette"></i>
+                    </div>
+                    <span class="text-sm font-bold text-gray-700 group-hover:text-joss-blue">Kebudayaan</span>
+                </a>
+            </div>
+        </div>
+    </section>
+    <!-- END: ServicesSection -->
+    <!-- BEGIN: VideoGuideSection -->
+    <section class="py-20 bg-gray-50" id="video-guide-section">
+        <div class="container mx-auto px-4">
+            <!-- Header -->
+            <div class="flex flex-col md:flex-row items-end justify-between mb-10 gap-6">
+                <div>
+                    <h2 class="text-3xl font-bold text-joss-dark">Panduan Video</h2>
+                    <p class="text-gray-600 mt-2">Pelajari langkah-langkah penggunaan sistem JOSS melalui video tutorial
+                        resmi.</p>
+                </div>
+                <button onclick="openVideoModal()"
+                    class="px-6 py-2.5 bg-joss-blue text-white font-semibold rounded-full hover:bg-blue-600 shadow-lg shadow-blue-200 transition hover:-translate-y-0.5 flex items-center gap-2 whitespace-nowrap">
+                    Lihat Semua <i class="w-4 h-4" data-lucide="arrow-right"></i>
+                </button>
+            </div>
+
+            <!-- Preview: 3 video cards -->
+            <div class="grid md:grid-cols-3 gap-6" id="preview-video-grid">
+                <!-- Rendered by JS -->
+            </div>
+        </div>
+    </section>
+    <!-- END: VideoGuideSection -->
+
+    <!-- == MODAL: LIHAT SEMUA VIDEO == -->
+    <div id="video-modal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4">
+        <div class="absolute inset-0 bg-black/50 backdrop-blur-sm" onclick="closeVideoModal()"></div>
+        <div
+            class="relative bg-white rounded-3xl shadow-2xl w-full max-w-5xl max-h-[90vh] flex flex-col overflow-hidden">
+            <!-- Modal Header -->
+            <div class="flex items-center justify-between px-6 py-4 border-b border-gray-100 shrink-0">
+                <div>
+                    <h3 class="text-xl font-extrabold text-joss-dark">Semua Panduan Video</h3>
+                    <p class="text-xs text-gray-400 mt-0.5" id="modal-video-count">Memuat...</p>
+                </div>
+                <button onclick="closeVideoModal()"
+                    class="w-9 h-9 bg-gray-100 hover:bg-gray-200 rounded-full flex items-center justify-center transition">
+                    <i class="w-5 h-5 text-gray-500" data-lucide="x"></i>
+                </button>
+            </div>
+            <!-- Modal Body -->
+            <div class="overflow-y-auto flex-1 p-6">
+                <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5" id="modal-video-grid">
+                    <!-- Rendered by JS -->
+                </div>
+            </div>
+            <!-- Pagination -->
+            <div class="px-6 py-4 border-t border-gray-100 flex items-center justify-center gap-2 shrink-0"
+                id="vid-pagination">
+                <!-- Rendered by JS -->
+            </div>
+        </div>
+    </div>
+
+    <!-- == MODAL: VIDEO PLAY == -->
+    <div id="video-play-modal" class="hidden fixed inset-0 z-[60] flex items-center justify-center p-4">
+        <div class="absolute inset-0 bg-black/80" onclick="closeVideoPlay()"></div>
+        <div class="relative w-full max-w-3xl">
+            <button onclick="closeVideoPlay()"
+                class="absolute -top-10 right-0 text-white/80 hover:text-white flex items-center gap-1 text-sm font-semibold">
+                <i class="w-4 h-4" data-lucide="x"></i> Tutup
+            </button>
+            <div class="aspect-video rounded-2xl overflow-hidden shadow-2xl bg-black">
+                <iframe id="home-video-iframe" src="" frameborder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowfullscreen class="w-full h-full"></iframe>
+            </div>
+        </div>
+    </div>
+    <!-- END: VideoGuideSection Modals -->
+
+    <!-- BEGIN: Footer -->
+    <footer class="bg-joss-dark text-white py-16">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-12">
+                <div class="col-span-1 md:col-span-2">
+                    <div class="flex items-center space-x-3 mb-6">
+                        <img src="https://joss.jatimprov.go.id/images/logo.png" alt="Logo JOSS" class="h-10 w-auto" />
+                        <h2 class="text-2xl font-bold tracking-tight">JOSS - Jatim Online Single Submission</h2>
+                    </div>
+                    <p class="text-gray-400 mb-6 max-w-md">Layanan perizinan terpadu satu pintu Provinsi Jawa Timur
+                        untuk mewujudkan iklim investasi yang kondusif, transparan, dan akuntabel.</p>
+                    <div class="flex space-x-4">
+                        <a class="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center hover:bg-joss-blue transition"
+                            href="#"><i class="w-5 h-5" data-lucide="facebook"></i></a>
+                        <a class="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center hover:bg-joss-blue transition"
+                            href="#"><i class="w-5 h-5" data-lucide="instagram"></i></a>
+                        <a class="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center hover:bg-joss-blue transition"
+                            href="#"><i class="w-5 h-5" data-lucide="twitter"></i></a>
+                    </div>
+                </div>
+                <div>
+                    <h3 class="font-bold text-lg mb-6">Kontak Kami</h3>
+                    <ul class="space-y-4 text-gray-400">
+                        <li class="flex items-start gap-3">
+                            <i class="w-5 h-5 text-joss-yellow shrink-0" data-lucide="map-pin"></i>
+                            <span>Jl. Pahlawan No.116, Krembangan Sel., Kec. Krembangan, Surabaya, Jawa Timur
+                                60175</span>
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <i class="w-5 h-5 text-joss-yellow shrink-0" data-lucide="phone"></i>
+                            <span>(031) 3537345</span>
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <i class="w-5 h-5 text-joss-yellow shrink-0" data-lucide="mail"></i>
+                            <span>dpmptsp@jatimprov.go.id</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-white/10 mt-16 pt-8 text-center text-sm text-gray-500">
+                <p>© 2023 DPMPTSP Provinsi Jawa Timur. Hak Cipta Dilindungi Undang-Undang.</p>
+            </div>
+        </div>
+    </footer>
+    <!-- END: Footer -->
+    <!-- Scripts -->
+    <script data-purpose="icons">
+        lucide.createIcons();
+    </script>
+    <script data-purpose="slider-logic">
+        let currentSlideIndex = 0;
+        const slides = document.querySelectorAll('.slider-item');
+        const dots = document.querySelectorAll('.slider-dot');
+
+        function showSlide(index) {
+            slides.forEach(slide => slide.classList.remove('active'));
+            dots.forEach(dot => dot.classList.replace('opacity-100', 'opacity-50'));
+
+            currentSlideIndex = index;
+            if (currentSlideIndex >= slides.length) currentSlideIndex = 0;
+            if (currentSlideIndex < 0) currentSlideIndex = slides.length - 1;
+
+            slides[currentSlideIndex].classList.add('active');
+            dots[currentSlideIndex].classList.replace('opacity-50', 'opacity-100');
+        }
+
+        function currentSlide(n) {
+            showSlide(n);
+        }
+
+        // Auto-advance
+        setInterval(() => {
+            showSlide(currentSlideIndex + 1);
+        }, 5000);
+
+        // Initial dot state
+        dots[0].classList.replace('opacity-50', 'opacity-100');
+    </script>
+    <script data-purpose="ui-handlers">
+        // ════════════════════════════════════════════════════════
+        // DATA VIDEO
+        // ════════════════════════════════════════════════════════
+        const homeVideos = [
+            { videoId: 'dQw4w9WgXcQ', title: 'Panduan Pendaftaran Akun JOSS', desc: 'Cara membuat akun baru dan login pertama kali ke sistem JOSS.', duration: '5:32', category: 'Registrasi', img: 'https://lh3.googleusercontent.com/aida-public/AB6AXuC7phmhWsO3HUDdl5hKMRjuVLP_7tFKPMZ3km_RmT2RfHhDrulVEheNdjgnPu85FhFcgiRkRlZpDYANvBIUk9qHiRdJScT2jWgmfk-V8fEN5BSV0ERlpzx1RHDtYV0Ye7jnRfllSdtfMMw1x__RHZos5BG9oLNa_KJp2cG_lDMvZLKw6zTPYB0069xiFmfUcMKJM9m_I31ma1EMXIeiTU7z5xmL8VjiLv_kby2VkJT7QtWiykrlxtdJo3wUovYVravAvgziz55VRus' },
+            { videoId: 'dQw4w9WgXcQ', title: 'Cara e-Tracking Perizinan', desc: 'Memantau status permohonan izin secara real-time di portal JOSS.', duration: '3:15', category: 'Tracking', img: 'https://lh3.googleusercontent.com/aida-public/AB6AXuBQuQUkOK505orJGCatBxg1649n2vMkaCVAeKgAzQobnZ1JApXzjEWykEvQz3Tj77TiUQN4_ZB6FghqVmKiUYtfIffmqFEmqrnw09QyvYf1xELUdJ3ydZ_AdI9_Or7EADvAUX8bm7C04CRp5E9op2K7LyUcjqUF7fLjMQ7qVQF3768s0AQrG-Kz8kf5DZFBDkprpLxSP7DCSOt2XGuD-lVMCdjAGZl4LL6tswRQEquj9AP7ByVcfEfFEkigDOOvRhNNzem-Az9TLCQ' },
+            { videoId: 'dQw4w9WgXcQ', title: 'Tutorial Penginputan Data Sektoral', desc: 'Langkah mengisi laporan data bulanan per sektor di sistem JOSS.', duration: '8:45', category: 'Laporan', img: 'https://lh3.googleusercontent.com/aida-public/AB6AXuBsQN-POuCwuTxHDyGrFUCKvIgejZgYiEActEmkZGn7KcTPJw4VI7lCys6twhegpmY09lhuTL_VHLkHwrpkeO2V34ykVXNSWCdiftu70la8OoEe9Yv7lOr2l34MJrYEXj-2ZuyWQLaHRRPHGIiPMFyTIdKIRu2oZ1PX5P1IWcSlBsv1bSKksjMxC6OWZbgN0hA4LP0pUrVyH6w0gzJeMGgLttVurEoytLwcU_vNoRCSLZrcW-9DfQ9rXENktFaiprm-3XQ6bDtIPcw' },
+            { videoId: 'dQw4w9WgXcQ', title: 'Mekanisme Pembayaran PNBP', desc: 'Panduan lengkap cara pembayaran biaya penerimaan negara bukan pajak.', duration: '4:20', category: 'Perizinan', img: 'https://lh3.googleusercontent.com/aida-public/AB6AXuBCRDWH2CzWYJj4KD-tM7cXuhbVmJJC3dm6h_8ER5NKgNuL9ZrImCWvZCCV8IIokfQu4Y4avVPGVFBJkt7A-nHQfJFg5m3L8jAqTXiBDCXc14m7oIroBpYwVUooTBDKjpcwb1tWRfI3Mv7_UTe_yRJvDPMzcaa6BAwbFpJ8Pw7XvwInapx4xhrRoqEv44aUBkrhcgjw0Rt6rryKCIHigVvrzB5NLC525cDL7NX5pm5v0Y5g1zAjCLJPIZaKnoPK5HyjpAbOKcRfU0c' },
+            { videoId: 'dQw4w9WgXcQ', title: 'Pengajuan Izin Baru Online', desc: 'Langkah demi langkah proses pengajuan perizinan baru melalui portal JOSS.', duration: '6:10', category: 'Perizinan', img: 'https://lh3.googleusercontent.com/aida-public/AB6AXuC7phmhWsO3HUDdl5hKMRjuVLP_7tFKPMZ3km_RmT2RfHhDrulVEheNdjgnPu85FhFcgiRkRlZpDYANvBIUk9qHiRdJScT2jWgmfk-V8fEN5BSV0ERlpzx1RHDtYV0Ye7jnRfllSdtfMMw1x__RHZos5BG9oLNa_KJp2cG_lDMvZLKw6zTPYB0069xiFmfUcMKJM9m_I31ma1EMXIeiTU7z5xmL8VjiLv_kby2VkJT7QtWiykrlxtdJo3wUovYVravAvgziz55VRus' },
+            { videoId: 'dQw4w9WgXcQ', title: 'Upload Dokumen Persyaratan', desc: 'Cara mengunggah berkas persyaratan perizinan dengan format yang benar.', duration: '3:50', category: 'Perizinan', img: 'https://lh3.googleusercontent.com/aida-public/AB6AXuBQuQUkOK505orJGCatBxg1649n2vMkaCVAeKgAzQobnZ1JApXzjEWykEvQz3Tj77TiUQN4_ZB6FghqVmKiUYtfIffmqFEmqrnw09QyvYf1xELUdJ3ydZ_AdI9_Or7EADvAUX8bm7C04CRp5E9op2K7LyUcjqUF7fLjMQ7qVQF3768s0AQrG-Kz8kf5DZFBDkprpLxSP7DCSOt2XGuD-lVMCdjAGZl4LL6tswRQEquj9AP7ByVcfEfFEkigDOOvRhNNzem-Az9TLCQ' },
+            { videoId: 'dQw4w9WgXcQ', title: 'Lupa Password & Reset Akun', desc: 'Solusi mudah jika lupa password atau akun terblokir di sistem JOSS.', duration: '2:30', category: 'Akun', img: 'https://lh3.googleusercontent.com/aida-public/AB6AXuBsQN-POuCwuTxHDyGrFUCKvIgejZgYiEActEmkZGn7KcTPJw4VI7lCys6twhegpmY09lhuTL_VHLkHwrpkeO2V34ykVXNSWCdiftu70la8OoEe9Yv7lOr2l34MJrYEXj-2ZuyWQLaHRRPHGIiPMFyTIdKIRu2oZ1PX5P1IWcSlBsv1bSKksjMxC6OWZbgN0hA4LP0pUrVyH6w0gzJeMGgLttVurEoytLwcU_vNoRCSLZrcW-9DfQ9rXENktFaiprm-3XQ6bDtIPcw' },
+            { videoId: 'dQw4w9WgXcQ', title: 'Pengajuan Izin Peternakan', desc: 'Panduan pengajuan perizinan untuk dinas peternakan Jawa Timur.', duration: '7:25', category: 'Peternakan', img: 'https://lh3.googleusercontent.com/aida-public/AB6AXuBCRDWH2CzWYJj4KD-tM7cXuhbVmJJC3dm6h_8ER5NKgNuL9ZrImCWvZCCV8IIokfQu4Y4avVPGVFBJkt7A-nHQfJFg5m3L8jAqTXiBDCXc14m7oIroBpYwVUooTBDKjpcwb1tWRfI3Mv7_UTe_yRJvDPMzcaa6BAwbFpJ8Pw7XvwInapx4xhrRoqEv44aUBkrhcgjw0Rt6rryKCIHigVvrzB5NLC525cDL7NX5pm5v0Y5g1zAjCLJPIZaKnoPK5HyjpAbOKcRfU0c' },
+            { videoId: 'dQw4w9WgXcQ', title: 'Input Data ESDM Bulanan', desc: 'Tutorial input data laporan bulanan untuk sektor Energi dan Sumber Daya Mineral.', duration: '5:50', category: 'Laporan', img: 'https://lh3.googleusercontent.com/aida-public/AB6AXuC7phmhWsO3HUDdl5hKMRjuVLP_7tFKPMZ3km_RmT2RfHhDrulVEheNdjgnPu85FhFcgiRkRlZpDYANvBIUk9qHiRdJScT2jWgmfk-V8fEN5BSV0ERlpzx1RHDtYV0Ye7jnRfllSdtfMMw1x__RHZos5BG9oLNa_KJp2cG_lDMvZLKw6zTPYB0069xiFmfUcMKJM9m_I31ma1EMXIeiTU7z5xmL8VjiLv_kby2VkJT7QtWiykrlxtdJo3wUovYVravAvgziz55VRus' },
+            { videoId: 'dQw4w9WgXcQ', title: 'Cara Perpanjangan Izin Usaha', desc: 'Prosedur memperpanjang izin usaha yang akan habis masa berlakunya.', duration: '4:10', category: 'Perizinan', img: 'https://lh3.googleusercontent.com/aida-public/AB6AXuBQuQUkOK505orJGCatBxg1649n2vMkaCVAeKgAzQobnZ1JApXzjEWykEvQz3Tj77TiUQN4_ZB6FghqVmKiUYtfIffmqFEmqrnw09QyvYf1xELUdJ3ydZ_AdI9_Or7EADvAUX8bm7C04CRp5E9op2K7LyUcjqUF7fLjMQ7qVQF3768s0AQrG-Kz8kf5DZFBDkprpLxSP7DCSOt2XGuD-lVMCdjAGZl4LL6tswRQEquj9AP7ByVcfEfFEkigDOOvRhNNzem-Az9TLCQ' },
+            { videoId: 'dQw4w9WgXcQ', title: 'Mengunduh Dokumen Izin Digital', desc: 'Cara mengunduh sertifikat dan dokumen perizinan yang telah terbit.', duration: '3:10', category: 'Perizinan', img: 'https://lh3.googleusercontent.com/aida-public/AB6AXuBsQN-POuCwuTxHDyGrFUCKvIgejZgYiEActEmkZGn7KcTPJw4VI7lCys6twhegpmY09lhuTL_VHLkHwrpkeO2V34ykVXNSWCdiftu70la8OoEe9Yv7lOr2l34MJrYEXj-2ZuyWQLaHRRPHGIiPMFyTIdKIRu2oZ1PX5P1IWcSlBsv1bSKksjMxC6OWZbgN0hA4LP0pUrVyH6w0gzJeMGgLttVurEoytLwcU_vNoRCSLZrcW-9DfQ9rXENktFaiprm-3XQ6bDtIPcw' },
+            { videoId: 'dQw4w9WgXcQ', title: 'Cetak & Ekspor Laporan', desc: 'Cara mencetak dan mengekspor laporan perizinan ke format PDF dan Excel.', duration: '4:35', category: 'Laporan', img: 'https://lh3.googleusercontent.com/aida-public/AB6AXuBCRDWH2CzWYJj4KD-tM7cXuhbVmJJC3dm6h_8ER5NKgNuL9ZrImCWvZCCV8IIokfQu4Y4avVPGVFBJkt7A-nHQfJFg5m3L8jAqTXiBDCXc14m7oIroBpYwVUooTBDKjpcwb1tWRfI3Mv7_UTe_yRJvDPMzcaa6BAwbFpJ8Pw7XvwInapx4xhrRoqEv44aUBkrhcgjw0Rt6rryKCIHigVvrzB5NLC525cDL7NX5pm5v0Y5g1zAjCLJPIZaKnoPK5HyjpAbOKcRfU0c' },
+            { videoId: 'dQw4w9WgXcQ', title: 'Panduan Izin Toko Obat Hewan', desc: 'Langkah pengajuan izin pendirian toko obat hewan sesuai regulasi dinas.', duration: '6:15', category: 'Peternakan', img: 'https://lh3.googleusercontent.com/aida-public/AB6AXuC7phmhWsO3HUDdl5hKMRjuVLP_7tFKPMZ3km_RmT2RfHhDrulVEheNdjgnPu85FhFcgiRkRlZpDYANvBIUk9qHiRdJScT2jWgmfk-V8fEN5BSV0ERlpzx1RHDtYV0Ye7jnRfllSdtfMMw1x__RHZos5BG9oLNa_KJp2cG_lDMvZLKw6zTPYB0069xiFmfUcMKJM9m_I31ma1EMXIeiTU7z5xmL8VjiLv_kby2VkJT7QtWiykrlxtdJo3wUovYVravAvgziz55VRus' },
+            { videoId: 'dQw4w9WgXcQ', title: 'Notifikasi & Pesan di JOSS', desc: 'Memahami sistem notifikasi dan pesan dari petugas di portal JOSS.', duration: '3:45', category: 'Dasar', img: 'https://lh3.googleusercontent.com/aida-public/AB6AXuBQuQUkOK505orJGCatBxg1649n2vMkaCVAeKgAzQobnZ1JApXzjEWykEvQz3Tj77TiUQN4_ZB6FghqVmKiUYtfIffmqFEmqrnw09QyvYf1xELUdJ3ydZ_AdI9_Or7EADvAUX8bm7C04CRp5E9op2K7LyUcjqUF7fLjMQ7qVQF3768s0AQrG-Kz8kf5DZFBDkprpLxSP7DCSOt2XGuD-lVMCdjAGZl4LL6tswRQEquj9AP7ByVcfEfFEkigDOOvRhNNzem-Az9TLCQ' },
+            { videoId: 'dQw4w9WgXcQ', title: 'Mengurus Perubahan Data Perusahaan', desc: 'Cara mengajukan perubahan data legalitas perusahaan melalui JOSS.', duration: '5:05', category: 'Perusahaan', img: 'https://lh3.googleusercontent.com/aida-public/AB6AXuBsQN-POuCwuTxHDyGrFUCKvIgejZgYiEActEmkZGn7KcTPJw4VI7lCys6twhegpmY09lhuTL_VHLkHwrpkeO2V34ykVXNSWCdiftu70la8OoEe9Yv7lOr2l34MJrYEXj-2ZuyWQLaHRRPHGIiPMFyTIdKIRu2oZ1PX5P1IWcSlBsv1bSKksjMxC6OWZbgN0hA4LP0pUrVyH6w0gzJeMGgLttVurEoytLwcU_vNoRCSLZrcW-9DfQ9rXENktFaiprm-3XQ6bDtIPcw' },
+        ];
+
+        // ════════════════════════════════════════════════════════
+        // CATEGORY BADGE COLORS
+        // ════════════════════════════════════════════════════════
+        const homeCatColor = {
+            'Registrasi': 'bg-purple-100 text-purple-700',
+            'Tracking': 'bg-yellow-100 text-yellow-700',
+            'Laporan': 'bg-green-100 text-green-700',
+            'Perizinan': 'bg-blue-100 text-blue-700',
+            'Akun': 'bg-red-100 text-red-700',
+            'Peternakan': 'bg-amber-100 text-amber-700',
+            'Dasar': 'bg-gray-100 text-gray-600',
+            'Perusahaan': 'bg-indigo-100 text-indigo-700',
+        };
+
+        // ════════════════════════════════════════════════════════
+        // BUILD VIDEO CARD HTML (preview style: gambar full)
+        // ════════════════════════════════════════════════════════
+        function homeVideoCardHTML(v) {
+            const cc = homeCatColor[v.category] || 'bg-gray-100 text-gray-600';
+            return `
+            <div class="group relative rounded-2xl overflow-hidden aspect-video shadow-lg cursor-pointer"
+                 onclick="homePlayVideo('${v.videoId}')">
+                <img src="${v.img}" alt="${v.title}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
+                <div class="absolute inset-0 bg-black/40 flex items-center justify-center group-hover:bg-black/20 transition-all">
+                    <div class="w-16 h-16 bg-white/20 backdrop-blur-md rounded-full flex items-center justify-center group-hover:scale-110 transition-transform">
+                        <svg class="text-white w-8 h-8 ml-1" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                    </div>
+                </div>
+                <div class="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/80 to-transparent">
+                    <span class="inline-block text-xs font-bold px-2 py-0.5 rounded-full mb-1 ${cc}">${v.category}</span>
+                    <h3 class="text-white font-bold text-sm leading-snug">${v.title}</h3>
+                    <span class="text-white/70 text-xs">${v.duration}</span>
+                </div>
+            </div>`;
+        }
+
+        // ════════════════════════════════════════════════════════
+        // BUILD MODAL CARD HTML (card style: info di bawah gambar)
+        // ════════════════════════════════════════════════════════
+        function homeModalCardHTML(v) {
+            const cc = homeCatColor[v.category] || 'bg-gray-100 text-gray-600';
+            return `
+            <div class="group bg-white rounded-2xl border border-gray-100 shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-200 overflow-hidden cursor-pointer"
+                 onclick="homePlayVideo('${v.videoId}')">
+                <div class="relative overflow-hidden">
+                    <img src="${v.img}" alt="${v.title}" class="w-full h-40 object-cover group-hover:scale-105 transition-transform duration-300">
+                    <div class="absolute inset-0 bg-black/30 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                        <div class="w-14 h-14 bg-white rounded-full flex items-center justify-center shadow-xl">
+                            <svg class="w-6 h-6 text-joss-blue ml-1" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                        </div>
+                    </div>
+                    <span class="absolute bottom-2 right-2 bg-black/70 text-white text-xs font-bold px-2 py-0.5 rounded-lg">${v.duration}</span>
+                </div>
+                <div class="p-4">
+                    <span class="inline-block text-xs font-bold px-2 py-0.5 rounded-full mb-2 ${cc}">${v.category}</span>
+                    <h4 class="font-bold text-sm text-joss-dark leading-snug group-hover:text-joss-blue transition-colors line-clamp-2 mb-1">${v.title}</h4>
+                    <p class="text-xs text-gray-400 leading-relaxed line-clamp-2">${v.desc}</p>
+                </div>
+            </div>`;
+        }
+
+        // ════════════════════════════════════════════════════════
+        // RENDER PREVIEW (3 kartu)
+        // ════════════════════════════════════════════════════════
+        (function renderHomePreview() {
+            const el = document.getElementById('preview-video-grid');
+            if (!el) return;
+            el.innerHTML = homeVideos.slice(0, 3).map(homeVideoCardHTML).join('');
+        })();
+
+        // ════════════════════════════════════════════════════════
+        // MODAL STATE
+        // ════════════════════════════════════════════════════════
+        const HOME_VPP = 9; // videos per page
+        let homeCurrentPage = 1;
+
+        function openVideoModal() {
+            homeCurrentPage = 1;
+            document.getElementById('video-modal').classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+            renderHomeModalPage(homeCurrentPage);
+            lucide.createIcons();
+        }
+
+        function closeVideoModal() {
+            document.getElementById('video-modal').classList.add('hidden');
+            document.body.style.overflow = '';
+        }
+
+        // ════════════════════════════════════════════════════════
+        // RENDER MODAL PAGE
+        // ════════════════════════════════════════════════════════
+        function renderHomeModalPage(page) {
+            const total = Math.ceil(homeVideos.length / HOME_VPP);
+            const start = (page - 1) * HOME_VPP;
+            const pageVids = homeVideos.slice(start, start + HOME_VPP);
+
+            document.getElementById('modal-video-count').textContent =
+                `${homeVideos.length} video tersedia · Halaman ${page} dari ${total}`;
+            document.getElementById('modal-video-grid').innerHTML = pageVids.map(homeModalCardHTML).join('');
+            renderHomePagination(page, total);
+        }
+
+        // ════════════════════════════════════════════════════════
+        // RENDER PAGINATION
+        // ════════════════════════════════════════════════════════
+        function renderHomePagination(current, total) {
+            const el = document.getElementById('vid-pagination');
+            if (total <= 1) { el.innerHTML = ''; return; }
+
+            let html = `<button onclick="homeGoToPage(${current - 1})" ${current === 1 ? 'disabled' : ''}
+                class="flex items-center gap-1 px-3 py-2 rounded-xl text-sm font-semibold transition
+                ${current === 1 ? 'text-gray-300 cursor-not-allowed' : 'text-gray-600 hover:bg-gray-100 hover:text-joss-blue'}">
+                <i class="w-4 h-4" data-lucide="chevron-left"></i> Sebelumnya
+            </button>`;
+
+            for (let i = 1; i <= total; i++) {
+                html += i === current
+                    ? `<button class="w-9 h-9 rounded-xl text-sm font-bold bg-joss-blue text-white shadow-md shadow-blue-200">${i}</button>`
+                    : `<button onclick="homeGoToPage(${i})" class="w-9 h-9 rounded-xl text-sm font-semibold text-gray-600 hover:bg-gray-100 hover:text-joss-blue transition">${i}</button>`;
+            }
+
+            html += `<button onclick="homeGoToPage(${current + 1})" ${current === total ? 'disabled' : ''}
+                class="flex items-center gap-1 px-3 py-2 rounded-xl text-sm font-semibold transition
+                ${current === total ? 'text-gray-300 cursor-not-allowed' : 'text-gray-600 hover:bg-gray-100 hover:text-joss-blue'}">
+                Berikutnya <i class="w-4 h-4" data-lucide="chevron-right"></i>
+            </button>`;
+
+            el.innerHTML = html;
+            lucide.createIcons();
+        }
+
+        function homeGoToPage(page) {
+            const total = Math.ceil(homeVideos.length / HOME_VPP);
+            if (page < 1 || page > total) return;
+            homeCurrentPage = page;
+            renderHomeModalPage(page);
+            document.querySelector('#video-modal .overflow-y-auto').scrollTop = 0;
+        }
+
+        // ════════════════════════════════════════════════════════
+        // VIDEO PLAY
+        // ════════════════════════════════════════════════════════
+        function homePlayVideo(videoId) {
+            document.getElementById('home-video-iframe').src =
+                `https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0`;
+            document.getElementById('video-play-modal').classList.remove('hidden');
+        }
+
+        function closeVideoPlay() {
+            document.getElementById('video-play-modal').classList.add('hidden');
+            document.getElementById('home-video-iframe').src = '';
+        }
+
+        document.addEventListener('keydown', function (e) {
+            if (e.key === 'Escape') { closeVideoPlay(); closeVideoModal(); }
+        });
+    </script>
+</body>
+
+</html>
