@@ -188,10 +188,10 @@
                             <p class="text-sm text-gray-500 mt-1">Pelajari cara penggunaan JOSS melalui panduan video
                                 langkah demi langkah.</p>
                         </div>
-                        <button onclick="openVideoModal()"
+                        <a href="video-tutorial.html"
                             class="flex items-center gap-1.5 px-4 py-2 bg-joss-blue text-white text-sm font-bold rounded-xl hover:bg-blue-600 transition shadow-md shadow-blue-200 hover:-translate-y-0.5">
                             Lihat Semua <i class="w-4 h-4" data-lucide="arrow-right"></i>
-                        </button>
+                        </a>
                     </div>
 
                     <!-- Preview: 3 video cards -->
@@ -305,41 +305,14 @@
         </div>
     </footer>
 
+
     <a href="https://dpmptsp.jatimprov.go.id/helpdesk/web/" target="_blank" rel="noopener noreferrer"
         class="fixed bottom-6 right-6 z-50 flex items-center gap-2 bg-joss-blue text-white font-bold px-5 py-3 rounded-full shadow-2xl shadow-blue-400/40 hover:bg-blue-600 transition hover:-translate-y-1 group">
         <i class="w-4 h-4" data-lucide="headphones"></i>
         <span class="text-sm">Helpdesk</span>
     </a>
 
-    <!-- ── MODAL: LIHAT SEMUA VIDEO ── -->
-    <div id="video-modal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4">
-        <div class="absolute inset-0 bg-black/50 backdrop-blur-sm" onclick="closeVideoModal()"></div>
-        <div
-            class="relative bg-white rounded-3xl shadow-2xl w-full max-w-5xl max-h-[90vh] flex flex-col overflow-hidden">
-            <!-- Modal Header -->
-            <div class="flex items-center justify-between px-6 py-4 border-b border-gray-100 shrink-0">
-                <div>
-                    <h3 class="text-xl font-extrabold text-joss-dark">Semua Panduan Video</h3>
-                    <p class="text-xs text-gray-400 mt-0.5" id="modal-video-count">Memuat...</p>
-                </div>
-                <button onclick="closeVideoModal()"
-                    class="w-9 h-9 bg-gray-100 hover:bg-gray-200 rounded-full flex items-center justify-center transition">
-                    <i class="w-5 h-5 text-gray-500" data-lucide="x"></i>
-                </button>
-            </div>
-            <!-- Modal Body -->
-            <div class="overflow-y-auto flex-1 p-6">
-                <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5" id="modal-videos">
-                    <!-- Rendered by JS -->
-                </div>
-            </div>
-            <!-- Pagination -->
-            <div class="px-6 py-4 border-t border-gray-100 flex items-center justify-center gap-2 shrink-0"
-                id="pagination-container">
-                <!-- Rendered by JS -->
-            </div>
-        </div>
-    </div>
+
 
     <!-- ── VIDEO PLAY MODAL ── -->
     <div id="video-play-modal" class="hidden fixed inset-0 z-[60] flex items-center justify-center p-4">
@@ -363,21 +336,21 @@
 
         // ══ DATA VIDEO TUTORIAL ══════════════════════════════════
         const videos = [
-            { id: 'v1', videoId: 'dQw4w9WgXcQ', title: 'Cara Registrasi Akun JOSS', desc: 'Panduan lengkap membuat akun baru di sistem JOSS untuk pertama kali.', duration: '5:32', category: 'Registrasi' },
-            { id: 'v2', videoId: 'dQw4w9WgXcQ', title: 'Login & Navigasi Dashboard JOSS', desc: 'Cara masuk ke sistem dan memahami menu utama dashboard JOSS.', duration: '3:15', category: 'Dasar' },
-            { id: 'v3', videoId: 'dQw4w9WgXcQ', title: 'Pengajuan Izin Baru Online', desc: 'Langkah demi langkah proses pengajuan perizinan baru melalui portal JOSS.', duration: '8:45', category: 'Perizinan' },
-            { id: 'v4', videoId: 'dQw4w9WgXcQ', title: 'Upload Dokumen Persyaratan', desc: 'Cara mengunggah berkas persyaratan perizinan dengan format yang benar.', duration: '4:20', category: 'Perizinan' },
-            { id: 'v5', videoId: 'dQw4w9WgXcQ', title: 'Cek Status Permohonan (e-Tracking)', desc: 'Memantau perkembangan status permohonan izin secara real-time.', duration: '2:55', category: 'Tracking' },
-            { id: 'v6', videoId: 'dQw4w9WgXcQ', title: 'Mengunduh Dokumen Izin Digital', desc: 'Cara mengunduh sertifikat dan dokumen perizinan yang telah terbit.', duration: '3:10', category: 'Perizinan' },
-            { id: 'v7', videoId: 'dQw4w9WgXcQ', title: 'Input Laporan Perikanan', desc: 'Panduan pengisian laporan bulanan sektor perikanan di sistem JOSS.', duration: '6:40', category: 'Laporan' },
-            { id: 'v8', videoId: 'dQw4w9WgXcQ', title: 'Pengajuan Izin Peternakan', desc: 'Khusus panduan pengajuan perizinan untuk dinas peternakan Jawa Timur.', duration: '7:25', category: 'Peternakan' },
-            { id: 'v9', videoId: 'dQw4w9WgXcQ', title: 'Lupa Password & Reset Akun', desc: 'Solusi mudah jika lupa password atau akun terblokir di sistem JOSS.', duration: '2:30', category: 'Akun' },
-            { id: 'v10', videoId: 'dQw4w9WgXcQ', title: 'Input Data ESDM Bulanan', desc: 'Tutorial input data laporan bulanan untuk sektor Energi dan Sumber Daya Mineral.', duration: '5:50', category: 'Laporan' },
-            { id: 'v11', videoId: 'dQw4w9WgXcQ', title: 'Cara Perpanjangan Izin Usaha', desc: 'Prosedur memperpanjang izin usaha yang akan habis masa berlakunya.', duration: '4:10', category: 'Perizinan' },
-            { id: 'v12', videoId: 'dQw4w9WgXcQ', title: 'Mengurus Perubahan Data Perusahaan', desc: 'Cara mengajukan perubahan data legalitas perusahaan melalui JOSS.', duration: '5:05', category: 'Perusahaan' },
-            { id: 'v13', videoId: 'dQw4w9WgXcQ', title: 'Panduan Izin Toko Obat Hewan', desc: 'Langkah pengajuan izin pendirian toko obat hewan sesuai regulasi dinas.', duration: '6:15', category: 'Peternakan' },
-            { id: 'v14', videoId: 'dQw4w9WgXcQ', title: 'Notifikasi & Pesan di JOSS', desc: 'Memahami sistem notifikasi dan pesan dari petugas di portal JOSS.', duration: '3:45', category: 'Dasar' },
-            { id: 'v15', videoId: 'dQw4w9WgXcQ', title: 'Cetak & Ekspor Laporan', desc: 'Cara mencetak dan mengekspor laporan perizinan ke format PDF dan Excel.', duration: '4:35', category: 'Laporan' },
+            { id: 'v1', videoId: 'dQw4w9WgXcQ', title: 'Cara Registrasi Akun JOSS', desc: 'Panduan lengkap membuat akun baru di sistem JOSS untuk pertama kali.', duration: '5:32', category: 'Registrasi', img: 'https://images.unsplash.com/photo-1554224155-1696413565d3?auto=format&fit=crop&q=80&w=800' },
+            { id: 'v2', videoId: 'dQw4w9WgXcQ', title: 'Login & Navigasi Dashboard JOSS', desc: 'Cara masuk ke sistem dan memahami menu utama dashboard JOSS.', duration: '3:15', category: 'Dasar', img: 'https://images.unsplash.com/photo-1577563906417-45a11b3f9f7c?auto=format&fit=crop&q=80&w=800' },
+            { id: 'v3', videoId: 'dQw4w9WgXcQ', title: 'Pengajuan Izin Baru Online', desc: 'Langkah demi langkah proses pengajuan perizinan baru melalui portal JOSS.', duration: '8:45', category: 'Perizinan', img: 'https://images.unsplash.com/photo-1450101499163-c8848c66ca85?auto=format&fit=crop&q=80&w=800' },
+            { id: 'v4', videoId: 'dQw4w9WgXcQ', title: 'Upload Dokumen Persyaratan', desc: 'Cara mengunggah berkas persyaratan perizinan dengan format yang benar.', duration: '4:20', category: 'Perizinan', img: 'https://images.unsplash.com/photo-1563986768609-322da13575f3?auto=format&fit=crop&q=80&w=800' },
+            { id: 'v5', videoId: 'dQw4w9WgXcQ', title: 'Cek Status Permohonan (e-Tracking)', desc: 'Memantau perkembangan status permohonan izin secara real-time.', duration: '2:55', category: 'Tracking', img: 'https://images.unsplash.com/photo-1508873535684-277a3cbcc4e8?auto=format&fit=crop&q=80&w=800' },
+            { id: 'v6', videoId: 'dQw4w9WgXcQ', title: 'Mengunduh Dokumen Izin Digital', desc: 'Cara mengunduh sertifikat dan dokumen perizinan yang telah terbit.', duration: '3:10', category: 'Perizinan', img: 'https://images.unsplash.com/photo-1633158829585-23ba8f7c8caf?auto=format&fit=crop&q=80&w=800' },
+            { id: 'v7', videoId: 'dQw4w9WgXcQ', title: 'Input Laporan Perikanan', desc: 'Panduan pengisian laporan bulanan sektor perikanan di sistem JOSS.', duration: '6:40', category: 'Laporan', img: 'https://images.unsplash.com/photo-1551288049-bbbda536ad0a?auto=format&fit=crop&q=80&w=800' },
+            { id: 'v8', videoId: 'dQw4w9WgXcQ', title: 'Pengajuan Izin Peternakan', desc: 'Khusus panduan pengajuan perizinan untuk dinas peternakan Jawa Timur.', duration: '7:25', category: 'Peternakan', img: 'https://images.unsplash.com/photo-1500595046743-cd271d694d30?auto=format&fit=crop&q=80&w=800' },
+            { id: 'v9', videoId: 'dQw4w9WgXcQ', title: 'Lupa Password & Reset Akun', desc: 'Solusi mudah jika lupa password atau akun terblokir di sistem JOSS.', duration: '2:30', category: 'Akun', img: 'https://images.unsplash.com/photo-1614064641938-3bbee52942c7?auto=format&fit=crop&q=80&w=800' },
+            { id: 'v10', videoId: 'dQw4w9WgXcQ', title: 'Input Data ESDM Bulanan', desc: 'Tutorial input data laporan bulanan untuk sektor Energi dan Sumber Daya Mineral.', duration: '5:50', category: 'Laporan', img: 'https://images.unsplash.com/photo-1581094120913-24796333c4c3?auto=format&fit=crop&q=80&w=800' },
+            { id: 'v11', videoId: 'dQw4w9WgXcQ', title: 'Cara Perpanjangan Izin Usaha', desc: 'Prosedur memperpanjang izin usaha yang akan habis masa berlakunya.', duration: '4:10', category: 'Perizinan', img: 'https://images.unsplash.com/photo-1506784983877-45594efa4cbe?auto=format&fit=crop&q=80&w=800' },
+            { id: 'v12', videoId: 'dQw4w9WgXcQ', title: 'Mengurus Perubahan Data Perusahaan', desc: 'Cara mengajukan perubahan data legalitas perusahaan melalui JOSS.', duration: '5:05', category: 'Perusahaan', img: 'https://images.unsplash.com/photo-1497215728101-856f4ea42174?auto=format&fit=crop&q=80&w=800' },
+            { id: 'v13', videoId: 'dQw4w9WgXcQ', title: 'Panduan Izin Toko Obat Hewan', desc: 'Langkah pengajuan izin pendirian toko obat hewan sesuai regulasi dinas.', duration: '6:15', category: 'Peternakan', img: 'https://images.unsplash.com/photo-1628009368231-7bb7cfcb0def?auto=format&fit=crop&q=80&w=800' },
+            { id: 'v14', videoId: 'dQw4w9WgXcQ', title: 'Notifikasi & Pesan di JOSS', desc: 'Memahami sistem notifikasi dan pesan dari petugas di portal JOSS.', duration: '3:45', category: 'Dasar', img: 'https://images.unsplash.com/photo-1577563906417-45a11b3f9f7c?auto=format&fit=crop&q=80&w=800' },
+            { id: 'v15', videoId: 'dQw4w9WgXcQ', title: 'Cetak & Ekspor Laporan', desc: 'Cara mencetak dan mengekspor laporan perizinan ke format PDF dan Excel.', duration: '4:35', category: 'Laporan', img: 'https://images.unsplash.com/photo-1583508915901-b5f84c1dc4a7?auto=format&fit=crop&q=80&w=800' },
         ];
 
         // ══ CATEGORY BADGE COLOR ════════════════════════════════
@@ -395,7 +368,7 @@
         // ══ BUILD VIDEO CARD HTML ════════════════════════════════
         function videoCardHTML(v) {
             const cc = catColor[v.category] || 'bg-gray-100 text-gray-600';
-            const thumb = `https://img.youtube.com/vi/${v.videoId}/hqdefault.jpg`;
+            const thumb = v.img;
             return `
             <div class="group bg-white rounded-2xl border border-gray-100 shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-200 overflow-hidden cursor-pointer"
                  onclick="playVideo('${v.videoId}')">
@@ -423,79 +396,8 @@
             lucide.createIcons();
         }
 
-        // ══ MODAL STATE ══════════════════════════════════════════
-        const VIDEOS_PER_PAGE = 9;
-        let currentPage = 1;
-
         function openVideoModal() {
-            currentPage = 1;
-            document.getElementById('video-modal').classList.remove('hidden');
-            document.body.style.overflow = 'hidden';
-            renderModalPage(currentPage);
-            lucide.createIcons();
-        }
-
-        function closeVideoModal() {
-            document.getElementById('video-modal').classList.add('hidden');
-            document.body.style.overflow = '';
-        }
-
-        // ══ RENDER MODAL PAGE ════════════════════════════════════
-        function renderModalPage(page) {
-            const totalPages = Math.ceil(videos.length / VIDEOS_PER_PAGE);
-            const start = (page - 1) * VIDEOS_PER_PAGE;
-            const pageVideos = videos.slice(start, start + VIDEOS_PER_PAGE);
-
-            document.getElementById('modal-video-count').textContent =
-                `${videos.length} video tersedia · Halaman ${page} dari ${totalPages}`;
-
-            document.getElementById('modal-videos').innerHTML = pageVideos.map(videoCardHTML).join('');
-            renderPagination(page, totalPages);
-            lucide.createIcons();
-        }
-
-        // ══ RENDER PAGINATION ════════════════════════════════════
-        function renderPagination(current, total) {
-            const el = document.getElementById('pagination-container');
-            if (total <= 1) { el.innerHTML = ''; return; }
-
-            let html = '';
-
-            // Prev button
-            html += `<button onclick="goToPage(${current - 1})" ${current === 1 ? 'disabled' : ''}
-                class="flex items-center gap-1 px-3 py-2 rounded-xl text-sm font-semibold transition
-                       ${current === 1 ? 'text-gray-300 cursor-not-allowed' : 'text-gray-600 hover:bg-gray-100 hover:text-joss-blue'}">
-                <i class="w-4 h-4" data-lucide="chevron-left"></i> Sebelumnya
-            </button>`;
-
-            // Page numbers
-            for (let i = 1; i <= total; i++) {
-                if (i === current) {
-                    html += `<button class="w-9 h-9 rounded-xl text-sm font-bold bg-joss-blue text-white shadow-md shadow-blue-200">${i}</button>`;
-                } else {
-                    html += `<button onclick="goToPage(${i})"
-                        class="w-9 h-9 rounded-xl text-sm font-semibold text-gray-600 hover:bg-gray-100 hover:text-joss-blue transition">${i}</button>`;
-                }
-            }
-
-            // Next button
-            html += `<button onclick="goToPage(${current + 1})" ${current === total ? 'disabled' : ''}
-                class="flex items-center gap-1 px-3 py-2 rounded-xl text-sm font-semibold transition
-                       ${current === total ? 'text-gray-300 cursor-not-allowed' : 'text-gray-600 hover:bg-gray-100 hover:text-joss-blue'}">
-                Berikutnya <i class="w-4 h-4" data-lucide="chevron-right"></i>
-            </button>`;
-
-            el.innerHTML = html;
-            lucide.createIcons();
-        }
-
-        function goToPage(page) {
-            const total = Math.ceil(videos.length / VIDEOS_PER_PAGE);
-            if (page < 1 || page > total) return;
-            currentPage = page;
-            renderModalPage(page);
-            // Scroll modal body to top
-            document.querySelector('#video-modal .overflow-y-auto').scrollTop = 0;
+            location.href = 'video-tutorial.html';
         }
 
         // ══ VIDEO PLAY ═══════════════════════════════════════════

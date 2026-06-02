@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Semua Panduan Video | JOSS - DPMPTSP Jawa Timur</title>
+    <link rel="icon" type="image/png" href="https://joss.jatimprov.go.id/images/logo.png">
+    <!-- Tailwind CSS v3 CDN with Plugins -->
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <!-- Tailwind Configuration -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'joss-blue': '#6e8dff',
+                        'joss-yellow': '#fccf0c',
+                        'joss-green': '#00b52d',
+                        'joss-dark': '#1e293b'
+                    },
+                    animation: {
+                        'fade-in-up': 'fadeInUp 0.6s ease-out forwards',
+                    },
+                    keyframes: {
+                        fadeInUp: {
+                            '0%': { opacity: '0', transform: 'translateY(20px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        .video-card:hover {
+            transform: translateY(-5px);
+            transition: all 0.3s ease;
+        }
+    </style>
+</head>
+
+<body class="bg-gray-50 text-gray-900 font-sans min-h-screen flex flex-col">
+    <!-- BEGIN: MainHeader -->
+    <header class="sticky top-0 z-50 bg-white shadow-md">
+        <nav class="container mx-auto px-4 py-3 flex items-center justify-between">
+            <!-- Logo and Brand -->
+            <a href="index.html" class="flex items-center space-x-3">
+                <img src="https://joss.jatimprov.go.id/images/logo.png" alt="Logo JOSS" class="h-10 w-auto" />
+                <div>
+                    <h1 class="font-bold text-xl tracking-tight text-joss-dark leading-none">JOSS</h1>
+                    <p class="text-[10px] uppercase font-semibold text-gray-500">DPMPTSP Jawa Timur</p>
+                </div>
+            </a>
+            <!-- Navigation Links (Desktop) -->
+            <div class="hidden md:flex items-center space-x-8 font-medium">
+                <a class="text-gray-600 hover:text-joss-blue" href="index.html">Beranda</a>
+                <a class="text-gray-600 hover:text-joss-blue" href="e-tracking.html">e-Tracking</a>
+                <a class="text-gray-600 hover:text-joss-blue" href="panduan.html">Panduan</a>
+            </div>
+            <!-- Auth Buttons -->
+            <div class="hidden md:flex items-center space-x-4">
+                <button class="px-5 py-2 border-2 border-joss-blue text-joss-blue font-semibold rounded-full hover:bg-blue-50 transition">Login</button>
+                <button class="px-6 py-2 bg-joss-blue text-white font-semibold rounded-full hover:bg-blue-600 shadow-lg shadow-blue-200 transition">Daftar</button>
+            </div>
+            <!-- Mobile Menu Button -->
+            <button class="md:hidden p-2" onclick="document.getElementById('mobile-menu').classList.toggle('hidden')">
+                <i class="w-6 h-6 text-gray-700" data-lucide="menu"></i>
+            </button>
+        </nav>
+        <!-- Mobile Navigation -->
+        <div class="hidden md:hidden bg-white border-t border-gray-100 p-4 space-y-4" id="mobile-menu">
+            <a class="block font-medium py-2" href="index.html">Beranda</a>
+            <a class="block font-medium py-2" href="e-tracking.html">e-Tracking</a>
+            <a class="block font-medium py-2" href="panduan.html">Panduan</a>
+            <hr />
+            <div class="flex flex-col space-y-2">
+                <button class="w-full py-2 border-2 border-joss-blue text-joss-blue font-semibold rounded-lg">Login</button>
+                <button class="w-full py-2 bg-joss-blue text-white font-semibold rounded-lg">Daftar</button>
+            </div>
+        </div>
+    </header>
+    <!-- END: MainHeader -->
+
+    <!-- BEGIN: Hero Section -->
+    <section class="bg-gradient-to-b from-blue-50 to-gray-50 pt-16 pb-12">
+        <div class="container mx-auto px-4 text-center max-w-4xl animate-fade-in-up">
+            <h1 class="text-4xl md:text-5xl font-extrabold text-joss-dark mb-4 tracking-tight">Koleksi Panduan Video</h1>
+            <p class="text-lg text-gray-500 mb-8 max-w-2xl mx-auto">
+                Pelajari setiap fitur dan proses di platform JOSS melalui tutorial visual yang mudah diikuti.
+            </p>
+
+            <!-- Search and Filter -->
+            <div class="flex flex-col md:flex-row gap-4 max-w-3xl mx-auto">
+                <div class="relative flex-1 group">
+                    <div class="absolute inset-y-0 left-4 flex items-center pointer-events-none">
+                        <i class="w-5 h-5 text-gray-400 group-focus-within:text-joss-blue transition" data-lucide="search"></i>
+                    </div>
+                    <input type="text" id="video-search"
+                        class="w-full pl-12 pr-4 py-4 border-none bg-white rounded-2xl shadow-xl shadow-blue-100/50 text-gray-700 outline-none focus:ring-4 focus:ring-joss-blue/20 transition text-lg"
+                        placeholder="Cari judul panduan..." oninput="filterVideos()">
+                </div>
+                <select id="category-filter" onchange="filterVideos()"
+                    class="md:w-48 px-4 py-4 bg-white border-none rounded-2xl shadow-xl shadow-blue-100/50 text-gray-600 font-semibold outline-none focus:ring-4 focus:ring-joss-blue/20 transition">
+                    <option value="All">Semua Kategori</option>
+                    <option value="Registrasi">Registrasi</option>
+                    <option value="Perizinan">Perizinan</option>
+                    <option value="Laporan">Laporan</option>
+                    <option value="Tracking">Tracking</option>
+                    <option value="Akun">Akun</option>
+                    <option value="Peternakan">Peternakan</option>
+                </select>
+            </div>
+        </div>
+    </section>
+    <!-- END: Hero Section -->
+
+    <!-- BEGIN: Main Content -->
+    <main class="flex-1 container mx-auto px-4 py-12">
+        <div class="flex items-center justify-between mb-8">
+            <h2 class="text-xl font-bold text-joss-dark flex items-center gap-2">
+                <i class="w-5 h-5 text-joss-blue" data-lucide="play-circle"></i>
+                <span id="results-count">Memuat video...</span>
+            </h2>
+        </div>
+
+        <div class="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-8" id="video-grid">
+            <!-- Rendered by JS -->
+        </div>
+
+        <!-- Pagination -->
+        <div class="mt-16 flex items-center justify-center gap-2" id="pagination-container">
+            <!-- Rendered by JS -->
+        </div>
+    </main>
+    <!-- END: Main Content -->
+
+    <!-- BEGIN: Video Play Modal -->
+    <div id="video-play-modal" class="hidden fixed inset-0 z-[60] flex items-center justify-center p-4">
+        <div class="absolute inset-0 bg-black/80 backdrop-blur-sm" onclick="closeVideoPlay()"></div>
+        <div class="relative w-full max-w-4xl animate-fade-in-up">
+            <button onclick="closeVideoPlay()"
+                class="absolute -top-12 right-0 text-white/80 hover:text-white flex items-center gap-2 text-sm font-bold bg-white/10 px-4 py-2 rounded-full backdrop-blur-md transition">
+                <i class="w-4 h-4" data-lucide="x"></i> Tutup
+            </button>
+            <div class="aspect-video rounded-3xl overflow-hidden shadow-2xl bg-black border-4 border-white/10">
+                <iframe id="video-iframe" src="" frameborder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowfullscreen class="w-full h-full"></iframe>
+            </div>
+            <div class="mt-4 text-white">
+                <h3 id="playing-title" class="text-2xl font-bold"></h3>
+                <p id="playing-desc" class="text-gray-400 mt-1"></p>
+            </div>
+        </div>
+    </div>
+    <!-- END: Video Play Modal -->
+
+    <!-- BEGIN: Footer -->
+    <footer class="bg-joss-dark text-white py-16">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-12">
+                <div class="col-span-1 md:col-span-2">
+                    <div class="flex items-center space-x-3 mb-6">
+                        <img src="https://joss.jatimprov.go.id/images/logo.png" alt="Logo JOSS" class="h-10 w-auto" />
+                        <h2 class="text-2xl font-bold tracking-tight">JOSS - Jatim Online Single Submission</h2>
+                    </div>
+                    <p class="text-gray-400 mb-6 max-w-md">Layanan perizinan terpadu satu pintu Provinsi Jawa Timur untuk mewujudkan iklim investasi yang kondusif, transparan, dan akuntabel.</p>
+                    <div class="flex space-x-4">
+                        <a class="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center hover:bg-joss-blue transition" href="#"><i class="w-5 h-5" data-lucide="facebook"></i></a>
+                        <a class="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center hover:bg-joss-blue transition" href="#"><i class="w-5 h-5" data-lucide="instagram"></i></a>
+                        <a class="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center hover:bg-joss-blue transition" href="#"><i class="w-5 h-5" data-lucide="twitter"></i></a>
+                    </div>
+                </div>
+                <div>
+                    <h3 class="font-bold text-lg mb-6">Kontak Kami</h3>
+                    <ul class="space-y-4 text-gray-400">
+                        <li class="flex items-start gap-3">
+                            <i class="w-5 h-5 text-joss-yellow shrink-0" data-lucide="map-pin"></i>
+                            <span>Jl. Pahlawan No.116, Krembangan Sel., Kec. Krembangan, Surabaya, Jawa Timur 60175</span>
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <i class="w-5 h-5 text-joss-yellow shrink-0" data-lucide="phone"></i>
+                            <span>(031) 3537345</span>
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <i class="w-5 h-5 text-joss-yellow shrink-0" data-lucide="mail"></i>
+                            <span>dpmptsp@jatimprov.go.id</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-white/10 mt-16 pt-8 text-center text-sm text-gray-500">
+                <p>© 2023 DPMPTSP Provinsi Jawa Timur. Hak Cipta Dilindungi Undang-Undang.</p>
+            </div>
+        </div>
+    </footer>
+
+    <a href="https://dpmptsp.jatimprov.go.id/helpdesk/web/" target="_blank" rel="noopener noreferrer"
+        class="fixed bottom-6 right-6 z-50 flex items-center gap-2 bg-joss-blue text-white font-bold px-5 py-3 rounded-full shadow-2xl shadow-blue-400/40 hover:bg-blue-600 transition hover:-translate-y-1 group">
+        <i class="w-4 h-4" data-lucide="headphones"></i>
+        <span class="text-sm">Helpdesk</span>
+    </a>
+    <!-- END: Footer -->
+
+    <script>
+        // Initialize Icons
+        lucide.createIcons();
+
+        // ════ DATA VIDEO ══════════════════════════════════════════
+        const allVideos = [
+            { videoId: 'dQw4w9WgXcQ', title: 'Panduan Pendaftaran Akun JOSS', desc: 'Cara membuat akun baru dan login pertama kali ke sistem JOSS.', duration: '5:32', category: 'Registrasi', img: 'https://images.unsplash.com/photo-1554224155-1696413565d3?auto=format&fit=crop&q=80&w=800' },
+            { videoId: 'dQw4w9WgXcQ', title: 'Cara e-Tracking Perizinan', desc: 'Memantau status permohonan izin secara real-time di portal JOSS.', duration: '3:15', category: 'Tracking', img: 'https://images.unsplash.com/photo-1508873535684-277a3cbcc4e8?auto=format&fit=crop&q=80&w=800' },
+            { videoId: 'dQw4w9WgXcQ', title: 'Tutorial Penginputan Data Sektoral', desc: 'Langkah mengisi laporan data bulanan per sektor di sistem JOSS.', duration: '8:45', category: 'Laporan', img: 'https://images.unsplash.com/photo-1551288049-bbbda536ad0a?auto=format&fit=crop&q=80&w=800' },
+            { videoId: 'dQw4w9WgXcQ', title: 'Mekanisme Pembayaran PNBP', desc: 'Panduan lengkap cara pembayaran biaya penerimaan negara bukan pajak.', duration: '4:20', category: 'Perizinan', img: 'https://images.unsplash.com/photo-1580519542036-c47de6196ba5?auto=format&fit=crop&q=80&w=800' },
+            { videoId: 'dQw4w9WgXcQ', title: 'Pengajuan Izin Baru Online', desc: 'Langkah demi langkah proses pengajuan perizinan baru melalui portal JOSS.', duration: '6:10', category: 'Perizinan', img: 'https://images.unsplash.com/photo-1450101499163-c8848c66ca85?auto=format&fit=crop&q=80&w=800' },
+            { videoId: 'dQw4w9WgXcQ', title: 'Upload Dokumen Persyaratan', desc: 'Cara mengunggah berkas persyaratan perizinan dengan format yang benar.', duration: '3:50', category: 'Perizinan', img: 'https://images.unsplash.com/photo-1563986768609-322da13575f3?auto=format&fit=crop&q=80&w=800' },
+            { videoId: 'dQw4w9WgXcQ', title: 'Lupa Password & Reset Akun', desc: 'Solusi mudah jika lupa password atau akun terblokir di sistem JOSS.', duration: '2:30', category: 'Akun', img: 'https://images.unsplash.com/photo-1614064641938-3bbee52942c7?auto=format&fit=crop&q=80&w=800' },
+            { videoId: 'dQw4w9WgXcQ', title: 'Pengajuan Izin Peternakan', desc: 'Panduan pengajuan perizinan untuk dinas peternakan Jawa Timur.', duration: '7:25', category: 'Peternakan', img: 'https://images.unsplash.com/photo-1500595046743-cd271d694d30?auto=format&fit=crop&q=80&w=800' },
+            { videoId: 'dQw4w9WgXcQ', title: 'Input Data ESDM Bulanan', desc: 'Tutorial input data laporan bulanan untuk sektor Energi dan Sumber Daya Mineral.', duration: '5:50', category: 'Laporan', img: 'https://images.unsplash.com/photo-1581094120913-24796333c4c3?auto=format&fit=crop&q=80&w=800' },
+            { videoId: 'dQw4w9WgXcQ', title: 'Cara Perpanjangan Izin Usaha', desc: 'Prosedur memperpanjang izin usaha yang akan habis masa berlakunya.', duration: '4:10', category: 'Perizinan', img: 'https://images.unsplash.com/photo-1506784983877-45594efa4cbe?auto=format&fit=crop&q=80&w=800' },
+            { videoId: 'dQw4w9WgXcQ', title: 'Mengunduh Dokumen Izin Digital', desc: 'Cara mengunduh sertifikat dan dokumen perizinan yang telah terbit.', duration: '3:10', category: 'Perizinan', img: 'https://images.unsplash.com/photo-1633158829585-23ba8f7c8caf?auto=format&fit=crop&q=80&w=800' },
+            { videoId: 'dQw4w9WgXcQ', title: 'Cetak & Ekspor Laporan', desc: 'Cara mencetak dan mengekspor laporan perizinan ke format PDF dan Excel.', duration: '4:35', category: 'Laporan', img: 'https://images.unsplash.com/photo-1583508915901-b5f84c1dc4a7?auto=format&fit=crop&q=80&w=800' },
+            { videoId: 'dQw4w9WgXcQ', title: 'Panduan Izin Toko Obat Hewan', desc: 'Langkah pengajuan izin pendirian toko obat hewan sesuai regulasi dinas.', duration: '6:15', category: 'Peternakan', img: 'https://images.unsplash.com/photo-1628009368231-7bb7cfcb0def?auto=format&fit=crop&q=80&w=800' },
+            { videoId: 'dQw4w9WgXcQ', title: 'Notifikasi & Pesan di JOSS', desc: 'Memahami sistem notifikasi dan pesan dari petugas di portal JOSS.', duration: '3:45', category: 'Dasar', img: 'https://images.unsplash.com/photo-1577563906417-45a11b3f9f7c?auto=format&fit=crop&q=80&w=800' },
+            { videoId: 'dQw4w9WgXcQ', title: 'Mengurus Perubahan Data Perusahaan', desc: 'Cara mengajukan perubahan data legalitas perusahaan melalui JOSS.', duration: '5:05', category: 'Perusahaan', img: 'https://images.unsplash.com/photo-1497215728101-856f4ea42174?auto=format&fit=crop&q=80&w=800' },
+        ];
+
+        // ════ CATEGORY BADGE COLORS ══════════════════════════════
+        const catColorMap = {
+            'Registrasi': 'bg-purple-100 text-purple-700',
+            'Tracking': 'bg-yellow-100 text-yellow-700',
+            'Laporan': 'bg-green-100 text-green-700',
+            'Perizinan': 'bg-blue-100 text-blue-700',
+            'Akun': 'bg-red-100 text-red-700',
+            'Peternakan': 'bg-amber-100 text-amber-700',
+            'Dasar': 'bg-gray-100 text-gray-600',
+            'Perusahaan': 'bg-indigo-100 text-indigo-700',
+        };
+
+        // ════ STATE ══════════════════════════════════════════════
+        const VIDEOS_PER_PAGE = 9;
+        let currentPage = 1;
+        let filteredVideos = [...allVideos];
+
+        // ════ RENDER GRID ════════════════════════════════════════
+        function renderVideoGrid(page) {
+            const grid = document.getElementById('video-grid');
+            const total = Math.ceil(filteredVideos.length / VIDEOS_PER_PAGE);
+            const start = (page - 1) * VIDEOS_PER_PAGE;
+            const pageVids = filteredVideos.slice(start, start + VIDEOS_PER_PAGE);
+
+            document.getElementById('results-count').textContent = 
+                `${filteredVideos.length} Video Ditemukan`;
+
+            if (pageVids.length === 0) {
+                grid.innerHTML = `
+                    <div class="col-span-full py-20 text-center">
+                        <i class="w-16 h-16 text-gray-200 mx-auto mb-4" data-lucide="search-x"></i>
+                        <h3 class="text-xl font-bold text-gray-400">Video tidak ditemukan</h3>
+                        <p class="text-gray-500">Coba gunakan kata kunci atau kategori lain.</p>
+                    </div>
+                `;
+                document.getElementById('pagination-container').innerHTML = '';
+                lucide.createIcons();
+                return;
+            }
+
+            grid.innerHTML = pageVids.map(v => {
+                const cc = catColorMap[v.category] || 'bg-gray-100 text-gray-600';
+                return `
+                    <div class="video-card group bg-white rounded-3xl border border-gray-100 shadow-sm hover:shadow-2xl transition-all duration-300 overflow-hidden cursor-pointer"
+                         onclick="playVideo('${v.videoId}', '${v.title}', '${v.desc}')">
+                        <div class="relative aspect-video overflow-hidden">
+                            <img src="${v.img}" alt="${v.title}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                            <div class="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                                <div class="w-16 h-16 bg-white rounded-full flex items-center justify-center shadow-2xl scale-75 group-hover:scale-100 transition-transform">
+                                    <svg class="w-8 h-8 text-joss-blue ml-1" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                                </div>
+                            </div>
+                            <span class="absolute bottom-3 right-3 bg-black/70 backdrop-blur-md text-white text-xs font-bold px-3 py-1 rounded-full border border-white/10">${v.duration}</span>
+                        </div>
+                        <div class="p-6">
+                            <span class="inline-block text-xs font-bold px-3 py-1 rounded-full mb-3 ${cc}">${v.category}</span>
+                            <h4 class="font-bold text-lg text-joss-dark leading-snug group-hover:text-joss-blue transition-colors line-clamp-2 mb-2">${v.title}</h4>
+                            <p class="text-sm text-gray-500 leading-relaxed line-clamp-2">${v.desc}</p>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+
+            renderPagination(page, total);
+            lucide.createIcons();
+        }
+
+        // ════ RENDER PAGINATION ══════════════════════════════════
+        function renderPagination(current, total) {
+            const el = document.getElementById('pagination-container');
+            if (total <= 1) { el.innerHTML = ''; return; }
+
+            let html = `
+                <button onclick="goToPage(${current - 1})" ${current === 1 ? 'disabled' : ''}
+                    class="flex items-center gap-2 px-5 py-3 rounded-2xl text-sm font-bold transition shadow-sm
+                    ${current === 1 ? 'bg-gray-100 text-gray-300 cursor-not-allowed' : 'bg-white text-gray-600 hover:bg-joss-blue hover:text-white'}">
+                    <i class="w-4 h-4" data-lucide="chevron-left"></i> Sebelumnya
+                </button>
+            `;
+
+            for (let i = 1; i <= total; i++) {
+                if (i === current) {
+                    html += `<button class="w-12 h-12 rounded-2xl text-sm font-bold bg-joss-blue text-white shadow-lg shadow-blue-200 transition-transform scale-110">${i}</button>`;
+                } else {
+                    html += `<button onclick="goToPage(${i})" class="w-12 h-12 rounded-2xl text-sm font-bold bg-white text-gray-600 hover:bg-blue-50 hover:text-joss-blue shadow-sm transition-all">${i}</button>`;
+                }
+            }
+
+            html += `
+                <button onclick="goToPage(${current + 1})" ${current === total ? 'disabled' : ''}
+                    class="flex items-center gap-2 px-5 py-3 rounded-2xl text-sm font-bold transition shadow-sm
+                    ${current === total ? 'bg-gray-100 text-gray-300 cursor-not-allowed' : 'bg-white text-gray-600 hover:bg-joss-blue hover:text-white'}">
+                    Berikutnya <i class="w-4 h-4" data-lucide="chevron-right"></i>
+                </button>
+            `;
+
+            el.innerHTML = html;
+            lucide.createIcons();
+        }
+
+        function goToPage(page) {
+            const total = Math.ceil(filteredVideos.length / VIDEOS_PER_PAGE);
+            if (page < 1 || page > total) return;
+            currentPage = page;
+            renderVideoGrid(page);
+            window.scrollTo({ top: 400, behavior: 'smooth' });
+        }
+
+        // ════ FILTER LOGIC ═══════════════════════════════════════
+        function filterVideos() {
+            const query = document.getElementById('video-search').value.toLowerCase();
+            const cat = document.getElementById('category-filter').value;
+
+            filteredVideos = allVideos.filter(v => {
+                const matchQuery = v.title.toLowerCase().includes(query) || v.desc.toLowerCase().includes(query);
+                const matchCat = cat === 'All' || v.category === cat;
+                return matchQuery && matchCat;
+            });
+
+            currentPage = 1;
+            renderVideoGrid(currentPage);
+        }
+
+        // ════ VIDEO PLAY ═════════════════════════════════════════
+        function playVideo(videoId, title, desc) {
+            document.getElementById('video-iframe').src = `https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0`;
+            document.getElementById('playing-title').textContent = title;
+            document.getElementById('playing-desc').textContent = desc;
+            document.getElementById('video-play-modal').classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeVideoPlay() {
+            document.getElementById('video-play-modal').classList.add('hidden');
+            document.getElementById('video-iframe').src = '';
+            document.body.style.overflow = '';
+        }
+
+        // Escape Key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') closeVideoPlay();
+        });
+
+        // Initial Render
+        renderVideoGrid(1);
+
+    </script>
+</body>
+
+</html>

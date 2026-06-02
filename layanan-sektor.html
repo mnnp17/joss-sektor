@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Layanan Sektoral - JOSS (Jatim Online Single Submission)</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'joss-blue': '#6e8dff',
+                        'joss-yellow': '#fccf0c',
+                        'joss-green': '#00b52d',
+                        'joss-dark': '#1e293b'
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    animation: {
+                        'slide-in': 'slideIn 0.5s ease-out forwards',
+                    },
+                    keyframes: {
+                        slideIn: {
+                            '0%': { opacity: '0', transform: 'translateY(10px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .sidebar-item.active {
+            background-color: #f0f7ff;
+            color: #6e8dff;
+            border-left: 4px solid #6e8dff;
+        }
+        
+        #sidebar-container {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        #sidebar-menu-content {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            max-height: 1000px;
+            opacity: 1;
+        }
+        
+        #sidebar-container.collapsed {
+            width: 64px;
+        }
+        
+        #sidebar-container.collapsed #sidebar-menu-content {
+            max-height: 0;
+            opacity: 0;
+            margin-top: -10px;
+            pointer-events: none;
+        }
+        
+        #sidebar-container.collapsed .sidebar-text-label,
+        #sidebar-container.collapsed #sidebar-chevron {
+            display: none;
+        }
+
+        #sidebar-container.collapsed .toggle-btn-container {
+            padding: 0.75rem !important;
+            justify-content: center;
+        }
+
+        #sidebar-container.collapsed .toggle-btn-container i {
+            margin-right: 0;
+        }
+        
+        @media (max-width: 1024px) {
+            #sidebar-container {
+                position: fixed;
+                left: -100%;
+                top: 80px;
+                height: calc(100vh - 80px);
+                z-index: 40;
+                width: 280px;
+                background: white;
+                box-shadow: 20px 0 50px -12px rgb(0 0 0 / 0.25);
+            }
+            #sidebar-container.active {
+                left: 0;
+            }
+            #sidebar-overlay.active {
+                display: block;
+            }
+            #sidebar-container.collapsed {
+                width: 280px; /* Don't collapse width on mobile */
+            }
+        }
+    </style>
+</head>
+
+<body class="bg-gray-50 font-sans text-gray-900 flex flex-col min-h-screen">
+
+    <!-- BEGIN: MainHeader -->
+    <header class="sticky top-0 z-50 bg-white shadow-md">
+        <nav class="container mx-auto px-4 py-3 flex items-center justify-between">
+            <div class="flex items-center space-x-3">
+                <!-- Sidebar Toggle Button (Custom request) -->
+                <button onclick="toggleSidebar()" class="p-2 hover:bg-gray-100 rounded-xl transition-colors lg:bg-gray-50 mr-1" title="Toggle Sidebar">
+                    <i data-lucide="layout-sidebar" class="w-5 h-5 text-gray-600"></i>
+                </button>
+                
+                <a href="index.html" class="flex items-center space-x-3">
+                    <img src="https://joss.jatimprov.go.id/images/logo.png" alt="Logo JOSS" class="h-10 w-auto" />
+                    <div>
+                        <h1 class="font-bold text-xl tracking-tight text-joss-dark leading-none">JOSS</h1>
+                        <p class="text-[10px] uppercase font-semibold text-gray-500">DPMPTSP Jawa Timur</p>
+                    </div>
+                </a>
+            </div>
+            
+            <div class="hidden md:flex items-center space-x-8 font-medium">
+                <a class="text-gray-600 hover:text-joss-blue transition-colors" href="index.html">Beranda</a>
+                <a class="text-gray-600 hover:text-joss-blue transition-colors" href="e-tracking.html">e-Tracking</a>
+                <a class="text-gray-600 hover:text-joss-blue transition-colors" href="panduan.html">Panduan</a>
+            </div>
+            
+            <div class="hidden md:flex items-center space-x-4">
+                <button class="px-5 py-2 border-2 border-joss-blue text-joss-blue font-semibold rounded-full hover:bg-blue-50 transition">Login</button>
+                <button class="px-6 py-2 bg-joss-blue text-white font-semibold rounded-full hover:bg-blue-600 shadow-lg shadow-blue-200 transition">Daftar</button>
+            </div>
+            
+            <button class="md:hidden p-2" onclick="document.getElementById('mobile-menu').classList.toggle('hidden')">
+                <i class="w-6 h-6 text-gray-700" data-lucide="menu"></i>
+            </button>
+        </nav>
+        
+        <div class="hidden md:hidden bg-white border-t border-gray-100 p-4 space-y-4" id="mobile-menu">
+            <a class="block font-medium py-2" href="index.html">Beranda</a>
+            <a class="block font-medium py-2" href="e-tracking.html">e-Tracking</a>
+            <a class="block font-medium py-2" href="panduan.html">Panduan</a>
+            <hr />
+            <div class="flex flex-col space-y-2">
+                <button class="w-full py-2 border-2 border-joss-blue text-joss-blue font-semibold rounded-lg">Login</button>
+                <button class="w-full py-2 bg-joss-blue text-white font-semibold rounded-lg">Daftar</button>
+            </div>
+        </div>
+    </header>
+    <!-- END: MainHeader -->
+
+    <!-- Sidebar Overlay (Mobile) -->
+    <div id="sidebar-overlay" class="fixed inset-0 bg-black/50 z-30 hidden transition-opacity" onclick="toggleSidebar()"></div>
+
+    <!-- Main Content with Sidebar -->
+    <main class="flex-grow max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-8">
+        <div class="flex flex-col lg:flex-row gap-8">
+            
+            <!-- Sidebar Container -->
+            <aside id="sidebar-container" class="w-full lg:w-80 shrink-0">
+                <div class="sticky top-28 space-y-4">
+                    <!-- Permanent Toggle Button -->
+                    <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
+                        <button onclick="toggleSidebar()" class="toggle-btn-container w-full flex items-center justify-between p-5 font-bold text-joss-dark hover:text-joss-blue transition-all group">
+                            <span class="flex items-center">
+                                <i data-lucide="menu" class="w-5 h-5 mr-3 text-joss-blue group-hover:rotate-90 transition-transform"></i>
+                                <span class="sidebar-text-label">Menu Sektor</span>
+                            </span>
+                            <i data-lucide="chevron-up" id="sidebar-chevron" class="w-4 h-4 text-gray-400 transition-transform"></i>
+                        </button>
+                    </div>
+
+                    <!-- Collapsable List Content -->
+                    <div id="sidebar-menu-content" class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
+                        <div class="max-h-[calc(100vh-320px)] overflow-y-auto custom-scrollbar" id="sector-list">
+                            <!-- Sector list will be rendered here -->
+                        </div>
+                    </div>
+                </div>
+            </aside>
+
+            <!-- Content Area -->
+            <section class="flex-grow">
+                <div class="bg-white rounded-3xl shadow-sm border border-gray-100 p-6 sm:p-10">
+                    <div id="sector-content">
+                        <!-- Sector content will be rendered here -->
+                        <div class="animate-pulse">
+                            <div class="h-8 bg-gray-200 rounded w-3/4 mb-6"></div>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div class="h-24 bg-gray-100 rounded-xl"></div>
+                                <div class="h-24 bg-gray-100 rounded-xl"></div>
+                                <div class="h-24 bg-gray-100 rounded-xl"></div>
+                                <div class="h-24 bg-gray-100 rounded-xl"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+        </div>
+    </main>
+
+    <!-- Footer (Copied from index.html) -->
+    <footer class="bg-joss-dark text-white pt-20 pb-10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
+                <div class="col-span-1 lg:col-span-1">
+                    <div class="flex items-center space-x-3 mb-6">
+                        <div class="w-10 h-10 bg-joss-blue rounded-xl flex items-center justify-center">
+                            <i data-lucide="shield-check" class="text-white w-6 h-6"></i>
+                        </div>
+                        <span class="text-2xl font-black tracking-tighter">JOSS</span>
+                    </div>
+                    <p class="text-gray-400 text-sm leading-relaxed mb-8">
+                        Portal Pelayanan Perizinan Terpadu Satu Pintu Provinsi Jawa Timur. Cepat, Transparan, dan Akuntabel.
+                    </p>
+                </div>
+                <div>
+                    <h4 class="font-bold mb-6 text-lg">Layanan</h4>
+                    <ul class="space-y-4 text-gray-400 text-sm">
+                        <li><a href="#" class="hover:text-joss-blue transition-colors">Perizinan Sektoral</a></li>
+                        <li><a href="#" class="hover:text-joss-blue transition-colors">E-Tracking</a></li>
+                        <li><a href="#" class="hover:text-joss-blue transition-colors">Pengaduan</a></li>
+                        <li><a href="#" class="hover:text-joss-blue transition-colors">Cek Sertifikat</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-bold mb-6 text-lg">Tautan Cepat</h4>
+                    <ul class="space-y-4 text-gray-400 text-sm">
+                        <li><a href="index.html" class="hover:text-joss-blue transition-colors">Beranda</a></li>
+                        <li><a href="panduan.html" class="hover:text-joss-blue transition-colors">Panduan</a></li>
+                        <li><a href="#" class="hover:text-joss-blue transition-colors">Tentang Kami</a></li>
+                        <li><a href="#" class="hover:text-joss-blue transition-colors">Kontak</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-bold mb-6 text-lg">Hubungi Kami</h4>
+                    <ul class="space-y-4 text-gray-400 text-sm">
+                        <li class="flex items-start">
+                            <i data-lucide="map-pin" class="w-5 h-5 mr-3 text-joss-blue shrink-0"></i>
+                            <span>Jl. Wisma Menanggal No.122-124, Surabaya, Jawa Timur</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i data-lucide="phone" class="w-5 h-5 mr-3 text-joss-blue shrink-0"></i>
+                            <span>(031) 8273209</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i data-lucide="mail" class="w-5 h-5 mr-3 text-joss-blue shrink-0"></i>
+                            <span>p2t@jatimprov.go.id</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-white/10 pt-8 flex flex-col md:row justify-between items-center text-gray-500 text-xs">
+                <p>&copy; 2026 JOSS Provinsi Jawa Timur. All rights reserved.</p>
+                <div class="flex space-x-6 mt-4 md:mt-0">
+                    <a href="#" class="hover:text-white transition-colors">Kebijakan Privasi</a>
+                    <a href="#" class="hover:text-white transition-colors">Syarat & Ketentuan</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Floating Helpdesk Button -->
+    <div class="fixed bottom-6 right-6 z-50 flex flex-col items-end gap-3" id="helpdesk-container">
+        <!-- Tooltip popup -->
+        <div id="helpdesk-tooltip" class="hidden flex-col items-end gap-2 mb-1">
+            <a href="https://wa.me/6281234567890?text=Halo%2C%20saya%20membutuhkan%20bantuan%20mengenai%20JOSS" 
+               target="_blank"
+               class="flex items-center gap-3 bg-white text-gray-700 text-sm font-semibold px-4 py-3 rounded-2xl shadow-xl border border-gray-100 hover:border-green-400 hover:text-green-600 transition-all group">
+                <span class="w-8 h-8 bg-green-100 rounded-xl flex items-center justify-center group-hover:bg-green-500 transition-colors">
+                    <i data-lucide="message-circle" class="w-4 h-4 text-green-600 group-hover:text-white transition-colors"></i>
+                </span>
+                WhatsApp
+            </a>
+            <a href="mailto:p2t@jatimprov.go.id"
+               class="flex items-center gap-3 bg-white text-gray-700 text-sm font-semibold px-4 py-3 rounded-2xl shadow-xl border border-gray-100 hover:border-joss-blue hover:text-joss-blue transition-all group">
+                <span class="w-8 h-8 bg-blue-50 rounded-xl flex items-center justify-center group-hover:bg-joss-blue transition-colors">
+                    <i data-lucide="mail" class="w-4 h-4 text-joss-blue group-hover:text-white transition-colors"></i>
+                </span>
+                Email Kami
+            </a>
+            <a href="tel:+6313208273209"
+               class="flex items-center gap-3 bg-white text-gray-700 text-sm font-semibold px-4 py-3 rounded-2xl shadow-xl border border-gray-100 hover:border-joss-blue hover:text-joss-blue transition-all group">
+                <span class="w-8 h-8 bg-blue-50 rounded-xl flex items-center justify-center group-hover:bg-joss-blue transition-colors">
+                    <i data-lucide="phone" class="w-4 h-4 text-joss-blue group-hover:text-white transition-colors"></i>
+                </span>
+                (031) 8273209
+            </a>
+        </div>
+
+        <!-- Main Helpdesk FAB -->
+        <button onclick="toggleHelpdesk()" id="helpdesk-btn"
+                class="flex items-center gap-2 bg-joss-blue text-white font-bold px-5 py-3.5 rounded-2xl shadow-2xl shadow-blue-300 hover:bg-blue-600 transition-all active:scale-95">
+            <i data-lucide="headphones" class="w-5 h-5" id="helpdesk-icon"></i>
+            <span>Helpdesk</span>
+        </button>
+    </div>
+
+    <!-- Scripts -->
+    <script src="js/sector-data.js"></script>
+    <script>
+        lucide.createIcons();
+
+        function getUrlParam(name) {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get(name);
+        }
+
+        function renderSectorList() {
+            const listEl = document.getElementById('sector-list');
+            const currentId = parseInt(getUrlParam('id')) || 1;
+            
+            listEl.innerHTML = SECTOR_DATA.map(sector => `
+                <a href="layanan-sektor.html?id=${sector.id}" 
+                   class="sidebar-item block p-4 text-sm font-semibold transition-all border-l-4 border-transparent hover:bg-gray-50 ${sector.id === currentId ? 'active' : 'text-gray-600 hover:text-joss-blue'}">
+                    ${sector.name}
+                </a>
+            `).join('');
+        }
+
+        function renderSectorContent() {
+            const contentEl = document.getElementById('sector-content');
+            const currentId = parseInt(getUrlParam('id')) || 1;
+            const sector = SECTOR_DATA.find(s => s.id === currentId);
+
+            if (!sector) {
+                contentEl.innerHTML = '<div class="text-center py-20 text-gray-500">Sektor tidak ditemukan.</div>';
+                return;
+            }
+
+            let subsectorsHtml = '';
+            if (!sector.subsectors || sector.subsectors.length === 0) {
+                subsectorsHtml = '<div class="col-span-full py-12 text-center text-gray-500 bg-gray-50 rounded-2xl border-2 border-dashed border-gray-200">Belum ada layanan subsektor tersedia untuk sektor ini.</div>';
+            } else {
+                sector.subsectors.forEach(sub => {
+                    if (sub.type === 'link') {
+                        subsectorsHtml += `
+                            <a href="${sub.url}" class="group p-5 bg-gray-50 rounded-2xl hover:bg-blue-50 border border-transparent hover:border-joss-blue/20 transition-all flex flex-col justify-between h-full">
+                                <div class="flex items-start justify-between mb-4">
+                                    <div class="w-10 h-10 bg-white rounded-xl flex items-center justify-center shadow-sm group-hover:shadow-md transition-all">
+                                        <i data-lucide="file-text" class="w-5 h-5 text-joss-blue"></i>
+                                    </div>
+                                    <i data-lucide="external-link" class="w-4 h-4 text-gray-300 group-hover:text-joss-blue transition-colors"></i>
+                                </div>
+                                <span class="font-bold text-gray-800 group-hover:text-joss-blue text-sm leading-snug">
+                                    ${sub.title}
+                                </span>
+                            </a>`;
+                    } else if (sub.type === 'group') {
+                        let itemsHtml = sub.items.map(i => `
+                            <li class="mb-3">
+                                <a href="${i.url}" class="flex items-start text-sm text-gray-600 hover:text-joss-blue transition-colors group/item">
+                                    <i data-lucide="chevron-right" class="w-4 h-4 mt-0.5 mr-2 text-gray-300 group-hover/item:text-joss-blue shrink-0"></i>
+                                    <span class="leading-snug">${i.title}</span>
+                                </a>
+                            </li>
+                        `).join('');
+
+                        subsectorsHtml += `
+                            <div class="p-6 bg-white border border-gray-100 rounded-2xl shadow-sm hover:shadow-md transition-all flex flex-col">
+                                <h4 class="font-bold text-joss-dark text-base mb-4 flex items-center">
+                                    <i data-lucide="folder" class="w-5 h-5 mr-2 text-joss-yellow"></i>
+                                    ${sub.title}
+                                </h4>
+                                <ul class="flex-1">
+                                    ${itemsHtml}
+                                </ul>
+                            </div>`;
+                    }
+                });
+            }
+
+            contentEl.innerHTML = `
+                <div class="mb-8">
+                    <nav class="flex text-xs font-bold uppercase tracking-wider text-gray-400 mb-4" aria-label="Breadcrumb">
+                        <ol class="flex items-center space-x-2">
+                            <li><a href="index.html" class="hover:text-joss-blue">Beranda</a></li>
+                            <li><i data-lucide="chevron-right" class="w-3 h-3"></i></li>
+                            <li class="text-joss-blue">Layanan Sektoral</li>
+                        </ol>
+                    </nav>
+                    <h1 class="text-3xl sm:text-4xl font-extrabold text-joss-dark tracking-tight mb-2">${sector.name}</h1>
+                    <p class="text-gray-500">Pilih subsektor di bawah ini untuk melihat detail perizinan.</p>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    ${subsectorsHtml}
+                </div>
+            `;
+            lucide.createIcons();
+        }
+
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar-container');
+            const overlay = document.getElementById('sidebar-overlay');
+            
+            if (window.innerWidth >= 1024) {
+                // Desktop toggle
+                sidebar.classList.toggle('collapsed');
+            } else {
+                // Mobile toggle
+                sidebar.classList.toggle('active');
+                overlay.classList.toggle('active');
+            }
+        }
+
+        function toggleHelpdesk() {
+            const tooltip = document.getElementById('helpdesk-tooltip');
+            const btn = document.getElementById('helpdesk-btn');
+            const isOpen = !tooltip.classList.contains('hidden');
+
+            if (isOpen) {
+                tooltip.classList.add('hidden');
+                tooltip.classList.remove('flex');
+                btn.classList.remove('bg-blue-700');
+            } else {
+                tooltip.classList.remove('hidden');
+                tooltip.classList.add('flex');
+                btn.classList.add('bg-blue-700');
+                lucide.createIcons();
+            }
+        }
+
+        // Close helpdesk on outside click
+        document.addEventListener('click', function(e) {
+            const container = document.getElementById('helpdesk-container');
+            if (container && !container.contains(e.target)) {
+                const tooltip = document.getElementById('helpdesk-tooltip');
+                const btn = document.getElementById('helpdesk-btn');
+                tooltip.classList.add('hidden');
+                tooltip.classList.remove('flex');
+                btn.classList.remove('bg-blue-700');
+            }
+        });
+
+        renderSectorList();
+        renderSectorContent();
+    </script>
+</body>
+
+</html>
