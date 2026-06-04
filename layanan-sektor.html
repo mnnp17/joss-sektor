@@ -230,6 +230,8 @@
                         class="tab-btn px-5 py-3 text-sm font-semibold text-joss-blue border-b-2 border-joss-blue whitespace-nowrap">Ringkasan</button>
                     <button onclick="switchTab('syarat')" id="tab-syarat"
                         class="tab-btn px-5 py-3 text-sm font-semibold text-gray-500 border-b-2 border-transparent hover:text-joss-blue whitespace-nowrap">Persyaratan</button>
+                    <button onclick="switchTab('download')" id="tab-download"
+                        class="tab-btn px-5 py-3 text-sm font-semibold text-gray-500 border-b-2 border-transparent hover:text-joss-blue whitespace-nowrap">Form Download</button>
                     <button onclick="switchTab('prosedur')" id="tab-prosedur"
                         class="tab-btn px-5 py-3 text-sm font-semibold text-gray-500 border-b-2 border-transparent hover:text-joss-blue whitespace-nowrap">Prosedur</button>
                     <button onclick="switchTab('biaya')" id="tab-biaya"
@@ -351,6 +353,123 @@
                         </div>
 
                         <div id="syarat-full" class="space-y-3"><!-- Rendered by JS --></div>
+                    </div>
+                </div>
+
+                <!-- ── TAB: Form Download ── -->
+                <div id="content-download" class="hidden">
+                    <div class="bg-white rounded-2xl p-6 border border-gray-100 shadow-sm">
+                        <div class="mb-6">
+                            <h4 class="font-bold text-joss-dark text-lg mb-2 flex items-center gap-2">
+                                <i class="w-5 h-5 text-joss-blue" data-lucide="download-cloud"></i>
+                                Formulir & Dokumen Pendukung
+                            </h4>
+                            <p class="text-sm text-gray-500">
+                                Silakan unduh formulir di bawah ini, isi data dengan lengkap, lalu unggah kembali pada saat pengajuan izin.
+                            </p>
+                        </div>
+
+                        <div class="grid gap-4">
+                            <!-- Dokumen 1 -->
+                            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 p-5 bg-gradient-to-r from-gray-50 to-white hover:from-blue-50/30 hover:to-indigo-50/10 border border-gray-100 hover:border-joss-blue/30 rounded-2xl transition-all duration-300 hover:shadow-md group">
+                                <div class="flex items-start gap-4">
+                                    <div class="w-12 h-12 bg-gradient-to-tr from-blue-500/10 to-indigo-500/10 text-joss-blue rounded-xl flex items-center justify-center shrink-0 shadow-sm group-hover:scale-105 transition-transform duration-300">
+                                        <i class="w-6 h-6" data-lucide="file-text"></i>
+                                    </div>
+                                    <div class="space-y-1">
+                                        <h5 class="font-bold text-joss-dark text-sm md:text-base leading-snug group-hover:text-joss-blue transition-colors">
+                                            SURAT PERNYATAAN KESANGGUPAN MEMBAYAR RETRIBUSI
+                                        </h5>
+                                        <p class="text-xs text-gray-500">
+                                            Surat pernyataan resmi kesanggupan pembayaran retribusi daerah secara tepat waktu.
+                                        </p>
+                                        <div class="flex gap-2 mt-1">
+                                            <span class="inline-flex items-center px-2 py-0.5 rounded-md text-[10px] font-bold bg-red-50 text-red-600 border border-red-100">PDF</span>
+                                            <span class="inline-flex items-center text-[10px] text-gray-400 font-medium">185 KB</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <a href="assets/docs/uu1.pdf" download="SURAT PERNYATAAN KESANGGUPAN MEMBAYAR RETRIBUSI.pdf"
+                                   class="inline-flex items-center justify-center gap-2 px-5 py-3 bg-joss-blue hover:bg-blue-600 text-white font-bold rounded-xl transition-all duration-300 hover:-translate-y-0.5 hover:shadow-lg hover:shadow-blue-200 group-hover:bg-blue-600 shrink-0 text-sm">
+                                    <i class="w-4 h-4" data-lucide="download"></i> Unduh
+                                </a>
+                            </div>
+
+                            <!-- Dokumen 2 -->
+                            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 p-5 bg-gradient-to-r from-gray-50 to-white hover:from-blue-50/30 hover:to-indigo-50/10 border border-gray-100 hover:border-joss-blue/30 rounded-2xl transition-all duration-300 hover:shadow-md group">
+                                <div class="flex items-start gap-4">
+                                    <div class="w-12 h-12 bg-gradient-to-tr from-blue-500/10 to-indigo-500/10 text-joss-blue rounded-xl flex items-center justify-center shrink-0 shadow-sm group-hover:scale-105 transition-transform duration-300">
+                                        <i class="w-6 h-6" data-lucide="file-spreadsheet"></i>
+                                    </div>
+                                    <div class="space-y-1">
+                                        <h5 class="font-bold text-joss-dark text-sm md:text-base leading-snug group-hover:text-joss-blue transition-colors">
+                                            FORMULIR TEKNIS IZIN PENGUSAHAAN SDA
+                                        </h5>
+                                        <p class="text-xs text-gray-500">
+                                            Formulir data teknis pengusahaan Sumber Daya Air (SDA) untuk permohonan kajian teknis.
+                                        </p>
+                                        <div class="flex gap-2 mt-1">
+                                            <span class="inline-flex items-center px-2 py-0.5 rounded-md text-[10px] font-bold bg-blue-50 text-blue-600 border border-blue-100">DOCX</span>
+                                            <span class="inline-flex items-center text-[10px] text-gray-400 font-medium">320 KB</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <a href="assets/docs/uu1.pdf" download="FORMULIR TEKNIS IZIN PENGUSAHAAN SDA.pdf"
+                                   class="inline-flex items-center justify-center gap-2 px-5 py-3 bg-joss-blue hover:bg-blue-600 text-white font-bold rounded-xl transition-all duration-300 hover:-translate-y-0.5 hover:shadow-lg hover:shadow-blue-200 group-hover:bg-blue-600 shrink-0 text-sm">
+                                    <i class="w-4 h-4" data-lucide="download"></i> Unduh
+                                </a>
+                            </div>
+
+                            <!-- Dokumen 3 -->
+                            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 p-5 bg-gradient-to-r from-gray-50 to-white hover:from-blue-50/30 hover:to-indigo-50/10 border border-gray-100 hover:border-joss-blue/30 rounded-2xl transition-all duration-300 hover:shadow-md group">
+                                <div class="flex items-start gap-4">
+                                    <div class="w-12 h-12 bg-gradient-to-tr from-blue-500/10 to-indigo-500/10 text-joss-blue rounded-xl flex items-center justify-center shrink-0 shadow-sm group-hover:scale-105 transition-transform duration-300">
+                                        <i class="w-6 h-6" data-lucide="file-text"></i>
+                                    </div>
+                                    <div class="space-y-1">
+                                        <h5 class="font-bold text-joss-dark text-sm md:text-base leading-snug group-hover:text-joss-blue transition-colors">
+                                            SURAT PERNYATAAN KESANGGUPAN MEMASANG ALAT UKUR DEBIT ATAU METER AIR
+                                        </h5>
+                                        <p class="text-xs text-gray-500">
+                                            Surat pernyataan komitmen pemasangan alat ukur debit air secara resmi dan tervalidasi.
+                                        </p>
+                                        <div class="flex gap-2 mt-1">
+                                            <span class="inline-flex items-center px-2 py-0.5 rounded-md text-[10px] font-bold bg-red-50 text-red-600 border border-red-100">PDF</span>
+                                            <span class="inline-flex items-center text-[10px] text-gray-400 font-medium">195 KB</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <a href="assets/docs/uu1.pdf" download="SURAT PERNYATAAN KESANGGUPAN MEMASANG ALAT UKUR DEBIT ATAU METER AIR.pdf"
+                                   class="inline-flex items-center justify-center gap-2 px-5 py-3 bg-joss-blue hover:bg-blue-600 text-white font-bold rounded-xl transition-all duration-300 hover:-translate-y-0.5 hover:shadow-lg hover:shadow-blue-200 group-hover:bg-blue-600 shrink-0 text-sm">
+                                    <i class="w-4 h-4" data-lucide="download"></i> Unduh
+                                </a>
+                            </div>
+
+                            <!-- Dokumen 4 -->
+                            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 p-5 bg-gradient-to-r from-gray-50 to-white hover:from-blue-50/30 hover:to-indigo-50/10 border border-gray-100 hover:border-joss-blue/30 rounded-2xl transition-all duration-300 hover:shadow-md group">
+                                <div class="flex items-start gap-4">
+                                    <div class="w-12 h-12 bg-gradient-to-tr from-blue-500/10 to-indigo-500/10 text-joss-blue rounded-xl flex items-center justify-center shrink-0 shadow-sm group-hover:scale-105 transition-transform duration-300">
+                                        <i class="w-6 h-6" data-lucide="file-text"></i>
+                                    </div>
+                                    <div class="space-y-1">
+                                        <h5 class="font-bold text-joss-dark text-sm md:text-base leading-snug group-hover:text-joss-blue transition-colors">
+                                            SURAT PERNYATAAN KESANGGUPAN MEMBAYAR PAJAK AIR
+                                        </h5>
+                                        <p class="text-xs text-gray-500">
+                                            Surat kesanggupan pemenuhan kewajiban perpajakan atas pemanfaatan air bawah tanah/permukaan.
+                                        </p>
+                                        <div class="flex gap-2 mt-1">
+                                            <span class="inline-flex items-center px-2 py-0.5 rounded-md text-[10px] font-bold bg-red-50 text-red-600 border border-red-100">PDF</span>
+                                            <span class="inline-flex items-center text-[10px] text-gray-400 font-medium">170 KB</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <a href="assets/docs/uu1.pdf" download="SURAT PERNYATAAN KESANGGUPAN MEMBAYAR PAJAK AIR.pdf"
+                                   class="inline-flex items-center justify-center gap-2 px-5 py-3 bg-joss-blue hover:bg-blue-600 text-white font-bold rounded-xl transition-all duration-300 hover:-translate-y-0.5 hover:shadow-lg hover:shadow-blue-200 group-hover:bg-blue-600 shrink-0 text-sm">
+                                    <i class="w-4 h-4" data-lucide="download"></i> Unduh
+                                </a>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
@@ -568,16 +687,16 @@
                 biaya: 'Gratis (Rp 0)',
                 produk: 'Surat Rekomendasi',
                 hukum: [
-                    { title: 'Undang-Undang Nomor 23 Tahun 2014 tentang Pemerintahan Daerah;', url: 'uu1.pdf' },
-                    { title: 'Undang-Undang Nomor 18 Tahun 2009 tentang Peternakan dan Kesehatan Hewan (Lembaran Negara Republik Indonesia Tahun 2009 Nomor 84, Tambahan Lembaran Negara Republik Indonesia Nomor 5015) sebagaimana telah diubah dengan Undang-Undang Nomor 41 Tahun 2014 tentang Perubahan atas Undang-Undang Nomor 18 Tahun 2009 tentang Peternakan dan Kesehatan Hewan (Lembaran Negara Republik Indonesia Tahun 2014 Nomor 338, Tambahan Lembaran Negara Republik Indonesia Nomor 5619);', url: 'uu1.pdf' },
-                    { title: 'Peraturan Pemerintah Nomor 38 Tahun 2007 tentang Pembagian Urusan Pemerintahan antara Pemerintah, Pemerintah Daerah Provinsi dan Pemerintah Daerah Kabupaten/Kota;', url: 'uu1.pdf' },
-                    { title: 'Peraturan Pemerintah Nomor 95 Tahun 2012 tentang Kesehatan Masyarakat Veteriner dan Kesejahteraan Hewan;', url: 'uu1.pdf' },
-                    { title: 'Peraturan Pemerintah Nomor 5 Tahun 2021 tentang Penyelenggaraan Perizinan Berusaha Berbasis Risiko;', url: 'uu1.pdf' },
-                    { title: 'Peraturan Menteri Pertanian Nomor 11 Tahun 2020 tentang Sertifikasi Nomor Kontrol Veteriner Unit Usaha Produk Hewan;', url: 'uu1.pdf' },
-                    { title: 'Peraturan Menteri Pertanian Nomor 15 Tahun 2021 tentang Standar Kegiatan Usaha dan Standar Produk pada Penyelenggaraan Perizinan Berusaha Berbasis Resiko Sektor Pertanian;', url: 'uu1.pdf' },
-                    { title: 'Peraturan Menteri Pertanian Nomor 17 Tahun 2023 Tentang Tata Cara Pengawasan Lalu Lintas Hewan, Produk Hewan, dan Media Pembawa Penyakit Hewan Lainnya di dalam Wilayah Negara Kesatuan Republik Indonesia;', url: 'uu1.pdf' },
-                    { title: 'Peraturan Daerah Provinsi Jawa Timur Nomor 8 Tahun 2023 tentang Pajak Daerah dan Retribusi Daerah;', url: 'uu1.pdf' },
-                    { title: 'Peraturan Gubernur Jawa Timur Nomor 88 Tahun 2022 tentang Penyelenggaraan Perizinan Berusaha.', url: 'uu1.pdf' }
+                    { title: 'Undang-Undang Nomor 23 Tahun 2014 tentang Pemerintahan Daerah;', url: 'assets/docs/uu1.pdf' },
+                    { title: 'Undang-Undang Nomor 18 Tahun 2009 tentang Peternakan dan Kesehatan Hewan (Lembaran Negara Republik Indonesia Tahun 2009 Nomor 84, Tambahan Lembaran Negara Republik Indonesia Nomor 5015) sebagaimana telah diubah dengan Undang-Undang Nomor 41 Tahun 2014 tentang Perubahan atas Undang-Undang Nomor 18 Tahun 2009 tentang Peternakan dan Kesehatan Hewan (Lembaran Negara Republik Indonesia Tahun 2014 Nomor 338, Tambahan Lembaran Negara Republik Indonesia Nomor 5619);', url: 'assets/docs/uu1.pdf' },
+                    { title: 'Peraturan Pemerintah Nomor 38 Tahun 2007 tentang Pembagian Urusan Pemerintahan antara Pemerintah, Pemerintah Daerah Provinsi dan Pemerintah Daerah Kabupaten/Kota;', url: 'assets/docs/uu1.pdf' },
+                    { title: 'Peraturan Pemerintah Nomor 95 Tahun 2012 tentang Kesehatan Masyarakat Veteriner dan Kesejahteraan Hewan;', url: 'assets/docs/uu1.pdf' },
+                    { title: 'Peraturan Pemerintah Nomor 5 Tahun 2021 tentang Penyelenggaraan Perizinan Berusaha Berbasis Risiko;', url: 'assets/docs/uu1.pdf' },
+                    { title: 'Peraturan Menteri Pertanian Nomor 11 Tahun 2020 tentang Sertifikasi Nomor Kontrol Veteriner Unit Usaha Produk Hewan;', url: 'assets/docs/uu1.pdf' },
+                    { title: 'Peraturan Menteri Pertanian Nomor 15 Tahun 2021 tentang Standar Kegiatan Usaha dan Standar Produk pada Penyelenggaraan Perizinan Berusaha Berbasis Resiko Sektor Pertanian;', url: 'assets/docs/uu1.pdf' },
+                    { title: 'Peraturan Menteri Pertanian Nomor 17 Tahun 2023 Tentang Tata Cara Pengawasan Lalu Lintas Hewan, Produk Hewan, dan Media Pembawa Penyakit Hewan Lainnya di dalam Wilayah Negara Kesatuan Republik Indonesia;', url: 'assets/docs/uu1.pdf' },
+                    { title: 'Peraturan Daerah Provinsi Jawa Timur Nomor 8 Tahun 2023 tentang Pajak Daerah dan Retribusi Daerah;', url: 'assets/docs/uu1.pdf' },
+                    { title: 'Peraturan Gubernur Jawa Timur Nomor 88 Tahun 2022 tentang Penyelenggaraan Perizinan Berusaha.', url: 'assets/docs/uu1.pdf' }
                 ],
                 dokumen: {
                     baru: {
@@ -1105,16 +1224,22 @@
 
         // ══ TAB SWITCHING ════════════════════════════════════════════
         function switchTab(tab) {
-            ['ringkasan', 'syarat', 'prosedur', 'biaya'].forEach(t => {
-                document.getElementById('content-' + t).classList.add('hidden');
-                const btn = document.getElementById('tab-' + t);
-                btn.classList.remove('text-joss-blue', 'border-joss-blue');
-                btn.classList.add('text-gray-500', 'border-transparent');
+            ['ringkasan', 'syarat', 'download', 'prosedur', 'biaya'].forEach(t => {
+                const contentEl = document.getElementById('content-' + t);
+                const btnEl = document.getElementById('tab-' + t);
+                if (contentEl) contentEl.classList.add('hidden');
+                if (btnEl) {
+                    btnEl.classList.remove('text-joss-blue', 'border-joss-blue');
+                    btnEl.classList.add('text-gray-500', 'border-transparent');
+                }
             });
-            document.getElementById('content-' + tab).classList.remove('hidden');
-            const active = document.getElementById('tab-' + tab);
-            active.classList.add('text-joss-blue', 'border-joss-blue');
-            active.classList.remove('text-gray-500', 'border-transparent');
+            const activeContent = document.getElementById('content-' + tab);
+            if (activeContent) activeContent.classList.remove('hidden');
+            const activeBtn = document.getElementById('tab-' + tab);
+            if (activeBtn) {
+                activeBtn.classList.add('text-joss-blue', 'border-joss-blue');
+                activeBtn.classList.remove('text-gray-500', 'border-transparent');
+            }
             lucide.createIcons();
         }
 
