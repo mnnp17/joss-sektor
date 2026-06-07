@@ -48,37 +48,164 @@
             display: none;
         }
 
-        /* Sidebar slide transition */
-        #sidebar-wrap {
-            transition: width 0.3s ease, opacity 0.3s ease, margin 0.3s ease;
-            overflow: hidden;
+        /* ── Icon-Rail Sidebar ── */
+        #sidebar-col {
+            width: 320px;
+            transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        #sidebar-col.collapsed {
+            width: 64px;
         }
 
-        #sidebar-wrap.sidebar-hidden {
-            width: 0 !important;
+        /* Content hidden when collapsed */
+        .sidebar-expand-content {
+            max-height: 200px;
+            transition: max-height 0.3s ease, opacity 0.2s ease, margin 0.3s ease, padding 0.3s ease;
+            overflow: hidden;
+            white-space: nowrap;
+        }
+        #sidebar-col.collapsed .sidebar-expand-content {
             opacity: 0;
+            pointer-events: none;
+            max-height: 0;
             margin: 0 !important;
             padding: 0 !important;
         }
 
-        /* Toggle button animation */
-        #sidebar-toggle-icon {
-            transition: transform 0.3s ease;
+        /* Menu item label */
+        .sidebar-label {
+            white-space: nowrap;
+            overflow: hidden;
+            max-width: 240px;
+            transition: max-width 0.3s cubic-bezier(0.4,0,0.2,1), opacity 0.2s ease;
+            opacity: 1;
+        }
+        #sidebar-col.collapsed .sidebar-label {
+            max-width: 0;
+            opacity: 0;
         }
 
-        #sidebar-wrap.sidebar-hidden~* #sidebar-toggle-icon,
-        body.sidebar-hidden #sidebar-toggle-icon {
-            transform: rotate(180deg);
+        /* Menu item centering when collapsed */
+        .sidebar-menu-btn {
+            transition: padding 0.3s ease, justify-content 0.3s ease, gap 0.3s ease;
         }
+        #sidebar-col.collapsed .sidebar-menu-btn {
+            justify-content: center;
+            padding-left: 0;
+            padding-right: 0;
+            gap: 0;
+        }
+
+        /* State-based visibility utilities */
+        .sidebar-collapsed-only {
+            display: none !important;
+        }
+        #sidebar-col.collapsed .sidebar-collapsed-only {
+            display: flex !important;
+        }
+        #sidebar-col.collapsed .sidebar-expanded-only {
+            display: none !important;
+        }
+
+        /* JS-controlled Tooltip – rendered on body to bypass sidebar overflow clipping */
+        #sidebar-tooltip-el {
+            position: fixed;
+            background: #1e293b;
+            color: #fff;
+            padding: 5px 10px;
+            border-radius: 6px;
+            font-size: 11px;
+            font-weight: 500;
+            white-space: nowrap;
+            pointer-events: none;
+            z-index: 9999;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.15);
+            opacity: 0;
+            transform: translateX(-4px);
+            transition: opacity 0.15s ease, transform 0.15s ease;
+        }
+        #sidebar-tooltip-el.visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+        /* Arrow pointing left */
+        #sidebar-tooltip-el::before {
+            content: '';
+            position: absolute;
+            right: 100%;
+            top: 50%;
+            transform: translateY(-50%);
+            border-width: 5px;
+            border-style: solid;
+            border-color: transparent #1e293b transparent transparent;
+        }
+
+        /* Main content wrapper padding transition */
+        #main-content-wrapper {
+            transition: padding-left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* Scrollbar */
+        #sidebar-col ::-webkit-scrollbar { width: 4px; }
+        #sidebar-col ::-webkit-scrollbar-track { background: transparent; }
+        #sidebar-col ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
     </style>
 </head>
 
-<body class="bg-gray-50 text-gray-900 font-sans min-h-screen flex flex-col">
+<body class="bg-gray-50 text-gray-900 font-sans min-h-screen flex">
 
-    <!-- ===== HEADER ===== -->
-    <!-- BEGIN: MainHeader -->
-    <header class="sticky top-0 z-50 bg-white shadow-md">
-        <nav class="container mx-auto px-4 py-3 flex items-center justify-between">
+    <!-- ===== ICON-RAIL SIDEBAR ===== -->
+    <aside id="sidebar-col" class="fixed top-0 left-0 h-screen bg-white border-r border-gray-200 z-50 flex flex-col shadow-lg">
+
+        <!-- ── Sidebar Header: Logo ── -->
+        <div class="h-16 border-b border-gray-100 flex items-center px-4 gap-3 shrink-0 relative">
+            <!-- Logo (always visible) -->
+            <img src="https://joss.jatimprov.go.id/images/logo.png" alt="Logo JOSS" class="h-8 w-auto shrink-0" />
+            <!-- Brand Text (hidden when collapsed) -->
+            <div class="sidebar-expand-content flex-1 min-w-0">
+                <h1 class="font-bold text-sm tracking-tight text-joss-dark leading-none">JOSS</h1>
+                <p class="text-[9px] uppercase font-semibold text-gray-500">DPMPTSP Jawa Timur</p>
+            </div>
+        </div>
+
+        <!-- ── Unit Kerja Card (hidden when collapsed) ── -->
+        <div class="sidebar-expand-content px-3 pt-3 shrink-0">
+            <div class="bg-gradient-to-r from-joss-blue to-blue-500 px-4 py-3 rounded-xl shadow-sm flex items-center justify-between">
+                <div>
+                    <p class="text-blue-100 text-[10px] font-bold uppercase tracking-wider mb-0.5">Unit Kerja</p>
+                    <h2 class="text-white font-extrabold text-sm leading-tight">Dinas Peternakan</h2>
+                </div>
+                <!-- Toggle Button: visible when opened, using panel-left-close icon -->
+                <button onclick="toggleSidebar()" title="Sembunyikan Panel"
+                    class="w-8 h-8 flex items-center justify-center text-white/80 hover:text-white hover:bg-white/10 rounded-lg transition-all shrink-0">
+                    <i class="w-5 h-5" data-lucide="panel-left-close"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Toggle Button: visible when closed, using panel-left-open icon, placed above the menu icons -->
+        <div class="sidebar-collapsed-only w-full px-3 pt-3 shrink-0 justify-center">
+            <button onclick="toggleSidebar()" data-tooltip="Tampilkan Panel"
+                class="w-10 h-10 flex items-center justify-center text-gray-400 hover:text-joss-blue hover:bg-blue-50 rounded-xl transition-all shrink-0">
+                <i class="w-5 h-5" data-lucide="panel-left-open"></i>
+            </button>
+        </div>
+
+        <!-- ── Scrollable Menu Items ── -->
+        <div class="flex-1 overflow-y-auto py-3 px-2 space-y-1" id="sidebar-menu">
+            <!-- items rendered by JS -->
+        </div>
+    </aside>
+
+    <!-- Global Tooltip Element (attached to body, bypasses sidebar overflow clipping) -->
+    <div id="sidebar-tooltip-el"></div>
+
+    <div id="main-content-wrapper" class="flex-1 flex flex-col transition-all duration-300">
+
+        <!-- ===== HEADER ===== -->
+        <!-- BEGIN: MainHeader -->
+        <header class="sticky top-0 z-30 bg-white shadow-md">
+            <nav class="container mx-auto px-4 py-3 flex items-center justify-between">
             <!-- Logo and Brand -->
             <a href="index.html" class="flex items-center space-x-3">
                 <img src="https://joss.jatimprov.go.id/images/logo.png" alt="Logo JOSS" class="h-10 w-auto" />
@@ -132,35 +259,8 @@
             </nav>
         </div>
     </div>
-
     <!-- ===== MAIN LAYOUT ===== -->
     <div class="flex-1 container mx-auto px-4 py-6 flex flex-col lg:flex-row gap-6">
-
-        <!-- ── SIDEBAR COLUMN ───────────────────── -->
-        <div id="sidebar-col" class="w-full lg:w-64 shrink-0 flex flex-col gap-2 transition-all duration-300">
-
-            <!-- Hamburger toggle — always visible, sits above sidebar -->
-            <button onclick="toggleSidebar()" id="sidebar-toggle-btn" title="Sembunyikan / Tampilkan Panel"
-                class="hidden lg:flex w-9 h-9 items-center justify-center bg-white border border-gray-200 hover:bg-blue-50 hover:border-joss-blue hover:text-joss-blue text-gray-500 rounded-xl shadow-sm transition-all">
-                <i class="w-5 h-5" id="sidebar-toggle-icon" data-lucide="menu"></i>
-            </button>
-
-            <!-- ── SIDEBAR ────────────────────── -->
-            <aside id="sidebar-wrap" class="w-full space-y-4">
-
-                <!-- Unit Kerja header -->
-                <div class="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
-                    <div class="bg-gradient-to-r from-joss-blue to-blue-500 px-5 py-4">
-                        <p class="text-blue-100 text-xs font-semibold uppercase tracking-wider mb-1">Unit Kerja</p>
-                        <h2 class="text-white font-extrabold text-lg leading-tight">Dinas Peternakan</h2>
-                    </div>
-                    <div class="p-3 space-y-1" id="sidebar-menu">
-                        <!-- items rendered by JS -->
-                    </div>
-                </div>
-
-            </aside>
-        </div>
 
         <!-- ── MAIN CONTENT ───────────────── -->
         <main class="flex-1 min-w-0">
@@ -550,6 +650,7 @@
     </footer>
 
     <!-- END: Footer -->
+    </div><!-- end main-content-wrapper -->
 
     <a href="https://dpmptsp.jatimprov.go.id/helpdesk/web/" target="_blank" rel="noopener noreferrer"
         class="fixed bottom-6 right-6 z-50 flex items-center gap-2 bg-joss-blue text-white font-bold px-5 py-3 rounded-full shadow-2xl shadow-blue-400/40 hover:bg-blue-600 transition hover:-translate-y-1 group">
@@ -646,32 +747,106 @@
     <script>
         lucide.createIcons();
 
+        // ══ SIDEBAR TOOLTIP (JS-based, bypasses overflow clipping) ══
+        const tooltipEl = document.getElementById('sidebar-tooltip-el');
+        let tooltipTimer = null;
+        const sidebar = document.getElementById('sidebar-col');
+
+        sidebar.addEventListener('mouseenter', function(e) {
+            const btn = e.target.closest('[data-tooltip]');
+            if (!btn || !sidebar.classList.contains('collapsed')) return;
+            scheduleTooltip(btn);
+        }, true);
+
+        sidebar.addEventListener('mouseleave', function(e) {
+            const btn = e.target.closest('[data-tooltip]');
+            if (!btn) return;
+            cancelTooltip();
+        }, true);
+
+        // Also handle when moving between sibling buttons without triggering mouseleave on sidebar
+        sidebar.addEventListener('mouseover', function(e) {
+            const btn = e.target.closest('[data-tooltip]');
+            if (!sidebar.classList.contains('collapsed')) {
+                cancelTooltip();
+                return;
+            }
+            if (!btn) {
+                cancelTooltip();
+                return;
+            }
+            // If hovering a new button, reset timer
+            if (tooltipEl._currentBtn !== btn) {
+                cancelTooltip();
+                scheduleTooltip(btn);
+            }
+        });
+
+        sidebar.addEventListener('mouseout', function(e) {
+            const btn = e.target.closest('[data-tooltip]');
+            if (btn && !btn.contains(e.relatedTarget)) {
+                cancelTooltip();
+            }
+        });
+
+        function scheduleTooltip(btn) {
+            tooltipEl._currentBtn = btn;
+            tooltipTimer = setTimeout(() => {
+                const rect = btn.getBoundingClientRect();
+                const text = btn.getAttribute('data-tooltip');
+                tooltipEl.textContent = text;
+                // Position: right side of sidebar + gap
+                tooltipEl.style.left = (rect.right + 10) + 'px';
+                tooltipEl.style.top = (rect.top + rect.height / 2) + 'px';
+                tooltipEl.style.transform = 'translateY(-50%)';
+                tooltipEl.classList.add('visible');
+            }, 2000);
+        }
+
+        function cancelTooltip() {
+            clearTimeout(tooltipTimer);
+            tooltipEl._currentBtn = null;
+            tooltipEl.classList.remove('visible');
+        }
+
         // ══ STATE VARIABLE UNTUK PERSYARATAN ════════════════════════
         let currentPengurusan = 'baru'; // 'baru' | 'pencabutan'
         let currentPemohon = 'perseorangan'; // 'perseorangan' | 'non'
 
         // ══ SIDEBAR TOGGLE ══════════════════════════════════════════
-        let sidebarVisible = true;
-        function toggleSidebar() {
-            const sidebarCol = document.getElementById('sidebar-col');
-            const sidebarWrap = document.getElementById('sidebar-wrap');
-            const icon = document.getElementById('sidebar-toggle-icon');
-            sidebarVisible = !sidebarVisible;
+        let sidebarVisible = false; // default: hidden until initSidebarState sets it
 
-            if (sidebarVisible) {
-                // Expand: restore full sidebar column width
-                sidebarCol.style.width = '';
-                sidebarCol.style.minWidth = '';
-                sidebarWrap.style.display = '';
-                icon.setAttribute('data-lucide', 'menu');
+        function setSidebarState(visible) {
+            const sidebarEl = document.getElementById('sidebar-col');
+            const overlay = document.getElementById('sidebar-overlay');
+            const wrapper = document.getElementById('main-content-wrapper');
+            const isDesktop = window.innerWidth >= 1024;
+
+            sidebarVisible = visible;
+            cancelTooltip(); // Hide any pending or showing tooltip on state change
+
+            if (visible) {
+                sidebarEl.classList.remove('collapsed');
+                if (isDesktop) {
+                    wrapper.style.paddingLeft = '320px';
+                } else {
+                    wrapper.style.paddingLeft = '64px';
+                    overlay.classList.remove('hidden');
+                }
             } else {
-                // Collapse: shrink column to just the toggle button width
-                sidebarWrap.style.display = 'none';
-                sidebarCol.style.width = '40px';
-                sidebarCol.style.minWidth = '40px';
-                icon.setAttribute('data-lucide', 'menu');
+                sidebarEl.classList.add('collapsed');
+                wrapper.style.paddingLeft = '64px';
+                overlay.classList.add('hidden');
             }
-            lucide.createIcons();
+        }
+
+        function toggleSidebar() {
+            setSidebarState(!sidebarVisible);
+        }
+
+        function initSidebarState() {
+            const isDesktop = window.innerWidth >= 1024;
+            setSidebarState(isDesktop); // open on desktop, closed on mobile
         }
 
 
@@ -943,12 +1118,13 @@
             const el = document.getElementById('sidebar-menu');
             el.innerHTML = permits.map(p => `
       <button onclick="openPermit('${p.id}')"
-        class="w-full flex items-center gap-2.5 px-3 py-2.5 rounded-xl text-left text-sm font-medium transition-all
+        data-tooltip="${p.shortTitle}"
+        class="sidebar-menu-btn w-full flex items-center gap-2.5 px-3 py-2.5 rounded-xl text-left text-sm font-medium transition-all
                ${p.id === activeId
                     ? 'bg-blue-50 text-joss-blue font-bold'
                     : 'text-gray-600 hover:bg-gray-50 hover:text-joss-blue'}">
         <i class="w-4 h-4 shrink-0" data-lucide="${p.icon}"></i>
-        <span class="leading-snug">${p.shortTitle}</span>
+        <span class="sidebar-label leading-snug">${p.shortTitle}</span>
       </button>`).join('');
             lucide.createIcons();
         }
@@ -1246,6 +1422,17 @@
         // ══ INIT ════════════════════════════════════════════════════
         renderSidebar(null);
         renderList();
+        initSidebarState();
+
+        // Re-evaluate sidebar state on window resize
+        window.addEventListener('resize', () => {
+            const isDesktop = window.innerWidth >= 1024;
+            if (isDesktop && !sidebarVisible) {
+                setSidebarState(true);
+            } else if (!isDesktop && sidebarVisible) {
+                setSidebarState(false);
+            }
+        });
 
         // URL param: ?izin=usaha-peternakan
         const urlIzin = new URLSearchParams(window.location.search).get('izin');
